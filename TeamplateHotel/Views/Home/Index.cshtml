@@ -1,0 +1,325 @@
+﻿@using TeamplateHotel.Controllers
+@using TeamplateHotel.Handler
+@using TeamplateHotel.Models
+@using ProjectLibrary.Database
+@{
+    ViewBag.HomePage = true;
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    var lang = Request.Cookies["LanguageID"].Value;
+    ShowObject article = CommentController.WellcomeArticle(Request.Cookies["LanguageID"].Value) ?? new ShowObject();
+    List<ShowObject> articleShowHots = CommentController.HotArticles(Request.Cookies["LanguageID"].Value);
+    List<ShowObject> CustomerArticle = CommentController.CustomerArticles(Request.Cookies["LanguageID"].Value);
+    List<ShowObject> roomShowHomes = CommentController.RoomShowHome(Request.Cookies["LanguageID"].Value);
+    List<Advertising> qc = CommentController.GetAdvertisings();
+    Menu menu = ViewBag.Menu ?? new Menu();
+
+    List<Slider> sliders = CommentController.GetListSlider(Request.Cookies["LanguageID"].Value, 0);
+    List<ShowObject> services = CommentController.ListServiceHome(Request.Cookies["LanguageID"].Value);
+    //List<Gallery> galleries = CommentController.Gallery();
+    List<RoomGallery> roomGalleries = CommentController.RoomGallery();
+
+    List<ShowObject> articleNews = CommentController.NewArticles(Request.Cookies["LanguageID"].Value);
+    string menuAlias = "";
+}
+
+<div class="banner">
+    <div class="banner-slide owl-carousel owl-theme">
+        <div class="banner__item">
+            <div class="banner__img"><img src="~/Content/images/banner/LHV01073 (Copy).jpg" alt=""></div>
+            <div class="banner__caption">
+                <h3 class="animate__animated">HOTEL & RESORT</h3>
+                <h1 class="animate__animated">NAM CƯỜNG HOTEL</h1>
+            </div>
+        </div>
+        <div class="banner__item">
+            <div class="banner__img"><img src="~/Content/images/banner/LHV01067 (Copy).jpg" alt=""></div>
+            <div class="banner__caption">
+                <h3 class="animate__animated">HOTEL & RESORT</h3>
+                <h1 class="animate__animated">NAM CƯỜNG HOTEL</h1>
+            </div>
+        </div>
+        <div class="banner__item">
+            <div class="banner__img"><img src="~/Content/images/banner/LHV01073 (Copy).jpg" alt=""></div>
+            <div class="banner__caption">
+                <h3 class="animate__animated">HOTEL & RESORT</h3>
+                <h1 class="animate__animated">NAM CƯỜNG HOTEL</h1>
+            </div>
+        </div>
+        <div class="banner__item">
+            <div class="banner__img"><img src="~/Content/images/banner/LHV01067 (Copy).jpg" alt=""></div>
+            <div class="banner__caption">
+                <h3 class="animate__animated">HOTEL & RESORT</h3>
+                <h1 class="animate__animated">NAM CƯỜNG HOTEL</h1>
+            </div>
+        </div>
+    </div>
+    <div class="quick-book">
+        <div class="container">
+            <form action="book-room.html" method="method" id="quick_search">
+                <div class="row">
+                    <div class="col-lg-20 col-6">
+                        <div class="form-group">
+                            <label for="checkIn">Ngày Đến</label>
+                            <input class="form-control" type="text" name="checkIn" id="checkIn">
+                        </div>
+                    </div>
+                    <div class="col-lg-20 col-6">
+                        <div class="form-group">
+                            <label for="checkIn">Ngày Đi</label>
+                            <input class="form-control" type="text" name="checkOut" id="checkOut">
+                        </div>
+                    </div>
+                    <div class="col-lg-20 col-6">
+                        <div class="form-group">
+                            <label for="Adult">Người Lớn</label>
+                            <select class="custom-select" name="Adult" id="Adult">
+                                <option value="0">Adults</option>
+                                <option value="0">1</option>
+                                <option value="0">2</option>
+                                <option value="0">3</option>
+                                <option value="0">4</option>
+                                <option value="0">5</option>
+                                <option value="0">6</option>
+                                <option value="0">7</option>
+                                <option value="0">8</option>
+                                <option value="0">9</option>
+                                <option value="0">10</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-20 col-6">
+                        <div class="form-group">
+                            <label for="Child">Trẻ em</label>
+                            <select class="custom-select" name="Child" id="Child">
+                                <option value="0">Child</option>
+                                <option value="0">1</option>
+                                <option value="0">2</option>
+                                <option value="0">3</option>
+                                <option value="0">4</option>
+                                <option value="0">5</option>
+                                <option value="0">6</option>
+                                <option value="0">7</option>
+                                <option value="0">8</option>
+                                <option value="0">9</option>
+                                <option value="0">10</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-20 col-md-12 mt-auto">
+                        <button class="check-avai">ĐẶT PHÒNG</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<section class="about-home box">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div>
+                    <div class="box__title about__title">
+                        <h5><a href="about.html"> ABOUT US</a></h5>
+                        <h3>Welcome to <br> NAM CƯỜNG Hotel</h3>
+                    </div>
+                    <div class="about__desc">
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit odio architecto labore? Omnis assumenda est possimus? Animi qui provident sit corporis debitis, tempore incidunt doloremque sed repellendus labore sequi ipsam.</p>
+                    </div><a class="btn view-more" href="about.html">Xem Thêm</a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="about__right">
+                    <div class="about__thumb"><img src="~/Content/images/about2.jpg" alt=""></div>
+                    <div class="about__thumb"><img src="~/Content/images/about4.jpg" alt=""></div>
+                    <div class="about__thumb"><img src="~/Content/images/about5.jpg" alt=""></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="box rooms">
+    <div class="box__title">
+        <h5><a href="Room-list.html"> PHÒNG NGHỈ</a></h5>
+        <h3>Thoải mái & tiện nghi</h3>
+    </div>
+    <div class="room-slide owl-carousel owl-theme">
+        <div class="room__item">
+            <div class="room__desc">
+                <div class="room__name"><a href="room-detail.html"> Basic Room</a></div>
+                <ul class="room__info">
+                    <li class="ml-0">30m<sup>2</sup></li>
+                    <li>King bed</li>
+                    <li class="mr-0">2 persons</li>
+                </ul>
+                <div class="room__text">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum accusantium voluptatem maxime eum magni unde cumque, pariatur architecto mollitia expedita totam inventore error. Doloremque aliquid quae incidunt cupiditate? Repellendus, qui.</p>
+                </div>
+                <div class="room-btn"><a class="btn" href="room-detail.html">Xem chi tiết</a></div>
+            </div>
+            <div class="room__img"><img src="~/Content/images/room1 (Copy).jpg" alt=""></div>
+        </div>
+        <div class="room__item">
+            <div class="room__desc">
+                <div class="room__name"><a href="room-detail.html"> Executive Deluxe</a></div>
+                <ul class="room__info">
+                    <li class="ml-0">30m<sup>2</sup></li>
+                    <li>King bed</li>
+                    <li class="mr-0">2 persons</li>
+                </ul>
+                <div class="room__text">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum accusantium voluptatem maxime eum magni unde cumque, pariatur architecto mollitia expedita totam inventore error. Doloremque aliquid quae incidunt cupiditate? Repellendus, qui.</p>
+                </div>
+                <div class="room-btn"><a class="btn" href="room-detail.html">Xem chi tiết</a></div>
+            </div>
+            <div class="room__img"><img src="~/Content/images/room2 (Copy).jpg" alt=""></div>
+        </div>
+        <div class="room__item">
+            <div class="room__desc">
+                <div class="room__name"><a href="room-detail.html"> Superior Room</a></div>
+                <ul class="room__info">
+                    <li class="ml-0">30m<sup>2</sup></li>
+                    <li>King bed</li>
+                    <li class="mr-0">2 persons</li>
+                </ul>
+                <div class="room__text">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum accusantium voluptatem maxime eum magni unde cumque, pariatur architecto mollitia expedita totam inventore error. Doloremque aliquid quae incidunt cupiditate? Repellendus, qui.</p>
+                </div>
+                <div class="room-btn"><a class="btn" href="room-detail.html">Xem chi tiết</a></div>
+            </div>
+            <div class="room__img"><img src="~/Content/images/room3 (Copy).jpg" alt=""></div>
+        </div>
+    </div>
+</section>
+<section class="box">
+    <div class="container">
+        <div class="ser-home">
+            <div class="box__title">
+                <h5><a href="service.html"> Dịch vụ</a></h5>
+                <h3>dịch vụ của chúng tôi</h3>
+            </div>
+            <div class="ser-home__list">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6">
+                        <a class="ser-home__item" href="ser_detail.html">
+                            <div class="ser-home__img"><img src="~/Content/images/service1.jpg" alt=""></div>
+                            <div class="ser-home__cont">
+                                <h3 class="ser-home__name">Hội Thảo</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <a class="ser-home__item" href="ser_detail.html">
+                            <div class="ser-home__img"><img src="~/Content/images/service6.jpg" alt=""></div>
+                            <div class="ser-home__cont">
+                                <h3 class="ser-home__name">Tiệc Cưới</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <a class="ser-home__item" href="ser_detail.html">
+                            <div class="ser-home__img"><img src="~/Content/images/service2.jpg" alt=""></div>
+                            <div class="ser-home__cont">
+                                <h3 class="ser-home__name">Nhà Hàng & Bar</h3>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="box">
+    <div class="container">
+        <div class="news">
+            <div class="box__title">
+                <h5><a href="blog.html"> NEWS</a></h5>
+                <h3>Tin tức & sự kiện mới nhất</h3>
+            </div>
+            <div class="new-list owl-carousel owl-theme">
+                <div class="post__item">
+                    <div class="post__thumb"><a href="blog_detail.html"><img src="~/Content/images/gallery8.jpg" alt=""></a></div>
+                    <div class="post__meta"><span class="post__date"> 26 / 8 /2021</span><a class="post__catagory" href=""> Sự Kiện</a></div>
+                    <h3 class="post__title"><a href="blog_detail.html"> Hội thảo khoa học</a></h3>
+                    <div class="post__desc">
+                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus delectus in sequi consequatur repellat odio obcaecati dicta, maiores non deserunt!</p>
+                    </div>
+                    <div class="post__more">
+                        <a class="btn view-more" href="blog_detail.html">
+                            Xem thêm<i class="far fa-long-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="post__item">
+                    <div class="post__thumb"><a href="blog_detail.html"><img src="~/Content/images/gallery5.jpg" alt=""></a></div>
+                    <div class="post__meta"><span class="post__date"> 26 / 8 /2021</span><a class="post__catagory" href=""> Dịch Vụ</a></div>
+                    <h3 class="post__title"><a href="blog_detail.html"> Ưu đãi nhà hàng</a></h3>
+                    <div class="post__desc">
+                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus delectus in sequi consequatur repellat odio obcaecati dicta, maiores non deserunt!</p>
+                    </div>
+                    <div class="post__more">
+                        <a class="btn view-more" href="blog_detail.html">
+                            Xem thêm<i class="far fa-long-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="post__item">
+                    <div class="post__thumb"><a href="/"><img src="~/Content/images/gallery11.jpg" alt=""></a></div>
+                    <div class="post__meta"><span class="post__date"> 26 / 8 /2021</span><a class="post__catagory" href=""> Sự Kiện</a></div>
+                    <h3 class="post__title"><a href="blog_detail.html">Tổng kết cuối năm</a></h3>
+                    <div class="post__desc">
+                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus delectus in sequi consequatur repellat odio obcaecati dicta, maiores non deserunt!</p>
+                    </div>
+                    <div class="post__more">
+                        <a class="btn view-more" href="blog_detail.html">
+                            Xem thêm<i class="far fa-long-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="post__item">
+                    <div class="post__thumb"><a href="/"><img src="~/Content/images/gallery11.jpg" alt=""></a></div>
+                    <div class="post__meta"><span class="post__date"> 26 / 8 /2021</span><a class="post__catagory" href=""> Sự Kiện</a></div>
+                    <h3 class="post__title"><a href="/"> Tổ chức tiệc cưới</a></h3>
+                    <div class="post__desc">
+                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus delectus in sequi consequatur repellat odio obcaecati dicta, maiores non deserunt!</p>
+                    </div>
+                    <div class="post__more">
+                        <a class="btn view-more" href="blog_detail.html">
+                            Xem thêm<i class="far fa-long-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="box">
+    <div class="video" style="background-image: url(~/Content/images/sl15.jpg);">
+        <div class="video__title text-center">
+            <h3 class="media__title">Thư Giãn Trong Kỳ Nghỉ</h3>
+            <h6> DỊCH VỤ ĐẲNG CẤP TỪ KHÁCH SẠN</h6><img class="active-video" src="~/Content/images/icon/icon-3.png" alt="">
+        </div>
+        <div class="bg-video">
+            <div class="close-video"><i class="fas fa-times"></i></div>
+            <div class="video-box">
+                <iframe width="100%" height="500" src="https://www.youtube.com/embed/CpjQa0aFRjY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="box">
+    <div class="container">
+        <div class="box__title">
+            <h5><a href="gallery.html"> hình ảnh</a></h5>
+            <h3>Thư viện hình ảnh</h3>
+        </div>
+        <div class="gallery">
+            <div class="gallery__item"><a href="~/Content/images/gallery1.jpg" data-fancybox="gallery"><img src="~/Content/images/gallery1.jpg" alt=""></a></div>
+            <div class="gallery__item"><a href="~/Content/images/gallery2.jpg" data-fancybox="gallery"><img src="~/Content/images/gallery2.jpg" alt=""></a></div>
+            <div class="gallery__item"><a href="~/Content/images/gallery3.jpg" data-fancybox="gallery"><img src="~/Content/images/gallery3.jpg" alt=""></a></div>
+            <div class="gallery__item"><a href="~/Content/images/gallery4.jpg" data-fancybox="gallery"><img src="~/Content/images/gallery4.jpg" alt=""></a></div>
+            <div class="gallery__item"><a href="~/Content/images/gallery5.jpg" data-fancybox="gallery"><img src="~/Content/images/gallery5.jpg" alt=""></a></div>
+            <div class="gallery__item"><a href="~/Content/images/gallery6.jpg" data-fancybox="gallery"><img src="~/Content/images/gallery6.jpg" alt=""></a></div>
+        </div>
+        <div class="gallery-btn text-center"><a class="btn view-more" href="gallery.html">Xem Thêm</a></div>
+    </div>
+</section>

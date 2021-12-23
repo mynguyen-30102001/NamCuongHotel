@@ -1,0 +1,489 @@
+﻿@using TeamplateHotel.Controllers
+@using TeamplateHotel.Handler
+@using TeamplateHotel.Models
+@using ProjectLibrary.Database
+@{
+    ViewBag.HomePage = true;
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    var lang = Request.Cookies["LanguageID"].Value;
+    ShowObject article = CommentController.WellcomeArticle(Request.Cookies["LanguageID"].Value) ?? new ShowObject();
+    List<ShowObject> articleShowHots = CommentController.HotArticles(Request.Cookies["LanguageID"].Value);
+    List<ShowObject> CustomerArticle = CommentController.CustomerArticles(Request.Cookies["LanguageID"].Value);
+    List<ShowObject> roomShowHomes = CommentController.RoomShowHome(Request.Cookies["LanguageID"].Value);
+    List<Advertising> qc = CommentController.GetAdvertisings();
+    Menu menu = ViewBag.Menu ?? new Menu();
+
+    List<Slider> sliders = CommentController.GetListSlider(Request.Cookies["LanguageID"].Value, 0);
+    List<ShowObject> services = CommentController.ListServiceHome(Request.Cookies["LanguageID"].Value);
+    //List<Gallery> galleries = CommentController.Gallery();
+    List<RoomGallery> roomGalleries = CommentController.RoomGallery();
+
+    List<ShowObject> articleNews = CommentController.NewArticles(Request.Cookies["LanguageID"].Value);
+    string menuAlias = "";
+}
+
+<!--================ Slider Revolution ================-->
+<div dir="ltr" class="rev_slider_wrapper fullscreenbanner-container">
+    <div id="rev-slider-1" data-version="5.4.5" class="milenia-d-none rev-slider fullscreenabanner rev-has-scrollbottom-icon">
+
+        <ul>
+            @foreach (var item in sliders)
+            {
+                <!--================ Slide 1 ================-->
+            <li data-transition="fade" data-speed="300" data-delay="9000">
+                <img src="@item.Image" alt="" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="2" class="rev-slidebg">
+                <!--================ Layer ================-->
+                @*<div data-frames="[{&quot;delay&quot;:200,&quot;speed&quot;:2000,&quot;frame&quot;:&quot;0&quot;,&quot;from&quot;:&quot;y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;&quot;,&quot;to&quot;:&quot;o:1;&quot;,&quot;ease&quot;:&quot;Power4.easeInOut&quot;},{&quot;delay&quot;:&quot;wait&quot;,&quot;speed&quot;:1000,&quot;frame&quot;:&quot;999&quot;,&quot;to&quot;:&quot;auto:auto;&quot;,&quot;ease&quot;:&quot;Power3.easeInOut&quot;}]" data-x="center" data-y="center" data-hoffset="0" data-voffset="['-70', '-70', '-70', '-90']" data-width="['400']" data-height="['auto']" data-textAlign="['center']" data-color="['#fff']" data-fontsize="['14']" data-lineheight="['20']" class="tp-caption tp-resizeme tp-layer-section-subtitle">@item.Title</div>*@
+                <!--================ End of Layer ================-->
+                <!--================ Layer ================-->
+                <div data-frames="[{&quot;delay&quot;:400,&quot;speed&quot;:2000,&quot;frame&quot;:&quot;0&quot;,&quot;from&quot;:&quot;y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;&quot;,&quot;to&quot;:&quot;o:1;&quot;,&quot;ease&quot;:&quot;Power4.easeInOut&quot;},{&quot;delay&quot;:&quot;wait&quot;,&quot;speed&quot;:1000,&quot;frame&quot;:&quot;999&quot;,&quot;to&quot;:&quot;auto:auto;&quot;,&quot;ease&quot;:&quot;Power3.easeInOut&quot;}]" data-x="center" data-y="center" data-hoffset="0" data-voffset="['-10', '-10', '0', '0']" data-width="['1000', '1000', '760', '560']" data-height="['auto']" data-textAlign="['center']" data-color="['#fff']" data-fontsize="['65']" data-lineheight="['65']" class="tp-caption tp-resizeme tp-layer-section-title">@item.Title</div>
+                <!--================ End of Layer ================-->
+                <!--================ Layer ================-->
+                @*<div data-frames="[{&quot;delay&quot;:600,&quot;speed&quot;:2000,&quot;frame&quot;:&quot;0&quot;,&quot;from&quot;:&quot;y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;&quot;,&quot;to&quot;:&quot;o:1;&quot;,&quot;ease&quot;:&quot;Power4.easeInOut&quot;},{&quot;delay&quot;:&quot;wait&quot;,&quot;speed&quot;:1000,&quot;frame&quot;:&quot;999&quot;,&quot;to&quot;:&quot;auto:auto;&quot;,&quot;ease&quot;:&quot;Power3.easeInOut&quot;}]" data-x="center" data-y="center" data-hoffset="0" data-voffset="['100', '100', '120', '140']" data-width="['1000']" data-textAlign="['center']" class="tp-caption"><a href="#" class="milenia-btn milenia-btn--scheme-primary milenia-btn--big milenia-btn--unbordered">Discover More</a></div>
+        <!--================ End of Layer ================-->*@
+            </li>
+                <!--================ End of Slide 1 ================-->
+            }
+        </ul>
+    </div>
+</div>
+<!--================ End of Slider Revolution ================-->
+<div class="milenia-content milenia-content--no-py ">
+    <div class="container">
+        <div class="row">
+            <main class="col">
+                <div class="milenia-entity-content">
+                    <!--================ Content Section ================-->
+                    <div class="milenia-section milenia-section--no-py">
+                        <form action="http://booking-guarantee.com/Home/SelectDate?hotelKey=LA&lang=vi&currency=VND" method="get" class="milenia-booking-form milenia-booking-form--style-1">
+                            <div class="form-group">
+                                <div class="form-col form-col--arrival-date">
+                                    <input type="hidden" name="hotelCode" value="LA" />
+                                    <div class="form-control">
+                                        <label for="booking-form-arrival-date">@GetLanguage.Language(lang, "ArrivalDate")</label><span class="milenia-field-datepicker milenia-field-datepicker--style-1"><span class="milenia-field-datepicker-day">15</span><span class="milenia-field-datepicker-others"><span class="milenia-field-datepicker-month-year">April, 2019</span><span class="milenia-field-datepicker-dayname">Monday</span></span></span>
+                                        <input type="text" id="booking-form-arrival-date" name="fromDate" class="milenia-datepicker milenia-field-datepicker-invoker">
+                                    </div>
+                                </div>
+                                <div class="form-col form-col--departure-date">
+                                    <div class="form-control">
+                                        <label for="booking-form-departure-date">@GetLanguage.Language(lang, "DepartureDate")</label><span class="milenia-field-datepicker milenia-field-datepicker--style-1"><span class="milenia-field-datepicker-day">27</span><span class="milenia-field-datepicker-others"><span class="milenia-field-datepicker-month-year">April, 2019</span><span class="milenia-field-datepicker-dayname">Saturday</span></span></span>
+                                        <input type="text" id="booking-form-departure-date" name="toDate" class="milenia-datepicker milenia-field-datepicker-invoker">
+                                    </div>
+                                </div>
+                                <div class="form-col form-col--adults">
+                                    <div class="form-control">
+                                        <label>@GetLanguage.Language(lang, "Adults")</label>
+                                        <div class="milenia-field-counter">
+                                            <div class="milenia-field-counter-value">2</div>
+                                            <input type="hidden" name="adults" value="2" class="milenia-field-counter-target">
+                                            <button type="button" class="milenia-field-counter-control milenia-field-counter-control--decrease"></button>
+                                            <button type="button" class="milenia-field-counter-control milenia-field-counter-control--increase"></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-col form-col--children">
+                                    <div class="form-control">
+                                        <label>@GetLanguage.Language(lang, "Child")</label>
+                                        <div class="milenia-field-counter">
+                                            <div class="milenia-field-counter-value">0</div>
+                                            <input type="hidden" name="child" value="0" class="milenia-field-counter-target">
+                                            <button type="button" class="milenia-field-counter-control milenia-field-counter-control--decrease"></button>
+                                            <button type="button" class="milenia-field-counter-control milenia-field-counter-control--increase"></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-col form-col--action">
+                                    <div class="form-control">
+                                        <button type="submit" class="milenia-btn milenia-btn--huge milenia-btn--scheme-primary">@GetLanguage.Language(lang, "CheckAvailability")</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!--================ End of Content Section ================-->
+                    <!--================ Content Section ================-->
+                    <section class="milenia-section milenia-color--black milenia-section--stretched milenia-colorizer--scheme-lightest">
+                        <div class="row align-items-center">
+                            <div class="col-lg-5">
+                                <h6 class="milenia-section-subtitle milenia-color--unchangeable">@article.Title</h6>
+                                <div>
+                                    @Html.Raw(article.Description)
+                                </div>
+                            </div>
+                            <div class="col-lg-6 offset-lg-1">
+                                <figure class="milenia-album">
+                                    <img src="@article.Image" alt="">
+                                    <div class="milenia-action-buttons">
+                                        <a href="/@article.MenuAlias/@article.ID/@article.Alias" role="button" data-fancybox-album-src="[{&quot;src&quot;: &quot;images/rooms-list-image-18.jpg&quot;, &quot;opts&quot;: {&quot;caption&quot;: &quot;Caption 1&quot;}}, {&quot;src&quot;: &quot;images/rooms-list-image-15.jpg&quot;, &quot;opts&quot;: {&quot;caption&quot;: &quot;Caption 2&quot;}}, {&quot;src&quot;: &quot;images/rooms-list-image-16.jpg&quot;, &quot;opts&quot;: {&quot;caption&quot;: &quot;Caption 3&quot;}}]" class="milenia-ln--independent"><i class="icon icon-pictures"></i></a><a href="https://www.youtube.com/watch?v=BnbL8ZDl0do" data-fancybox class="milenia-ln--independent"><i class="icon icon-camera-play"></i></a>
+                                    </div>
+                                </figure>
+                            </div>
+                        </div>
+                    </section>
+                    <!--================ End of Content Section ================-->
+                    <!--================ Content Section ================-->
+                    @if (CustomerArticle.Count() > 0)
+                    {
+                        <section class="milenia-section">
+                            <h6 class="milenia-section-subtitle milenia-color--unchangeable text-center">@GetLanguage.Language(lang, "Explore")</h6>
+                            <h2 class="milenia-section-title text-center">The Hotel</h2>
+                            <p class="milenia-section-description text-center" style="display:none">Donec porta diam eu massa. Quisque diam lorem, interdum vitae,dapibus ac, scelerisque vitae, pede. Donec eget tellus non erat lacinia fermentum. </p>
+                            <!--================ Entities (Style 1) ================-->
+                            <div class="milenia-entities milenia-entities--style-1">
+                                <div class="milenia-grid milenia-grid--cols-3">
+                                    @foreach (var item in services)
+                                    {
+                                        <div class="milenia-grid-item">
+                                            <!--================ Entity ================-->
+                                            <article class="milenia-entity milenia-entity--format-slideshow">
+                                                <div class="milenia-entity-media">
+                                                    <div class="owl-carousel milenia-simple-slideshow">
+                                                        <img src="@item.Image" alt="@item.Title">
+                                                    </div>
+                                                </div>
+                                                <div class="milenia-entity-content milenia-aligner">
+                                                    <div class="milenia-aligner-outer">
+                                                        <div class="milenia-aligner-inner">
+                                                            <header class="milenia-entity-header">
+                                                                <h2 class="milenia-entity-title"><a href="/@item.MenuAlias/@item.ID/@item.Alias" class="milenia-color--unchangeable">@item.Title</a></h2>
+                                                            </header>
+                                                            <div class="milenia-entity-body">
+                                                                @Html.Raw(item.Description)
+                                                            </div>
+                                                            <footer class="milenia-entity-footer"><a href="/@item.MenuAlias/@item.ID/@item.Alias" class="milenia-btn milenia-btn--link milenia-btn--scheme-primary">@GetLanguage.Language(lang, "ExploreMore")</a></footer>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </article>
+                                            <!--================ End of Entity ================-->
+                                        </div>
+                                    }
+
+
+                                </div>
+                            </div>
+                            <!--================ End of Entities (Style 1) ================-->
+                        </section>
+                    }
+
+                    <!--================ End of Content Section ================-->
+                    <!--================ Content Section ================-->
+                    <section data-bg-image-src="images/section-bg-5.jpg" class="milenia-section milenia-section--stretched milenia-colorizer--scheme-dark milenia-colorizer--parallax milenia-colorizer--bg-image-opacity-10">
+                        <h6 class="milenia-section-subtitle milenia-color--unchangeable text-center">@GetLanguage.Language(lang, "Whychoose")</h6>
+                        <h2 class="milenia-section-title text-center">@GetLanguage.Language(lang, "TheAdvantages")</h2>
+                        <!--================ Icon Boxes ================-->
+                        <div class="milenia-icon-boxes milenia-icon-boxes--style-3">
+                            <div class="milenia-grid milenia-grid--cols-3">
+                                <div class="milenia-grid-item">
+                                    <!--================ Icon Box ================-->
+                                    <article class="milenia-icon-box milenia-aligner">
+                                        <div class="milenia-aligner-outer">
+                                            <div class="milenia-aligner-inner">
+                                                <i class="milenia-icon-box-icon milenia-font-icon-cards"></i>
+                                                <div class="milenia-icon-box-content">
+                                                    <h2 class="milenia-icon-box-title">@GetLanguage.Language(lang, "BestPrice")</h2>
+                                                    <p>
+                                                        @GetLanguage.Language(lang, "DesBestPrice")
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    <!--================ End of Icon Box ================-->
+                                </div>
+                                <div class="milenia-grid-item">
+                                    <!--================ Icon Box ================-->
+                                    <article class="milenia-icon-box milenia-aligner">
+                                        <div class="milenia-aligner-outer">
+                                            <div class="milenia-aligner-inner">
+                                                <i class="milenia-icon-box-icon milenia-font-icon-calendar"></i>
+                                                <div class="milenia-icon-box-content">
+                                                    <h2 class="milenia-icon-box-title">@GetLanguage.Language(lang, "SecureAvailability")</h2>
+                                                    <p>
+                                                        @GetLanguage.Language(lang, "DesSecureAvailability")
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    <!--================ End of Icon Box ================-->
+                                </div>
+                                <div class="milenia-grid-item">
+                                    <!--================ Icon Box ================-->
+                                    <article class="milenia-icon-box milenia-aligner">
+                                        <div class="milenia-aligner-outer">
+                                            <div class="milenia-aligner-inner">
+                                                <i class="milenia-icon-box-icon milenia-font-icon-clock"></i>
+                                                <div class="milenia-icon-box-content">
+                                                    <h2 class="milenia-icon-box-title">@GetLanguage.Language(lang, "LateCheckout") </h2>
+                                                    <p>
+                                                        @GetLanguage.Language(lang, "DesLateCheckout")
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    <!--================ End of Icon Box ================-->
+                                </div>
+                                <div class="milenia-grid-item">
+                                    <!--================ Icon Box ================-->
+                                    <article class="milenia-icon-box milenia-aligner">
+                                        <div class="milenia-aligner-outer">
+                                            <div class="milenia-aligner-inner">
+                                                <i class="milenia-icon-box-icon milenia-font-icon-wi-fi"></i>
+                                                <div class="milenia-icon-box-content">
+                                                    <h2 class="milenia-icon-box-title">@GetLanguage.Language(lang, "FreeWiFi")</h2>
+                                                    <p>
+                                                        @GetLanguage.Language(lang, "DesFreeWiFi")
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    <!--================ End of Icon Box ================-->
+                                </div>
+                                <div class="milenia-grid-item">
+                                    <!--================ Icon Box ================-->
+                                    <article class="milenia-icon-box milenia-aligner">
+                                        <div class="milenia-aligner-outer">
+                                            <div class="milenia-aligner-inner">
+                                                <i class="milenia-icon-box-icon milenia-font-icon-dish2"></i>
+                                                <div class="milenia-icon-box-content">
+                                                    <h2 class="milenia-icon-box-title"> @GetLanguage.Language(lang, "MeetingsEvents") </h2>
+                                                    <p>
+                                                        @GetLanguage.Language(lang, "DesMeetingsEvents")
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    <!--================ End of Icon Box ================-->
+                                </div>
+                                <div class="milenia-grid-item">
+                                    <!--================ Icon Box ================-->
+                                    <article class="milenia-icon-box milenia-aligner">
+                                        <div class="milenia-aligner-outer">
+                                            <div class="milenia-aligner-inner">
+                                                <i class="milenia-icon-box-icon milenia-font-icon-mobile2"></i>
+                                                <div class="milenia-icon-box-content">
+                                                    <h2 class="milenia-icon-box-title">@GetLanguage.Language(lang, "FreeAnytime")</h2>
+                                                    <p>
+                                                        @GetLanguage.Language(lang, "DesFreeAnytime")
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    <!--================ End of Icon Box ================-->
+                                </div>
+                            </div>
+                        </div>
+                        <!--================ End of Icon Boxes ================-->
+                    </section>
+                    <!--================ End of Content Section ================-->
+                    <!--================ Content Section ================-->
+                    <section class="milenia-section milenia-section--stretched milenia-colorizer--scheme-lightest">
+                        <h6 class="milenia-section-subtitle milenia-color--unchangeable text-center">@GetLanguage.Language(lang, "Thepleasure")</h6>
+                        <h2 class="milenia-section-title text-center">Rooms &amp; Suites</h2>
+                        <!--================ Tabs ================-->
+                        <div class="milenia-tabs milenia-tabs--unstyled">
+                            <!--================ Tabs Navigation ================-->
+                            <ul style="display:none" role="tablist" aria-label="Tabs v1" class="text-center milenia-filter-wrap milenia-tabs-nav milenia-filter milenia-list--unstyled">
+                                <li class="milenia-active"><a id="tab-1-link" href="#tab-1" role="tab" aria-selected="false" aria-controls="tab-1" class="milenia-tab-link">All</a></li>
+                            </ul>
+                            <!--================ End of Tabs Navigation ================-->
+                            <!--================ Tabs Container ================-->
+                            <div class="milenia-tabs-container">
+                                <!--================ Tab ================-->
+                                <div id="tab-1" tabindex="0" role="tabpanel" aria-labelledby="tab-1-link" class="milenia-tab">
+                                    <!--================ Tabbed Carousel ================-->
+                                    <div class="milenia-tabbed-carousel">
+                                        <!--================ Entities (Style 15) ================-->
+                                        <div class="milenia-entities milenia-entities--style-15 milenia-entities--with-tabbed-grid">
+                                            <div id="milenia-grid-tabbed-1" class="milenia-grid milenia-grid--cols-1 milenia-grid--tabbed milenia-grid--tabbed-loading">
+                                                @foreach (var item in roomShowHomes)
+                                                {
+                                                    <div class="milenia-grid-item">
+                                                        <!--================ Entity ================-->
+                                                        <article class="milenia-entity">
+                                                            <div class="milenia-entity-media">
+                                                                <div class="owl-carousel owl-carousel--vadaptive milenia-simple-slideshow">
+                                                                    @foreach (var gallery in roomGalleries.Where(a => a.RoomId == item.ID).ToList())
+                                                                    {
+                                                                        <div data-bg-image-src="@gallery.ImageLarge" class="milenia-entity-slide"></div>
+                                                                    }
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="milenia-entity-content milenia-aligner">
+                                                                <div class="milenia-aligner-outer">
+                                                                    <div class="milenia-aligner-inner">
+                                                                        <header class="milenia-entity-header">
+                                                                            <div class="milenia-entity-meta">
+                                                                                <div>@GetLanguage.Language(lang, "from")  <strong class='milenia-entity-price'>@GetLanguage.Language(lang, "money") @(((double)item.Price).ToString("N0"))</strong>/@GetLanguage.Language(lang, "night")</div>
+                                                                            </div>
+                                                                            <h2 class="milenia-entity-title"><a href="/@item.MenuAlias/@item.ID/@item.Alias" class="milenia-color--unchangeable">@item.Title</a></h2>
+                                                                        </header>
+                                                                        <div class="milenia-entity-body">
+                                                                            <p>
+                                                                                @Html.Raw(item.Description)
+                                                                            </p>
+                                                                        </div>
+                                                                        <footer class="milenia-entity-footer">
+                                                                            <a href="/@item.MenuAlias/@item.ID/@item.Alias" class="milenia-btn">@GetLanguage.Language(lang, "Details")</a>
+                                                                            <a href="/@item.MenuAlias/@item.ID/@item.Alias" class="milenia-btn milenia-btn--scheme-primary">@GetLanguage.Language(lang, "BookNow")</a>
+                                                                        </footer>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </article>
+                                                        <!--================ End of Entity ================-->
+                                                    </div>
+                                                }
+
+
+                                            </div>
+                                        </div>
+                                        <!--================ End of Entities (Style 15) ================-->
+                                        <!--================ Thumbnails ================-->
+                                        <div class="milenia-tabbed-carousel-thumbs">
+                                            <div data-tabbed-sync="milenia-grid-tabbed-1" class="milenia-grid milenia-grid--cols-4 owl-carousel--nav-onhover owl-carousel owl-carousel--nav-edges owl-carousel--nav-small">
+                                                @foreach (var item in roomShowHomes)
+                                                {
+                                                    <div class="milenia-grid-item">
+                                                        <figure class="milenia-tabbed-carousel-thumb">
+                                                            <div data-bg-image-src="@item.Image" class="milenia-tabbed-carousel-thumb-image"></div>
+                                                            <figcaption class="milenia-tabbed-carousel-thumb-caption milenia-text-color--darkest">@item.Title</figcaption>
+                                                        </figure>
+                                                    </div>
+                                                }
+
+
+                                            </div>
+                                        </div>
+                                        <!--================ End of Thumbnails ================-->
+                                    </div>
+                                </div>
+                                <!--================ End of Tab ================-->
+                            </div>
+                            <!--================ End of Tabs Container ================-->
+                        </div>
+                        <!--================ End of Tabs ================-->
+                    </section>
+                    <!--================ End of Content Section ================-->
+                    <!--================ Content Section ================-->
+                    <section class="milenia-section milenia-section--stretched milenia-colorizer--scheme-lightest">
+                        <h6 class="milenia-section-subtitle milenia-color--unchangeable text-center">@GetLanguage.Language(lang, "WhatNew")</h6>
+                        <h2 class="milenia-section-title text-center">@GetLanguage.Language(lang, "TheNews")</h2>
+                        <!--================ Entities (Style 4) ================-->
+                        <div class="milenia-entities milenia-entities--style-4">
+                            <div class="milenia-grid milenia-grid--cols-3">
+                                @foreach (var item in articleShowHots)
+                                {
+                                    <div class="milenia-grid-item">
+                                        <!--================ Entity ================-->
+                                        <article class="milenia-entity--format-image milenia-entity">
+                                            <div class="milenia-entity-media"><a href="/@item.MenuAlias/@item.ID/@item.Title" class="milenia-ln--independent"><img src="@item.Image" alt="@item.Title"></a></div>
+                                            <div class="milenia-entity-content milenia-aligner">
+                                                <div class="milenia-aligner-outer">
+                                                    <div class="milenia-aligner-inner">
+                                                        <header class="milenia-entity-header">
+                                                            <h2 class="milenia-entity-title"><a href="/@item.MenuAlias/@item.ID/@item.Title" class="milenia-color--unchangeable">@item.Title</a></h2>
+                                                        </header>
+                                                        <div class="milenia-entity-body">
+                                                            <p>
+                                                                @Html.Raw(item.Description)
+                                                            </p>
+                                                        </div>
+                                                        <footer class="milenia-entity-footer"><a href="/@item.MenuAlias/@item.ID/@item.Title" class="milenia-btn milenia-btn--link milenia-btn--scheme-primary">@GetLanguage.Language(lang, "ReadMore")</a></footer>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </article>
+                                        <!--================ End of Entity ================-->
+                                    </div>
+                                    menuAlias = item.MenuAlias;
+                                }
+
+                            </div>
+                        </div>
+                        <!--================ End of Entities (Style 4) ================-->
+                        <footer class="text-center"><a href="/@menuAlias" class="milenia-btn">@GetLanguage.Language(lang, "Seeallnews")</a></footer>
+                    </section>
+                    <!--================ End of Content Section ================-->
+                    <!--================ Content Section ================-->
+                    <div class="milenia-section milenia-section--stretched milenia-colorizer--scheme-primary">
+                        <div class="row">
+                            <div class="col-lg-8 offset-lg-2">
+                                <!--================ Testimonials ================-->
+                                <div class="milenia-testimonials">
+                                    <div class="milenia-grid owl-carousel">
+                                        @foreach (var item in CustomerArticle)
+                                        {
+                                            <div class="milenia-grid-item">
+                                                <!--================ Testimonial ================-->
+                                                <div class="milenia-testimonial">
+                                                    <div data-estimate="5" class="milenia-rating milenia-text-color--primary"></div>
+                                                    <blockquote aria-labelledby="testimonial-cite-7" class="milenia-blockquote--unstyled milenia-text-color--darkest">
+                                                        “@Html.Raw(item.Description)”
+                                                    </blockquote>
+                                                    <footer class="milenia-author">
+                                                        <div class="milenia-author-info">
+                                                            <cite id="testimonial-cite-7">@item.Title</cite>
+                                                        </div>
+                                                    </footer>
+                                                </div>
+                                                <!--================ End of Testimonial ================-->
+                                            </div>
+                                        }
+
+                                    </div>
+                                </div>
+                                <!--================ End of Testimonials ================-->
+                            </div>
+                        </div>
+                    </div>
+                    <!--================ End of Content Section ================-->
+                    <!--================ End of Content Section ================-->
+                    <!--================ Content Section ================-->
+                    <div class="milenia-section milenia-section--py-medium">
+                        <!--================ Awards ================-->
+                        <div class="milenia-awards">
+                            <div class="milenia-grid milenia-grid--cols-6">
+                                <div class="milenia-grid-item">
+                                    <figure class="milenia-award"><a href="#" class="milenia-ln--independent"><img src="/content/images/award-1.jpg" alt=""></a></figure>
+                                </div>
+                                <div class="milenia-grid-item">
+                                    <figure class="milenia-award"><a href="#" class="milenia-ln--independent"><img src="/content/images/award-2.jpg" alt=""></a></figure>
+                                </div>
+                                <div class="milenia-grid-item">
+                                    <figure class="milenia-award"><a href="#" class="milenia-ln--independent"><img src="/content/images/award-3.jpg" alt=""></a></figure>
+                                </div>
+                                <div class="milenia-grid-item">
+                                    <figure class="milenia-award"><a href="#" class="milenia-ln--independent"><img src="/content/images/award-4.jpg" alt=""></a></figure>
+                                </div>
+                                <div class="milenia-grid-item">
+                                    <figure class="milenia-award"><a href="#" class="milenia-ln--independent"><img src="/content/images/award-5.jpg" alt=""></a></figure>
+                                </div>
+                                <div class="milenia-grid-item">
+                                    <figure class="milenia-award"><a href="#" class="milenia-ln--independent"><img src="/content/images/award-6.jpg" alt=""></a></figure>
+                                </div>
+                            </div>
+                        </div>
+                        <!--================ End of Awards ================-->
+                    </div>
+                    <!--================ End of Content Section ================-->
+                    <!--================ Content Section ================-->
+                    <div class="milenia-section milenia-section--no-py milenia-section--stretched-content-no-px">
+                        <!--================ Gallery ================-->
+                        <div class="milenia-instafeed">
+                            <div id="instafeed" data-get="user" data-user="customer" data-limit="6" class="milenia-grid milenia-grid--no-gutters milenia-grid--cols-6"></div>
+                        </div>
+                        <!--================ End of Gallery ================-->
+                    </div>
+                    <!--================ End of Content Section ================-->
+                </div>
+            </main>
+        </div>
+    </div>
+</div>
