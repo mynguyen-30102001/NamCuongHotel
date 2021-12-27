@@ -24,10 +24,11 @@ namespace TeamplateHotel.Areas.Administrator.Controllers
             {
                 using (var db = new MyDbDataContext())
                 {
-                    List<EGallery> list = db.Galleries.OrderBy(a => a.Index).Select(a=> new EGallery()
+                    List<EGallery> list = db.Galleries.OrderBy(a => a.Index).Select(a => new EGallery()
                     {
                         ID = a.ID,
                         Title = a.Title,
+                        MenuId = a.MenuId,
                         Image = a.LargeImage,
                         Index = a.Index,
                     }).ToList();
@@ -55,6 +56,7 @@ namespace TeamplateHotel.Areas.Administrator.Controllers
                         {
                             Title = model.Title,
                             Index = 0,
+                            MenuId = model.MenuId,
                             LargeImage = model.Image,
                             SmallImage = ReturnSmallImage.GetImageSmall(model.Image),
 
@@ -95,6 +97,7 @@ namespace TeamplateHotel.Areas.Administrator.Controllers
                         string imageSmall = "/Files/_thumbs" + model.Image.Substring(6, model.Image.Length - 6);
                         if (edit != null)
                         {
+                            edit.MenuId = model.MenuId;
                             edit.Title = model.Title;
                             edit.LargeImage = model.Image;
                             edit.SmallImage = imageSmall;

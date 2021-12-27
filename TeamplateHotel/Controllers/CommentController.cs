@@ -53,14 +53,32 @@ namespace TeamplateHotel.Controllers
             }
         }
         //Danh sách Second menu
-        public static IPagedList<Gallery> Gallery(int? page)
+        public static List<EGallery> Gallery()
         {
             using (var db = new MyDbDataContext())
             {
-                List<Gallery> galleries = db.Galleries.OrderBy(a => a.Index).ToList();
-                int pageNumber = (page ?? 1);
-                int pageSize = 24;
-                return galleries.ToPagedList(pageNumber, pageSize);
+                //List<Menu> menu = db.Menus.Where(a => a.Type == SystemMenuType.Gallery && a.Level == 1).ToList();
+              
+                    List<EGallery> galleries = db.Galleries.OrderBy(a => a.Index)
+                        .Join(db.Menus.Where(a => a.Type == SystemMenuType.Gallery && a.Level == 1), a => a.MenuId, b => b.ID,(a,b) => new EGallery
+                        {
+                            Id =a.ID,
+                            MenuName = b.Title,
+                            LargeImg = a.LargeImage,
+                            SmallImg = a.SmallImage,
+                        }).ToList();
+                
+                return galleries;
+            }
+        }
+
+        public static List<Gallery> ListGalleryHome()
+        {
+            using (var db = new MyDbDataContext())
+            {
+                var menu = db.Menus.FirstOrDefault(a => a.Type == SystemMenuType.Home);
+                List<Gallery> galleries = db.Galleries.Where(a=> a.MenuId == menu.ID).OrderBy(a => a.Index).Take(6).ToList();
+                return galleries;
             }
         }
         public static List<RoomGallery> RoomGallery()
@@ -203,12 +221,29 @@ namespace TeamplateHotel.Controllers
                 return detailArticle;
             }
         }
+
         //Danh sách phòng
         public static List<Room> GetRooms(int menuId)
         {
             using (var db = new MyDbDataContext())
             {
                 var menu = db.Menus.FirstOrDefault(a => a.ID == menuId);
+                List<Room> rooms = db.Rooms.Where(a => a.Status && a.LanguageID == menu.LanguageID).OrderBy(a => a.Index).ToList();
+
+                foreach (var room in rooms)
+                {
+                    room.MenuAlias = menu.Alias;
+                    room.roomGalleries = db.RoomGalleries.Where(a => a.RoomId == room.ID).ToList();
+                    room.Price = room.Price * GetPriceUSD.USDToVND();
+                }
+                return rooms;
+            }
+        }
+        public static List<Room> GetRoom(string _lang)
+        {
+            using (var db = new MyDbDataContext())
+            {
+                var menu = db.Menus.FirstOrDefault(a => a.LanguageID == _lang);
                 List<Room> rooms = db.Rooms.Where(a => a.Status && a.LanguageID == menu.LanguageID).OrderBy(a => a.Index).ToList();
 
                 foreach (var room in rooms)
@@ -228,8 +263,14 @@ namespace TeamplateHotel.Controllers
                 var menu = db.Menus.FirstOrDefault(a => a.ID == menuId);
                 Room room = db.Rooms.FirstOrDefault(a => a.ID == id && a.Status) ?? new Room();
                 List<RoomGallery> roomGalleries = db.RoomGalleries.Where(a => a.RoomId == room.ID).ToList();
+                int[] functionsID = room.RoomFunctionID.Substring(0, room.RoomFunctionID.Length - 1).Split(',').Select(a => Convert.ToInt32(a)).ToArray();
+                List<RoomFunction> roomFunctions = new List<RoomFunction>();
                 List<Room> rooms = db.Rooms.Where(a => a.Status && a.ID != room.ID && a.LanguageID == menu.LanguageID).OrderBy(a => a.Index).ToList();
 
+                foreach (var item in functionsID)
+                {
+                    roomFunctions.Add(db.RoomFunctions.FirstOrDefault(a => a.ID == item));
+                }
                 foreach (var item in rooms)
                 {
                     item.MenuAlias = menu.Alias;
@@ -239,13 +280,15 @@ namespace TeamplateHotel.Controllers
                 {
                     Room = room,
                     RoomGalleries = roomGalleries,
-                    Rooms = rooms
+                    Rooms = rooms,
+                    RoomFunctions = roomFunctions,
                 };
                 return detailRoom;
             }
         }
-        //List service
-        public static List<ShowObject> ListServiceHome(string language)
+
+            //List service
+            public static List<ShowObject> ListServiceHome(string language)
         {
             using (var db = new MyDbDataContext())
             {
@@ -261,7 +304,7 @@ namespace TeamplateHotel.Controllers
                                  Image = a.Image,
                                  Description = a.Description,
                                  //Content = a.Content
-                             }).OrderByDescending(a => a.ID).Take(3).ToList();
+                             }).OrderBy(a => a.ID).Take(3).ToList();
                 return service;
             }
         }
@@ -280,17 +323,31 @@ namespace TeamplateHotel.Controllers
             }
         }
 
-        //Chi tiết dich vu
-        public static DetailService Detail_Service(int id)
+        public static List<Service> GetService()
         {
             using (var db = new MyDbDataContext())
             {
+                List<Service> restaurants = db.Services.Where(a => a.Status).OrderBy(a => a.Index).ToList();
+                foreach (var restaurant in restaurants)
+                {
+                    restaurant.MenuAlias = restaurant.Menu.Alias;
+                }
+                return restaurants;
+            }
+        }
+
+        //Chi tiết dich vu
+        public static DetailService Detail_Service(int id, int menuId)
+        {
+            using (var db = new MyDbDataContext())
+            {
+                var menu = db.Menus.FirstOrDefault(a => a.ID == menuId);
                 Service service = db.Services.FirstOrDefault(a => a.ID == id && a.Status) ?? new Service();
                 List<ServiceGallery> restaurantGalleries = db.ServiceGalleries.Where(a => a.ServiceID == service.ID).ToList();
                 List<Service> restaurants = db.Services.Where(a => a.Status && a.ID != service.ID).OrderBy(a => a.Index).ToList();
                 foreach (var item in restaurants)
                 {
-                    item.MenuAlias = service.Menu.Alias;
+                    item.MenuAlias = menu.Alias;
                 }
                 DetailService detailRestaurant = new DetailService()
                 {
@@ -353,7 +410,9 @@ namespace TeamplateHotel.Controllers
                                 ID = a.ID,
                                 Alias = a.Alias,
                                 MenuAlias = b.Alias,
+                                MenuName = b.Title,
                                 Title = a.Title,
+                                Content = a.Content,
                                 Index = a.Index,
                                 Image = a.Image,
                                 Description = a.Description
@@ -376,7 +435,7 @@ namespace TeamplateHotel.Controllers
                                 Index = a.Index,
                                 Image = a.Image,
                                 Description = a.Description,
-                            }).Take(3).ToList();
+                            }).Take(4).ToList();
                 return articleHots;
             }
         }
@@ -415,11 +474,13 @@ namespace TeamplateHotel.Controllers
                     MenuAlias = memu.Alias,
                     Title = a.Title,
                     Index = a.Index,
+                    Size = a.Size,
+                    MaxPeople = a.MaxPeople,
                     Image = a.Image,
                     Description = a.Description,
                     Price = (double)a.Price,
                 }).ToList();
-                foreach(var item in roomShowHome)
+                foreach (var item in roomShowHome)
                 {
                     item.Price = item.Price * (double)GetPriceUSD.USDToVND();
                 }

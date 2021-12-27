@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace TeamplateHotel.Areas.Administrator.EntityModel
@@ -56,6 +57,8 @@ namespace TeamplateHotel.Areas.Administrator.EntityModel
 
         [DisplayName("Bài viết nổi bật")]
         public bool New { get; set; }
+        public DateTime DateCreate { get; set; }
+        public string Type { get; set; }
 
     }
 }

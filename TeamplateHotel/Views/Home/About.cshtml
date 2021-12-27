@@ -1,0 +1,96 @@
+﻿@using ProjectLibrary.Database
+@using TeamplateHotel.Controllers
+@using TeamplateHotel.Models
+@using TeamplateHotel.Handler
+@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    Menu menu = ViewBag.Menu ?? new Menu();
+    var lang = Request.Cookies["LanguageID"].Value;
+    ShowObject wellcomeArticle = CommentController.WellcomeArticle(lang);
+    List<ShowObject> services = CommentController.ListServiceHome(Request.Cookies["LanguageID"].Value);
+    List<Slider> sliders = CommentController.GetListSlider(Request.Cookies["LanguageID"].Value, 0);
+}
+
+<div class="banner-page">
+    <div class="banner__item">
+        <div class="banner__img"><img src="@menu.Image" alt=""></div>
+        <div class="banner__caption">
+            <h1 class="animate__animated">@menu.Title</h1>
+        </div>
+    </div>
+</div>
+<ul class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+    <li class="breadcrumb-item active">@menu.Title</li>
+</ul>
+<section class="about-main box">
+    <div class="about-box">
+        @Html.Raw(wellcomeArticle.Content)
+        @*<div class="container mb-5">
+                <div class="box__title">
+                    <h3>VỊ TRÍ TRUNG TÂM</h3>
+                </div>
+                <div class="box__desc about-intro">
+
+                    Tọa lạc tại trung tâm văn hoá và kinh tế của Thành Phố Hải Phòng, gần với sân bay Cát Bi và khu du lịch biển
+                    Đồ Sơn, khách sạn Nam Cường Hải Phòng được bao quanh bởi quần thể kiến trúc phong phú và hài hoà như công
+                    viên, hồ nước, trung tâm văn hoá triển lãm, cung thiếu nhi, sân vận động, khu thể thao liên hợp cùng các địa
+                    danh mang đậm tính lịch sử và khu mua sắm thương mại sầm uất.
+                    </p>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row ">
+                    <div class="col-lg-6 d-flex">
+                        <div class="about-box_img"><img src="./images/Sảnh lễ tân.JPG" alt=""></div>
+                    </div>
+                    <div class="col-lg-6 d-flex">
+                        <div class="about-text">
+                            <h3>LỊCH SỬ HÌNH THÀNH</h3>
+                            <p>
+                                " Khách sạn Nam Cường – Hải Phòng được khai trương vào tháng 10 năm 1998 với tên gọi ban đầu là Khách
+                                sạn
+                                Tray. Trải qua hơn 10 năm hoạt động, Khách sạn Tray đã khẳng định được thương hiệu trên thị trường du
+                                lịch của thành phố Hải Phòng. "
+                            </p>
+                            <p>
+                                Cùng với định hướng phát triển lâu dài trong lĩnh vực kinh doanh thương mại – du lịch – khách sạn của
+                                Tập đoàn Nam Cường Hà Nội, ngày 01 tháng 01 năm 2009, Khách sạn Tray chính thức được đổi tên thành Khách
+                                sạn Nam Cường – Hải Phòng. Khách sạn Nam Cường – Hải Phòng cùng Khách sạn Nam Cường – Hải Dương, Khách
+                                sạn Nam Cường – Hồng Bàng, và một số khách sạn sắp đưa vào hoạt động như Khách sạn Nam Cường – Đồ Sơn,
+                                Khách sạn Nam Cường – Nam Định, Tổ hợp Khách sạn – Văn phòng tại Khu đô thị Dương Nội, … nằm trong hệ
+                                thống Du lịch – Khách sạn, trực thuộc Tập đoàn Nam Cường Hà Nội, một tập đoàn được phát triển từ Công ty
+                                TNHH TM – DL Nam Cường, chuyên đầu tư x
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>*@
+    </div>
+</section>
+<section class="box">
+    <div class="container">
+        <div class="ser-home">
+            <div class="box__title">
+                <h5><a href="service.html"> Dịch vụ</a></h5>
+                <h3>dịch vụ của chúng tôi</h3>
+            </div>
+            <div class="ser-home__list">
+                <div class="row">
+                    @foreach (var itemService in services)
+                    {
+                        <div class="col-lg-4 col-md-6">
+                            <a class="ser-home__item" href="/@itemService.MenuAlias/@itemService.Alias">
+                                <div class="ser-home__img"><img src="@itemService.Image" alt=""></div>
+                                <div class="ser-home__cont">
+                                    <h3 class="ser-home__name">@itemService.Title</h3>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

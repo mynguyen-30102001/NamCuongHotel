@@ -1,65 +1,53 @@
 ﻿@using ProjectLibrary.Database
+@using TeamplateHotel.Models
 @using PagedList.Mvc
-@model  PagedList.IPagedList<Gallery>
+@model  List<EGallery>
 @{
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
     Menu menu = ViewBag.Menu ?? new Menu();
 }
-<!--================ Breadcrumb ================-->
-<div data-bg-image-src="images/breadcrumb-bg-1.jpg" class="milenia-breadcrumb text-center milenia-colorizer--scheme-dark milenia-colorizer--bg-image-opacity-60 milenia-colorizer--parallax">
-    <div class="milenia-colorizer-bg-image" style="background-image: url('../../Content/asset/breadcrumb-bg-2.jpg'); top: -142.797px; background-position: 50% 0px;"></div>
-    <div class="container">
-        <h1 class="milenia-page-title">@menu.Title</h1>
-        <nav class="milenia-breadcrumb-path">
-            <span><a href="/">Home</a></span>/<span>@menu.Title</span>
-        </nav>
-    </div>
-</div>
-<!--================ End of Breadcrumb ================-->
-<div class="milenia-content  ">
-    <div class="container">
-        <div class="row">
-            <main class="col">
-                <div class="milenia-entity-content">
-                    <!--================ Content Section ================-->
-                    <div class="milenia-section">
-                        <!--================ Gallery ================-->
-                        <div class="milenia-gallery">
-                            <div data-isotope-layout="grid" class="milenia-grid milenia-grid--isotope milenia-grid--cols-4">
-                                <div class="milenia-grid-sizer"></div>
-                                @foreach (var item in Model)
-                                {
-                                    <div class="milenia-grid-item milenia-category-rooms">
-                                        <!--================ Gallery Item ================-->
-                                        <figure class="milenia-gallery-item milenia-gallery-item--with-thumb">
-                                            <a href="@item.LargeImage" data-fancybox="gallery" data-caption="Nemo Enim Ipsam" class="milenia-ln--independent milenia-gallery-item-link">
-                                                <img src="@item.LargeImage" alt="">
-                                            </a>
-                                            <figcaption class="milenia-gallery-item-caption">@item.Title</figcaption>
-                                        </figure>
-                                        <!--================ End of Gallery Item ================-->
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                        <!--================ End of Gallery ================-->
-                        <!--================ Pagination ================-->
-                        <footer class="text-center">
-                            <nav>
-                                <ul class="milenia-list--unstyled milenia-pagination milenia-pagination--stretched">
-                                    @Html.PagedListPager(Model, page => "/" + menu.Alias + "?page=" + page)
-                                </ul>
-                            </nav>
-                        </footer>
-                        <!--================ End of Pagination ================-->
-                    </div>
-                </div>
-            </main>
+
+    <div class="banner-page">
+        <div class="banner__item">
+            <div class="banner__img"><img src="@menu.Image" alt=""></div>
+            <div class="banner__caption">
+                <h1 class="animate__animated">@menu.Title</h1>
+            </div>
         </div>
     </div>
-</div>
-<style>
-    .pagination li:before {
-        content: "" !important;
-    }
-</style>
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+        <li class="breadcrumb-item active">@menu.Title</li>
+    </ul>
+    <div class="gallery-main box">
+        <div class="gallery-box">
+            <div class="container">
+                <h3 class="gallery-title">VIDEO</h3>
+            </div>
+            <div class="gallery-slide owl-carousel owl-theme">
+                <div class="gallery-item"><img src="~/Content/images/gallery1.jpg" alt=""><i class="fas fa-play-circle"></i></div>
+                <div class="gallery-item"><img src="~/Content/images/gallery2.jpg" alt=""><i class="fas fa-play-circle"></i></div>
+                <div class="gallery-item"><img src="~/Content/images/gallery3.jpg" alt=""><i class="fas fa-play-circle"></i></div>
+                <div class="gallery-item"><img src="~/Content/images/gallery4.jpg" alt=""><i class="fas fa-play-circle"></i></div>
+                <div class="gallery-item"><img src="~/Content/images/gallery5.jpg" alt=""><i class="fas fa-play-circle"></i></div>
+                <div class="gallery-item"><img src="~/Content/images/gallery5.jpg" alt=""><i class="fas fa-play-circle"></i></div>
+            </div>
+        </div>
+        <div class="gallery-box">
+            <div class="container">
+                <h3 class="gallery-title">Hình ảnh</h3>
+            </div>
+            @foreach (var item in Model)
+            {
+                <div class="img-element">
+                    <div class="container">
+                        <h3 class="g-sub-title">@item.MenuName</h3>
+                    </div>
+                    <div class="gallery-slide owl-carousel owl-theme">
+                        <div class="gallery-item"><a href="@item.LargeImg" data-fancybox="gallery"><img src="@item.LargeImg" alt=""></a></div>
+                    </div>
+                </div>
+            }
+           
+        </div>
+    </div>

@@ -57,6 +57,8 @@ namespace TeamplateHotel.Controllers
                     goto TrangTour;
                 case SystemMenuType.RoomRate:
                     goto TrangRoom;
+                case SystemMenuType.About:
+                    return View("About");
                 case SystemMenuType.Service:
                     goto Service;
                 case SystemMenuType.Booking:
@@ -67,7 +69,7 @@ namespace TeamplateHotel.Controllers
                     Session["Captcha"] = iNumber.ToString();
                     return View("Contact");
                 case SystemMenuType.Gallery:
-                    return View("Gallery", CommentController.Gallery(page));
+                    return View("Gallery", CommentController.Gallery());
                 case SystemMenuType.Location:
                     //Lấy bài viết Location
                     ViewBag.ArticleByRoomRate = db.Articles.FirstOrDefault(a => a.MenuID == menu.ID);
@@ -137,7 +139,7 @@ namespace TeamplateHotel.Controllers
                 {
                     int id;
                     int.TryParse(idSub.ToString(), out id);
-                    DetailService detailService = CommentController.Detail_Service(id);
+                    DetailService detailService = CommentController.Detail_Service(id,menu.ID);
                     ViewBag.MetaTitle = detailService.Service.MetaTitle;
                     ViewBag.MetaDesctiption = detailService.Service.MetaDescription;
                     return View("Service/DetailService", detailService);
@@ -146,7 +148,7 @@ namespace TeamplateHotel.Controllers
                     List<Service> services = CommentController.GetServices(menu.ID);
                     if (services.Count == 1)
                     {
-                        DetailService detailService = CommentController.Detail_Service(services[0].ID);
+                        DetailService detailService = CommentController.Detail_Service(services[0].ID, menu.ID);
                         ViewBag.MetaTitle = detailService.Service.MetaTitle;
                         ViewBag.MetaDesctiption = detailService.Service.MetaDescription;
                         return View("Service/DetailService", detailService);

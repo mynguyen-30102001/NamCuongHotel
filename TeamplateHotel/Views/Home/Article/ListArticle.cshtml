@@ -8,88 +8,148 @@
 }
 
 
-<!--================ Breadcrumb ================-->
-<div data-bg-image-src="images/breadcrumb-bg-2.jpg" class="milenia-breadcrumb text-center milenia-colorizer--scheme-dark milenia-colorizer--parallax" style="padding-top: 2.65rem;">
-    <div class="milenia-colorizer-bg-image" style="background-image: url('../../Content/asset/breadcrumb-bg-2.jpg'); top: -142.797px; background-position: 50% 0px;"></div>
-    <div class="container">
-        <h1 class="milenia-page-title">@menu.Title</h1>
-        <nav class="milenia-breadcrumb-path">
-            <span><a href="/">Home</a></span>/<span>@menu.Title</span>
-        </nav>
-    </div>
-</div>
-<!--================ End of Breadcrumb ================-->
-<div class="milenia-content  ">
-    <div class="container">
-        <div class="row">
-            <main class="col">
-                <div class="milenia-entity-content">
-                    <!--================ Content Section ================-->
-                    <div class="milenia-section">
-                        <!--================ Entities (Style 7) ================-->
-                        <div class="milenia-entities milenia-entities--style-7">
-                            <div data-isotope-layout="grid" class="milenia-grid milenia-grid--isotope milenia-grid--cols-3">
-                                <div class="milenia-grid-sizer"></div>
-                                @foreach (Article item in Model)
-                                {
-                                    <div class="milenia-grid-item">
-                                        <!--================ Entity ================-->
-                                        <article class="milenia-entity--format-image milenia-entity">
-                                            <div class="milenia-entity-media">
-                                                <a href="/@item.MenuAlias/@item.ID/@item.Alias" class="milenia-ln--independent">
-                                                    <img src="@item.Image" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="milenia-entity-content milenia-aligner">
-                                                <div class="milenia-aligner-outer">
-                                                    <div class="milenia-aligner-inner">
-                                                        <header class="milenia-entity-header">
-                                                            @*<div class="milenia-entity-meta">
-                                                                    <div>
-                                                                        <time datetime="2018-11-28">November 28, 2018</time>
-                                                                    </div>
-                                                                    <div>by&nbsp;<a href="#" class="milenia-color--unchangeable">admin&nbsp;</a></div>
-                                                                    <div>
-                                                                        in
-                                                                        <div class="milenia-entity-categories">
-                                                                            <span><a href="#" class="milenia-color--unchangeable">Sights</a></span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>*@
-                                                            <h2 class="milenia-entity-title"><a href="/@item.MenuAlias/@item.ID/@item.Alias" class="milenia-color--unchangeable">@item.Title</a></h2>
-                                                        </header>
-                                                        <div class="milenia-entity-body">
-                                                            @Html.Raw(item.Description)
-                                                        </div>
-                                                        <footer class="milenia-entity-footer"><a href="/@item.MenuAlias/@item.ID/@item.Alias" class="milenia-btn milenia-btn--link milenia-btn--scheme-primary">Read More</a></footer>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </article>
-                                        <!--================ End of Entity ================-->
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                        <!--================ End of Entities (Style 7) ================-->
-                        <!--================ Pagination ================-->
-                        <footer class="text-center">
-                            <nav>
-                                <ul class="milenia-list--unstyled milenia-pagination milenia-pagination--stretched">
-                                    @Html.PagedListPager(Model, page => "/" + menu.Alias + "?page=" + page)
-                                </ul>
-                            </nav>
-                        </footer>
-                        <!--================ End of Pagination ================-->
-                    </div>
-                    <!--================ End of Content Section ================-->
-                </div>
-            </main>
+<div class="banner-page">
+    <div class="banner__item">
+        <div class="banner__img">
+            <img src="@menu.Image" alt="">
+        </div>
+        <div class="banner__caption">
+            <h1 class="animate__animated">@menu.Title</h1>
         </div>
     </div>
 </div>
-<style>
-    .pagination li:before{
-        content:"" !important;
-    }
-</style>
+<ul class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/">Trang chủ</a>
+    </li>
+    <li class="breadcrumb-item active">@menu.Title</li>
+</ul>
+<div class="blog-wp box">
+    <div class="container">
+        <div class="blog-box d-block d-lg-none">
+            <form action="" method="method" id="blog_search">
+                <div class="input-group">
+                    <input class="form-control" type="text" name="b_search" id="b_search" placeholder="Tìm kiếm...">
+                    <div class="input-group-append">
+                        <span class="fas fa-search input-group-text"></span>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                @foreach (var item in Model)
+                {
+                    <div class="post__item">
+                        <div class="row no-gutters">
+                            <div class="col-md-5 d-flex">
+                                <div class="post__thumb">
+                                    <a href="/@item.MenuAlias/@item.ID/@item.Alias"><img src="@item.Image" alt=""></a>
+                                </div>
+                            </div>
+                            <div class="col-md-7 d-flex">
+                                <div class="post__content">
+
+
+                                    <div class="post__meta">
+                                        @if (item.DateUpdate != null)
+                                        {
+                                            <span class="post__date">@item.DateUpdate</span>
+                                        }
+                                        else
+                                        {
+                                            @item.DateCreate
+                                        }
+
+                                        <a class="post__catagory" href=""> @item.Type</a>
+                                    </div>
+                                    <h3 class="post__title">
+                                        <a href="blog_detail.html">@item.Title</a>
+                                    </h3>
+                                    <div class="post__desc">
+                                        @Html.Raw(item.Description)
+                                    </div>
+                                    <div class="post__more">
+                                        <a class="btn view-more" href="/@item.MenuAlias/@item.ID/@item.Alias">Xem thêm</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="col-lg-4">
+                <div class="blog-sidebar">
+                    <div class="blog-box d-none d-lg-block">
+                        <form action="" method="method" id="blog_search">
+                            <div class="input-group">
+                                <input class="form-control" type="text" name="b_search" id="b_search" placeholder="Tìm kiếm...">
+                                <div class="input-group-append">
+                                    <span class="fas fa-search input-group-text"></span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="blog-box">
+                        <h3>Tin gần đây</h3>
+                        <ul class="Recent-News">
+                            <li>
+                                <div class="post-thumb">
+                                    <img src="./images/about2.jpg" alt="">
+                                </div>
+                                <div class="post-content">
+                                    <div class="post__meta">
+                                        <span class="post__date"> 26 / 8 /2021</span>
+                                        <a class="post__catagory" href=""> Sự Kiện</a>
+                                    </div>
+                                    <a href="blog_detail.html">Khám phá địa điểm nối tiếng Hải Dương</a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="post-thumb">
+                                    <img src="./images/about2.jpg" alt="">
+                                </div>
+                                <div class="post-content">
+                                    <div class="post__meta">
+                                        <span class="post__date"> 26 / 8 /2021</span>
+                                        <a class="post__catagory" href="">Sự Kiện</a>
+                                    </div>
+                                    <a href="blog_detail.html">Khám phá địa điểm nối tiếng Hải Dương</a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="post-thumb">
+                                    <img src="./images/about2.jpg" alt="">
+                                </div>
+                                <div class="post-content">
+                                    <div class="post__meta">
+                                        <span class="post__date"> 26 / 8 /2021</span>
+                                        <a class="post__catagory" href="">Sự Kiện</a>
+                                    </div>
+                                    <a href="blog_detail.html">Khám phá địa điểm nối tiếng Hải Dương</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="blog-box">
+                        <h3>Tags</h3>
+                        <ul class="blog-tag">
+                            <li>
+                                <a href="#">Hotel</a>
+                            </li>
+                            <li>
+                                <a href="#">room</a>
+                            </li>
+                            <li>
+                                <a href="#">service</a>
+                            </li>
+                            <li>
+                                <a href="#">event</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

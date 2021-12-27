@@ -16,7 +16,7 @@
             @Html.ValidationSummary(true)
             @using (Html.BeginForm("Update", "Room", FormMethod.Post, new { @class = "form-horizontal" }))
             {
-                @Html.HiddenFor(a=>a.ID)
+                @Html.HiddenFor(a => a.ID)
                 <div class="control-group">
                     <label class="control-label" for="Title">Tên Phòng<span class="asterisk">*</span></label>
                     <div class="controls">
@@ -51,11 +51,12 @@
                 </div>
 
                 <div class="control-group">
-                    <label class="control-label" for="Price">Giá bán
-                        </label>
+                    <label class="control-label" for="Price">
+                        Giá bán
+                    </label>
                     <div class="controls">
                         @Html.TextBoxFor(c => c.Price, new { @class = "span4" }) <span>USD</span>
-                       
+
                     </div>
                 </div>
 
@@ -64,6 +65,46 @@
                     <div class="controls">
                         @Html.TextBoxFor(c => c.PriceNet, new { @class = "span4" }) <span>USD</span>
                         @Html.ValidationMessageFor(c => c.PriceNet)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="Size">Kích thước</label>
+                    <div class="controls">
+                        @Html.TextBoxFor(c => c.Size, new { @class = "span4" })
+                        @Html.ValidationMessageFor(c => c.Size)
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="RoomFunctionID">Room Functions<span class="asterisk" style="display: inline; float: none">*</span></label>
+                    <div class="controls">
+                        <span class="multiselect-native-select">
+                            <select class="span4" id="RoomFunctionID" multiple="multiple" name="RoomFunctionID" style="width: 300px;display: inline;">
+                                @if (ViewBag.ListMenu3 != null)
+                                {
+                                    foreach (var i in ViewBag.ListMenu3.Items)
+                                    {
+                                        if (Model.RoomFunctionID != null)
+                                        {
+                                            if (Model.RoomFunctionID.FirstOrDefault(a => a == i.Text) != null)
+                                            {
+                                                <option selected value="@i.Text">@i.Value</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@i.Text">@i.Value</option>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <option value="@i.Text">@i.Value</option>
+                                        }
+                                    }
+                                }
+                            </select>
+
+                        </span>
+                        @Html.ValidationMessageFor(p => p.RoomFunctionID)
                     </div>
                 </div>
 
@@ -206,6 +247,7 @@
     }
 
     $(document).ready(function () {
+        $('#RoomFunctionID').multiselect();
         bindUl();
         AutoAlias("Title", "Alias");
         CreateCkEditor();

@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using ProjectLibrary.Config;
 using ProjectLibrary.Database;
 using ProjectLibrary.Security;
+using TeamplateHotel.Areas.Administrator.ModelShow;
 
 namespace TeamplateHotel.Areas.Administrator.Controllers
 {
@@ -51,6 +52,26 @@ namespace TeamplateHotel.Areas.Administrator.Controllers
                 {
                     return "";
                 }
+            }
+        }
+        [HttpPost]
+        public JsonResult ListMenuById(string languageId)
+        {
+            if (!CurrentSession.Logined)
+            {
+                return Json(new { Result = "ERROR", Message = "You do not have permission to access" });
+            }
+            using (var db = new MyDbDataContext())
+            {
+                var menus = new List<Options>();
+                var listLanguageTemp = db.Menus.Where(a => a.LanguageID == languageId && a.Status && a.Type == SystemMenuType.Home || a.Type == SystemMenuType.Gallery).Select(a => new Options() { DisplayText = a.Title, Value = a.ID.ToString(CultureInfo.InvariantCulture) }).ToList();
+                menus.Add(new Options()
+                {
+                    DisplayText = "Select a Menu",
+                    Value = "0"
+                });
+                menus.AddRange(listLanguageTemp);
+                return Json(new { Result = "OK", Options = menus });
             }
         }
         //lấy họ tên người đăng nhập

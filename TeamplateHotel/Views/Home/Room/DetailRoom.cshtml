@@ -6,96 +6,149 @@
     Menu menu = ViewBag.Menu ?? new Menu();
     var lang = Request.Cookies["LanguageID"].Value;
 }
-<!--================ Slider Revolution ================-->
-<div class="milenia-rev-slider-wrapper">
-    <div class="rev_slider_wrapper fullscreenbanner-container">
-        <div id="rev-slider-4" data-version="5.4.5" class="milenia-d-none rev-slider fullscreenabanner">
-            <ul>
-                @foreach (var item in Model.RoomGalleries)
+
+<div class="banner-page">
+    <div class="banner__item">
+        <div class="banner__img">
+            <img src="@menu.Image" alt="">
+        </div>
+        <div class="banner__caption">
+            <h1 class="animate__animated">@menu.Title</h1>
+        </div>
+    </div>
+</div>
+<ul class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/">Trang chủ</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="/">@menu.Title</a>
+    </li>
+    <li class="breadcrumb-item active">@Model.Room.Title</li>
+</ul>
+<section class="rooms-wp box">
+    <div class="container mb-5">
+        <div class="room-main">
+            <div class="room-img__slide owl-carousel owl-theme">
+                @foreach (var itemGallery in Model.RoomGalleries)
                 {
-                    <li data-transition="fade" data-speed="300" data-delay="9000">
-                        <img src="@item.ImageLarge" alt="" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg">
-                    </li>
+                    <div class="item">
+                        <img src="@itemGallery.ImageLarge" alt="">
+                    </div>
                 }
-            </ul>
-        </div>
-    </div>
-    <!--================ End of Slider Revolution ================-->
-    <!--================ Breadcrumb ================-->
-    <div class="milenia-section milenia-section--breadcrumb milenia-colorizer--scheme-dark milenia-colorizer--bg-color-opacity-80 milenia-entity-single milenia-entity--room">
-        <div class="container">
-            <div class="milenia-page-header">
-                <div class="row align-items-center milenia-columns-aligner--edges-lg">
-                    <div class="col-lg-9">
-                        <h1 class="milenia-page-title">@Model.Room.Title</h1>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="milenia-entity-meta">
-                            <div>from <strong class="milenia-entity-price">@GetLanguage.Language(lang, "money") @(((double)Model.Room.Price).ToString("N0"))</strong>/night</div>
-                        </div>
-                    </div>
-                </div>
             </div>
-            <nav class="milenia-breadcrumb-path"><span> <a href="/">Home</a></span>/<span> <a href="/@Model.Room.MenuAlias">Room</a></span>/<span>@Model.Room.Title</span></nav>
-            <div data-rev-api="roomRevApi" class="milenia-rev-arrows-outside milenia-action-buttons">
-                <button type="button" class="milenia-rev-arrows-prev"><i class="icon icon-chevron-left"></i></button>
-                <button type="button" class="milenia-rev-arrows-next"><i class="icon icon-chevron-right"></i></button>
-            </div>
-        </div>
-    </div>
-    <!--================ End of Breadcrumb ================-->
-</div>
-<div class="milenia-content milenia-content--no-pb ">
-    <div class="container">
-        <!--================ Content Section ================-->
-        <section class="milenia-section milenia-section--py-medium">
             <div class="row">
-                <div class="col-lg-3">
-                    <h4>@Model.Room.Title</h4>
-                </div>
-                <div class="col-lg-6">
-                   @Html.Raw(Model.Room.Content)
-                </div>
-
-            </div>
-        </section>
-       
-        <section class="milenia-section milenia-colorizer--scheme-lightest milenia-section--stretched milenia-section--py-medium">
-            <h3>Other Rooms</h3>
-            <!--================ Entities (Style 14) ================-->
-            <div class="milenia-entities milenia-entities--style-14">
-                <div class="milenia-grid milenia-grid--cols-3">
-                    @foreach (var item in Model.Rooms)
-                    {
-                        <div class="milenia-grid-item">
-                            <!--================ Entity ================-->
-                            <article class="milenia-entity milenia-entity--with-thumb">
-                                <div class="milenia-entity-media">
-                                    <a href="/@item.MenuAlias/@item.ID/@item.Alias" aria-labelledby="rooms-6-heading-0" class="milenia-entity-link milenia-ln--independent">
-                                        <img src="@item.Image" alt="">
-                                    </a>
-                                </div>
-                                <div class="milenia-entity-content milenia-aligner">
-                                    <div class="milenia-aligner-outer">
-                                        <div class="milenia-aligner-inner">
-                                            <header class="milenia-entity-header">
-                                                <div class="milenia-entity-meta">
-                                                    <div>from  <strong class='milenia-entity-price'>@GetLanguage.Language(lang, "money") @(((double)item.Price).ToString("N0"))</strong>/night</div>
-                                                </div>
-                                                <h2 id="rooms-6-heading-0" class="milenia-entity-title"><a href="/@item.MenuAlias/@item.ID/@item.Alias" class="milenia-color--unchangeable">@item.Title</a></h2>
-                                            </header>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                            <!--================ End of Entity ================-->
+                <div class="col-lg-8">
+                    <div class="room-left">
+                        <h3 class="room-dt__title">@Model.Room.Title</h3>
+                        <div class="room-dt__des mb-4">
+                            @Html.Raw(Model.Room.Content)
                         </div>
-                    }
+                        <div class="room-dt__serv">
+                            <h3 class="room-dt__title">Tiện nghi</h3>
+                            <ul>
+                                @foreach (var item1 in Model.RoomFunctions)
+                                {
+                                    <li>
+                                        <i class="@item1.Image"></i>
+                                        <span>@item1.Title</span>
+                                    </li>
+                                }
+                               
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="room-sidebar sticky-top">
+                        <h3>Đặt Phòng</h3>
+                        <form action="book-room.html" method="method" id="book-room">
+                            <div class="form-group">
+                                <label for="checkIn">Ngày Đến</label>
+                                <input class="form-control" type="text" name="checkIn" id="checkIn">
+                            </div>
+                            <div class="form-group">
+                                <label for="checkIn">Ngày Đi</label>
+                                <input class="form-control" type="text" name="checkOut" id="checkOut">
+                            </div>
+                            <div class="form-group">
+                                <label for="Adult">Người Lớn</label>
+                                <select class="custom-select" name="Adult" id="Adult">
+                                    <option value="0">Adults</option>
+                                    <option value="0">1</option>
+                                    <option value="0">2</option>
+                                    <option value="0">3</option>
+                                    <option value="0">4</option>
+                                    <option value="0">5</option>
+                                    <option value="0">6</option>
+                                    <option value="0">7</option>
+                                    <option value="0">8</option>
+                                    <option value="0">9</option>
+                                    <option value="0">10</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="Child">Trẻ em</label>
+                                <select class="custom-select" name="Child" id="Child">
+                                    <option value="0">Child</option>
+                                    <option value="0">1</option>
+                                    <option value="0">2</option>
+                                    <option value="0">3</option>
+                                    <option value="0">4</option>
+                                    <option value="0">5</option>
+                                    <option value="0">6</option>
+                                    <option value="0">7</option>
+                                    <option value="0">8</option>
+                                    <option value="0">9</option>
+                                    <option value="0">10</option>
+                                </select>
+                            </div>
+                            <div class="from-group pt-2">
+                                <button class="check-avai">ĐẶT NGAY</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-            <!--================ End of Entities (Style 14) ================-->
-        </section>
-        <!--================ End of Content Section ================-->
-
+        </div>
     </div>
-</div>
+    <div class="container">
+        <h3 class="room-dt__title">Phòng liên quan</h3>
+        <div class="room-related owl-carousel owl-theme">
+            @foreach (var item in Model.Rooms)
+            {
+                <div class="item">
+                    <div class="room-img">
+                        <img src="@item.Image" alt="">
+                        <div class="room-price">
+                            <span>@item.Price VND/ĐÊM</span>
+                        </div>
+                    </div>
+                    <div class="room-detail">
+                        <div class="room-desc">
+                            <h4 class="room-name">
+                                <a href="/@item.MenuAlias/@item.Alias">@item.Title</a>
+                            </h4>
+                            <ul class="room__info">
+                                <li class="ml-0">
+                                    @item.Size m
+                                    <sup>2</sup>
+                                </li>
+                                <li>King bed</li>
+                                <li class="mr-0">@item.MaxPeople persons</li>
+                            </ul>
+                            <div class="room-text">
+                                @Html.Raw(item.Content)
+                            </div>
+                            <div class="room_btn">
+                                <a class="detail-btn" href="/@item.MenuAlias/@item.Alias">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+
+        </div>
+</section>

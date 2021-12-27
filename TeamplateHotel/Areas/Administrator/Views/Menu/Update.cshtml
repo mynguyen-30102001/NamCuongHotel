@@ -18,14 +18,14 @@
             @using (Html.BeginForm("Update", "Menu", FormMethod.Post, new { @class = "form-horizontal" }))
             {
                 @Html.HiddenFor(c => c.ID)
-                <div class="control-group">	
+                <div class="control-group">
                     <label class="control-label" for="Title">Tiêu đề<span class="asterisk">*</span></label>
                     <div class="controls">
                         @Html.TextBoxFor(c => c.Title, new { @class = "span4" })
                         @Html.ValidationMessageFor(c => c.Title)
                     </div>
                 </div>
-            
+
                 <div class="control-group">
                     @Html.LabelFor(c => c.Alias, new { @class = "control-label" })
                     <div class="controls">
@@ -41,12 +41,21 @@
                         @Html.ValidationMessageFor(c => c.ParentID)
                     </div>
                 </div>
-                
+
                 <div class="control-group">
                     <label class="control-label" for="Type">Kiểu thiển thị<span class="asterisk">*</span></label>
                     <div class="controls">
                         @Html.DropDownListFor(c => c.Type, new SelectList(ViewBag.ListTypeMenu, "Value", "Text"), new { @class = "span3" })
                         @Html.ValidationMessageFor(c => c.Type)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="Image">Hình đại diện</label>
+                    <div class="controls">
+                        @Html.TextBoxFor(c => c.Image, new { @class = "span4 inputbox upload" })
+                        @Html.ValidationMessageFor(c => c.Image)
+                      
                     </div>
                 </div>
 
@@ -80,9 +89,9 @@
                         </label>
                     </div>
                 </div>
-                
+
                 <div class="form-actions">
-                    <input type="submit" value="Cập nhật" class="btn btn-primary"/>
+                    <input type="submit" value="Cập nhật" class="btn btn-primary" />
                     <a href="@Url.Action(menuLocation.AliasMenu,"Menu")" class="btn">Cancel</a>
                 </div>
             }
@@ -93,7 +102,8 @@
 <script>
     $(document).ready(function () {
         AutoAlias('Title', 'Alias');
-
+        CreateCkEditor();
+        bindUl();
         if ($("#Type").val() == 9) {
             $(".linkoutsite").show();
         } else {
@@ -107,5 +117,6 @@
                 $(".linkoutsite").hide();
             }
         });
+       
     });
 </script>

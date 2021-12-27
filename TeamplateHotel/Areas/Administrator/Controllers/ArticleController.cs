@@ -104,6 +104,8 @@ namespace TeamplateHotel.Areas.Administrator.Controllers
                             Image = model.Image,
                             Description = model.Description,
                             Content = model.Content,
+                            DateCreate = DateTime.UtcNow,
+                            Type = model.Type,
                             Index = 0,
                             MetaTitle = string.IsNullOrEmpty(model.MetaTitle) ? model.Title : model.MetaTitle,
                             MetaDescription =
@@ -154,6 +156,7 @@ namespace TeamplateHotel.Areas.Administrator.Controllers
                     Title = detailArticle.Title,
                     Alias = detailArticle.Alias,
                     Image = detailArticle.Image,
+                    Type = detailArticle.Type,
                     Description = detailArticle.Description,
                     Content = detailArticle.Content,
                     MetaTitle = detailArticle.MetaTitle,
@@ -190,12 +193,14 @@ namespace TeamplateHotel.Areas.Administrator.Controllers
                             article.Title = model.Title;
                             article.Alias = model.Alias;
                             article.Image = model.Image;
+                            article.DateUpdate = DateTime.UtcNow;
                             article.Description = model.Description;
                             article.Content = model.Content;
                             article.MetaTitle = string.IsNullOrEmpty(model.MetaTitle) ? model.Title : model.MetaTitle;
                             article.MetaDescription = string.IsNullOrEmpty(model.MetaDescription)
                                 ? model.Title
                                 : model.MetaDescription;
+                            article.Type = model.Type;
                             article.Status = model.Status;
                             article.Home = model.Home;
                             article.Hot = model.Hot;
@@ -254,6 +259,7 @@ namespace TeamplateHotel.Areas.Administrator.Controllers
                 MenuController.GetListMenu(0, Request.Cookies["lang_client"].Value).Where(
                     a =>
                         a.Type == SystemMenuType.Article ||
+                        a.Type == SystemMenuType.About ||
                         a.Type == SystemMenuType.RoomRate ||
                         a.Type == SystemMenuType.Location).ToList();
 

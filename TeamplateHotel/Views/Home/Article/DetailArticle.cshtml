@@ -9,132 +9,74 @@
     Hotel detailHotel = CommentController.DetailHotel(Request.Cookies["LanguageID"].Value);
 }
 
-<!--================ End of Header ================-->
-<div data-bg-image-src="images/breadcrumb-bg-2.jpg" class="milenia-breadcrumb text-center milenia-colorizer--scheme-dark milenia-colorizer--parallax" style="padding-top: 2.65rem;">
-    <div class="milenia-colorizer-bg-image" style="background-image: url('/Content/asset/breadcrumb-bg-2.jpg'); top: -142.797px; background-position: 50% 0px;"></div>
-    <div class="container">
-        <h1 class="milenia-page-title">@menu.Title</h1>
-        <nav class="milenia-breadcrumb-path">
-            <span><a href="/">Home</a></span>/<span>@menu.Title</span>
-        </nav>
-    </div>
-</div>
-<!--================ End of Breadcrumb ================-->
-<div class="milenia-content  ">
-    <!--================ Main Content Column ================-->
-    <div class="milenia-single-entity-container">
-        <!--================ Content Section ================-->
-        <div class="milenia-section">
-            <!--================ Post ================-->
-            <main class="milenia-entity-single milenia-entity--post milenia-entity--format-image milenia-entity--style-2">
-                <!--================ Post Header ================-->
-                <header class="milenia-entity-header milenia-entity-header--single text-center">
-                    <h1 class="milenia-entity-title">Detail Article</h1>
-                </header>
-                <!--================ End of Post Header ================-->
-                <!--================ Post Media ================-->
-                <div class="milenia-entity-media"><img src="@Model.Article.Image" alt=""></div>
-                <!--================ End of Post Media ================-->
-                <!--================ Post Content ================-->
-                <div class="milenia-entity-content">
-                    @Html.Raw(Model.Article.Content)
-                </div>
-                <!--================ End of Post Content ================-->
-                <!--================ Post Footer ================-->
-                <footer class="milenia-entity-footer">
-                    <div class="row milenia-columns-aligner--edges-lg">
-                        <div class="col-lg-9">
-                            @*Tags:
-                                <div class="tagcloud"><a href="#">accommodations</a><a href="#">activities</a><a href="#">bar</a></div>*@
-                        </div>
-                        <div class="col-lg-3">
-                            <a href="#" data-arctic-modal="#share-modal" aria-haspopup="true" aria-controls="share-modal" aria-expanded="false" class="milenia-icon-link">Share This<i class="icon icon-share2"></i></a>
-                            <!--================ Share Modal ================-->
-                            <div class="milenia-d-none">
-                                <div id="share-modal" aria-hidden="true" class="milenia-modal milenia-modal--share">
-                                    <button type="button" class="milenia-icon-btn arcticmodal-close"><i class="icon icon-cross"></i></button>
-                                    <h3>Share On:</h3>
-                                    <div class="milenia-share-buttons">
-                                        <a href="http://www.facebook.com/sharer.php?m2w&amp;s=100&url=http://lotusaromasapahotel.com/@menu.Alias/@Model.Article.ID/@Model.Article.Alias&title=" class="milenia-btn milenia-btn--icon milenia-btn--scheme-facebook">
-                                            <div class="fab fa-facebook-f"></div>Facebook
-                                        </a>
-                                        <a href="https://twitter.com/intent/tweet?text=text&amp;url=http://lotusaromasapahotel.com/@menu.Alias/@Model.Article.ID/@Model.Article.Alias&title=" class="milenia-btn milenia-btn--icon milenia-btn--scheme-twitter">
-                                            <div class="fab fa-twitter"></div>Twitter
-                                        </a>
-                                        <a href="https://plus.google.com/share?url=http://lotusaromasapahotel.com/@menu.Alias/@Model.Article.ID/@Model.Article.Alias&title=" class="milenia-btn milenia-btn--icon milenia-btn--scheme-google-plus">
-                                            <div class="fab fa-google-plus-g"></div>Google +
-                                        </a>
-                                        <a href="https://pinterest.com/pin/create/button/?url=http://lotusaromasapahotel.com/@menu.Alias/@Model.Article.ID/@Model.Article.Alias&title=&media=media&description=description" class="milenia-btn milenia-btn--icon milenia-btn--scheme-pinterest">
-                                            <div class="fab fa-pinterest-p"></div>Pinterest
-                                        </a><a href="mailto:@detailHotel.Email" class="milenia-btn milenia-btn--icon">
-                                            <div class="fas fa-envelope"></div>Email to a Friend
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--================ End of Share Modal ================-->
-                        </div>
-                    </div>
-                </footer>
-                <!--================ End of Post Footer ================-->
-            </main>
-            <!--================ End of Post ================-->
+    <div class="banner-page">
+        <div class="banner__item">
+            <div class="banner__img"><img src="@menu.Image" alt=""></div>
+            <div class="banner__caption">
+                <h1 class="animate__animated">@menu.Title</h1>
+            </div>
         </div>
-        <!--================ End of Content Section ================-->
-        @if (Model.Articles.Count > 0)
-        {
-            <!--================ Content Section ================-->
-            <section class="milenia-section">
-                <h3>Related Posts</h3>
-                <!--================ Entities (Style 7) ================-->
-                <div class="milenia-entities milenia-entities--style-7 milenia-entities--no-content">
-                    <div class="milenia-grid milenia-grid--cols-3">
-                        <div class="milenia-grid-sizer"></div>
-                        @foreach (Article item in Model.Articles)
-                        {
-                            <div class="milenia-grid-item">
-                                <!--================ Entity ================-->
-                                <article class="milenia-entity--format-image milenia-entity text-center">
-                                    <div class="milenia-entity-media">
-                                        <a href="/@item.MenuID/@item.ID/@item.Alias" class="milenia-ln--independent">
-                                            <img src="@item.Image" alt="">
-                                        </a>
+    </div>
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+        <li class="breadcrumb-item"><a href="/">@menu.Title</a></li>
+        <li class="breadcrumb-item active">@Model.Article.Title</li>
+    </ul>
+    <div class="blog-wp box">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="blog-post">
+                        <img src="@Model.Article.Image" alt="">
+                        <h3>@Model.Article.Title</h3>
+                        <div>@Html.Raw(Model.Article.Title)</div></div>
+                    <div class="blog-share"><a class="facebook" href=""><i class="fab fa-facebook mr-1"></i> Share</a><a class="twitter" href=""><i class="fab fa-twitter mr-1"></i> Tweet</a><a class="google" href=""><i class="fab fa-google-plus  mr-1"></i> Google+</a></div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="blog-sidebar">
+                        <div class="blog-box d-none d-lg-block">
+                            <form action="" method="method" id="blog_search">
+                                <div class="input-group">
+                                    <input class="form-control" type="text" name="b_search" id="b_search" placeholder="Tìm kiếm...">
+                                    <div class="input-group-append"><span class="fas fa-search input-group-text"></span></div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="blog-box">
+                            <h3>Tin gần đây</h3>
+                            <ul class="Recent-News">
+                                <li>
+                                    <div class="post-thumb"><img src="./images/about2.jpg" alt=""></div>
+                                    <div class="post-content">
+                                        <div class="post__meta"><span class="post__date"> 26 / 8 /2021</span><a class="post__catagory" href=""> Sự Kiện</a></div><a href="blog_detail.html">Khám phá địa điểm nối tiếng Hải Dương</a>
                                     </div>
-                                    <div class="milenia-entity-content milenia-aligner">
-                                        <div class="milenia-aligner-outer">
-                                            <div class="milenia-aligner-inner">
-                                                <header class="milenia-entity-header">
-                                                    @*<div class="milenia-entity-meta">
-                                                            <div>
-                                                                <time datetime="2018-11-28">November 28, 2018</time>
-                                                            </div>
-                                                            <div>by&nbsp;<a href="#" class="milenia-color--unchangeable">admin&nbsp;</a></div>
-                                                            <div>
-                                                                in
-                                                                <div class="milenia-entity-categories">
-                                                                    <span><a href="#" class="milenia-color--unchangeable">Press</a></span>
-                                                                </div>
-                                                            </div>
-                                                        </div>*@
-                                                    <h2 class="milenia-entity-title">
-                                                        <a href="/@item.MenuID/@item.ID/@item.Alias" class="milenia-color--unchangeable">@item.Title</a>
-                                                    </h2>
-                                                </header>
-                                            </div>
-                                        </div>
+                                </li>
+                                <li>
+                                    <div class="post-thumb"><img src="./images/about2.jpg" alt=""></div>
+                                    <div class="post-content">
+                                        <div class="post__meta"><span class="post__date"> 26 / 8 /2021</span><a class="post__catagory" href="">Sự Kiện</a></div><a href="blog_detail.html">Khám phá địa điểm nối tiếng Hải Dương</a>
                                     </div>
-                                </article>
-                                <!--================ End of Entity ================-->
-                            </div>
-                        }
+                                </li>
+                                <li>
+                                    <div class="post-thumb"><img src="./images/about2.jpg" alt=""></div>
+                                    <div class="post-content">
+                                        <div class="post__meta"><span class="post__date"> 26 / 8 /2021</span><a class="post__catagory" href="">Sự Kiện</a></div><a href="blog_detail.html">Khám phá địa điểm nối tiếng Hải Dương</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="blog-box">
+                            <h3>Tags</h3>
+                            <ul class="blog-tag">
+                                <li><a href="#">Hotel</a></li>
+                                <li><a href="#">room</a></li>
+                                <li><a href="#">service</a></li>
+                                <li><a href="#">event</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                <!--================ End of Entities (Style 7) ================-->
-            </section>
-            <!--================ End of Content Section ================-->
-        }
-
-
+            </div>
+        </div>
     </div>
-    <!--================ End of Main Content Column ================-->
-</div>
+

@@ -8,68 +8,60 @@
     var lang = Request.Cookies["LanguageID"].Value;
 }
 
-<div class="milenia-breadcrumb text-center milenia-colorizer--scheme-light main-header-detail ">
-    <div class="container">
-        <h1 class="milenia-page-title">@menu.Title</h1>
-        <nav class="milenia-breadcrumb-path">
-            <span><a href="/">Home</a></span>/<span>@menu.Title</span>
-        </nav>
-    </div>
-</div>
-<!--================ End of Breadcrumb ================-->
-<div class="milenia-content milenia-content--no-py ">
-    <div class="container">
-        <div class="row">
-            <main class="col">
-                <div class="milenia-entity-content">
-                    <!--================ Content Section ================-->
-                    <div class="milenia-section milenia-section--stretched-content-no-px">
-                        <!--================ Entities (Style 16) ================-->
-                        <div class="milenia-entities milenia-entities--style-16">
-                            <div class="milenia-grid milenia-grid--cols-1 milenia-grid--no-gutters">
-                                @foreach (var item in Model)
-                                {
-                                    <div class="milenia-grid-item">
-                                        <!--================ Entity ================-->
-                                        <article class="milenia-entity milenia-entity--format-slideshow">
-                                            <div class="milenia-entity-media">
-                                                <div class="owl-carousel owl-carousel--vadaptive milenia-simple-slideshow">
-                                                    @foreach (var itemchil in item.roomGalleries)
-                                                    {
-                                                        <div data-bg-image-src="@itemchil.ImageLarge" class="milenia-entity-slide">
-                                                        </div>
-                                                    }
 
-                                                </div>
-                                            </div>
-                                            <div class="milenia-entity-content milenia-aligner">
-                                                <div class="milenia-aligner-outer">
-                                                    <div class="milenia-aligner-inner">
-                                                        <header class="milenia-entity-header">
-                                                            <div class="milenia-entity-meta">
-                                                                <div>from  <strong class='milenia-entity-price'>@GetLanguage.Language(lang, "money") @(((double)item.Price).ToString("N0"))</strong>/night</div>
-                                                            </div>
-                                                            <h2 class="milenia-entity-title"><a href="/@item.MenuAlias/@item.ID/@item.Alias" class="milenia-color--unchangeable">@item.Title</a></h2>
-                                                        </header>
-                                                        <div class="milenia-entity-body">
-                                                            @Html.Raw(item.Description)
-                                                        </div>
-                                                        <footer class="milenia-entity-footer"><a href="/@item.MenuAlias/@item.ID/@item.Alias" class="milenia-btn">Details</a><a href="/booking" class="milenia-btn milenia-btn--scheme-primary">Book Now</a></footer>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </article>
-                                        <!--================ End of Entity ================-->
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                        <!--================ End of Entities (Style 16) ================-->
-                    </div>
-                    <!--================ End of Content Section ================-->
-                </div>
-            </main>
+    <div class="banner-page">
+        <div class="banner__item">
+            <div class="banner__img"><img src="@menu.Image" alt=""></div>
+            <div class="banner__caption">
+                <h1 class="animate__animated">@menu.Title</h1>
+            </div>
         </div>
     </div>
-</div>
-<!--================ Footer ================-->
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active">@menu.Title</li>
+    </ul>
+    <section class="rooms-wp box">
+        <div class="container">
+            <div class="room-head">
+                <div class="box__title room-title">
+                    <h3>Phòng nghỉ</h3>
+                </div>
+                <div class="room-line"><span></span></div>
+                <div class="room-review">
+                    <p>Khách sạn Nam Cường Hải Phòng giúp du khách có thể chiêm ngưỡng những nét đẹp nổi bật của Hải Phòng. Không gian phòng đảm bảo mang đến cho quý khách sự ấm cúng, tiện nghi và yên tĩnh. Nội thất được bài trí chi tiết mang đến cho quý khách những cảm xúc đặc biệt, được hòa mình vào bầu không khí trong lành, gần gũi với văn hóa bản địa.</p>
+                </div>
+                <div class="room-note">
+                    <p>Để đặt chỗ và giải đáp thắc mắc, vui lòng gọi <a href="tel:012345678">012345678</a> hoặc gửi mail đến : <a href="mailto: info@namcuonghotels.com"> info@namcuonghotels.com</a>. Hoặc  <a href="">đặt phòng trực tuyến tại đây</a> .</p>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                @foreach (var itemRoom in Model)
+                {
+                    <div class="col-lg-4 col-md-6">
+                        <div class="room-item">
+                            <div class="room-img">
+                                <img src="@itemRoom.Image" alt="">
+                                <div class="room-price"><span>@itemRoom.Price VND/ĐÊM</span></div>
+                            </div>
+                            <div class="room-detail">
+                                <div class="room-desc">
+                                    <h4 class="room-name"><a href="/@itemRoom.MenuAlias/@itemRoom.ID/@itemRoom.Alias">@itemRoom.Title</a></h4>
+                                    <ul class="room__info">
+                                        <li class="ml-0">@itemRoom.Size m<sup>2</sup></li>
+                                        <li>King bed</li>
+                                        <li class="mr-0">@itemRoom.MaxPeople persons</li>
+                                    </ul>
+                                    <div class="room-text">@Html.Raw(itemRoom.Description)</div>
+                                </div>
+                                <div class="room_btn"><a class="detail-btn" href="/@itemRoom.MenuAlias/@itemRoom.ID/@itemRoom.Alias">Xem chi tiết</a></div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </section>

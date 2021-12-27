@@ -6,6 +6,7 @@ namespace TeamplateHotel.Areas.Administrator.EntityModel
     public class EGallery
     {
         public int ID { get; set; }
+        public int? MenuId { get; set; }
 
         [DisplayName("Tên ảnh")]
         public string Title { get; set; }

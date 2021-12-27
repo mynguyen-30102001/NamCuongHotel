@@ -8,5 +8,6 @@ namespace TeamplateHotel.Models
         public Room Room { get; set; }
         public List<Room> Rooms { get; set; }
         public List<RoomGallery> RoomGalleries { get; set; }
+        public List<RoomFunction> RoomFunctions { get; set; }
     }
 }

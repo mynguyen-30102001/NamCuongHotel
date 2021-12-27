@@ -42,6 +42,12 @@
                     edit: false,
                     list: false
                 },
+                MenuId: {
+                    title: '@Html.DisplayNameFor(c=>c.MenuId)',
+                    options: '@Url.Action("ListMenuById", "Comment", new { languageId = Request.Cookies["lang_client"].Value })',
+                    inputClass: 'full-width',
+                    sorting: false,
+                },
                 Title: {
                     title: '@Html.DisplayNameFor(c=>c.Title)',
                     width: '15%',

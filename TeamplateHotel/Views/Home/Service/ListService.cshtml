@@ -6,60 +6,43 @@
     Menu menu = ViewBag.Menu ?? new Menu();
 }
 
-<!--================ End of Header ================-->
-<div data-bg-image-src="images/breadcrumb-bg-2.jpg" class="milenia-breadcrumb milenia-breadcrumb--small text-center milenia-colorizer--scheme-dark milenia-colorizer--parallax">
-    <div class="milenia-colorizer-bg-image" style="background-image: url('../../Content/asset/breadcrumb-bg-2.jpg'); top: -142.797px; background-position: 50% 0px;"></div>
-    <div class="container">
-        <nav class="milenia-breadcrumb-path milenia-colorizer-ln--dark">
-            <span><a href="/">Home</a></span>/<span>@menu.Title</span>
-        </nav>
-    </div>
-</div>
-<!--================ End of Breadcrumb ================-->
-<div class="milenia-content  milenia-has-sidebar">
-    <div class="container">
-        <div class="row">
-            <main class="col">
-                <div class="milenia-entity-content">
-                    <!--================ Content Section ================-->
-                    <div class="milenia-section">
-                        <!--================ Entities (Style 18) ================-->
-                        <div class="milenia-entities milenia-entities--style-18">
-                            <div data-isotope-layout="grid" class="milenia-grid milenia-grid--isotope milenia-grid--cols-2">
-                                <div class="milenia-grid-sizer"></div>
-                                @foreach (var item in Model)
-    {
-                            <div class="milenia-grid-item milenia-category-rooms">
-                                <!--================ Entity ================-->
-                                <article class="milenia-entity milenia-entity--format-image milenia-entity--with-thumb">
-                                    <div class="milenia-entity-media">
-                                    <a href="/@item.MenuAlias/@item.ID/@item.Alias" aria-labelledby="portfolio-heading-0" class="milenia-entity-link milenia-ln--independent">
-                                        <img src="@item.Image" alt=""></a></div>
-                                    <div class="milenia-entity-content milenia-all--stiff milenia-aligner">
-                                        <div class="milenia-aligner-outer">
-                                            <div class="milenia-aligner-inner">
-                                                <header class="milenia-entity-header">
-                                                    <h2 id="portfolio-heading-0" class="milenia-entity-title">
-                                                    <a href="/@item.MenuAlias/@item.ID/@item.Alias" class="milenia-color--unchangeable">@item.Title</a></h2>
-                                                </header>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </article>
-                                <!--================ End of Entity ================-->
-                            </div>
-}
-                            </div>
-                        </div>
-                        <!--================ End of Entities (Style 18) ================-->
-
-                    </div>
-                </div>
-            </main>
+    <div class="banner-page">
+        <div class="banner__item">
+            <div class="banner__img"><img src="@menu.Image" alt=""></div>
+            <div class="banner__caption">
+                <h1 class="animate__animated">@menu.Title</h1>
+            </div>
         </div>
     </div>
-</div>
-
-
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+        <li class="breadcrumb-item active">@menu.Title</li>
+    </ul>
+    <section class="box">
+        <div class="container mb-5">
+            <div class="box__title">
+                <h3>DỊCH VỤ CỦA CHÚNG TÔI</h3>
+            </div>
+            <div class="box__desc">
+                <p>Được đầu tư đồng bộ với các trang thiết bị hiện đại, tiên tiến, phòng tiệc hội nghị, hội thảo Thiên Trường sức chứa 600 khách là địa điểm hoàn hảo cho tất cả các sự kiện, quy mô dù lớn hay nhỏ luôn sẵn sàng đáp ứng đội ngũ chuyên gia cao cấp, chuyên viên lành nghề tổ chức sự kiện, cẩn thận từ cái bắt tay đầu tiên đến bước chân của vị khách cuối cùng.</p>
+            </div>
+        </div>
+        <article class="article-main">
+            <div class="container">
+                @foreach (var item in Model)
+                {
+                    <div class="article-element">
+                        <div class="article-box f-flex"><img src="@item.Image" alt=""></div>
+                        <div class="article-box f-flex">
+                            <div class="article-text p-md-4 p-3">
+                                <h4><a href="/@menu.Alias/@item.ID/@item.Alias">@item.Title</a></h4>
+                                @Html.Raw(item.Description)   
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </article>
+    </section>
 
 

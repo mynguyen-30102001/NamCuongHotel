@@ -55,12 +55,12 @@ namespace TeamplateHotel.Areas.Administrator.Controllers
                         a.Home
                     }).OrderBy(a => a.Index).Skip(jtStartIndex).Take(jtPageSize).ToList();
                     //Return result to jTable
-                    return Json(new {Result = "OK", Records = records, TotalRecordCount = list.Count});
+                    return Json(new { Result = "OK", Records = records, TotalRecordCount = list.Count });
                 }
             }
             catch (Exception ex)
             {
-                return Json(new {Result = "ERROR", ex.Message});
+                return Json(new { Result = "ERROR", ex.Message });
             }
         }
 
@@ -68,6 +68,7 @@ namespace TeamplateHotel.Areas.Administrator.Controllers
         public ActionResult Create()
         {
             ViewBag.Title = "Thêm phòng";
+            ListDataFunction();
             var eRoom = new ERoom();
             return View(eRoom);
         }
@@ -93,18 +94,25 @@ namespace TeamplateHotel.Areas.Administrator.Controllers
                             Alias = model.Alias,
                             Image = model.Image,
                             MaxPeople = model.MaxPeople,
-                            Price = (decimal)model.Price,
+                            Price = model.Price,
                             PriceNet = model.PriceNet,
                             Index = 0,
                             Description = model.Description,
-                            Content = model.Content,
+                            Size = model.Size,
+                            Bed = model.Bed,
                             MetaTitle = string.IsNullOrEmpty(model.MetaTitle) ? model.Title : model.MetaTitle,
                             MetaDescription =
                                 string.IsNullOrEmpty(model.MetaDescription) ? model.Title : model.MetaDescription,
                             Status = model.Status,
                             Home = model.Home
                         };
-
+                        if (model.RoomFunctionID != null)
+                        {
+                            foreach (var item in model.RoomFunctionID)
+                            {
+                                room.RoomFunctionID += item + ',';
+                            }
+                        }
                         db.Rooms.InsertOnSubmit(room);
                         db.SubmitChanges();
 
@@ -129,10 +137,12 @@ namespace TeamplateHotel.Areas.Administrator.Controllers
                     }
                     catch (Exception exception)
                     {
+                        ListDataFunction();
                         ViewBag.Messages = "Error: " + exception.Message;
                         return View(model);
                     }
                 }
+                ListDataFunction();
                 return View(model);
             }
         }
@@ -149,6 +159,7 @@ namespace TeamplateHotel.Areas.Administrator.Controllers
                     return RedirectToAction("Index");
                 }
                 ViewBag.Title = "Sửa phòng";
+                ListDataFunction();
                 var room = new ERoom
                 {
                     ID = detailRoom.ID,
@@ -159,8 +170,10 @@ namespace TeamplateHotel.Areas.Administrator.Controllers
                     Price = detailRoom.Price,
                     PriceNet = detailRoom.PriceNet,
                     Index = detailRoom.Index,
+                    Size = detailRoom.Size ?? 0,
                     Description = detailRoom.Description,
                     Content = detailRoom.Content,
+                    Bed = detailRoom.Bed,
                     MetaTitle = detailRoom.MetaTitle,
                     MetaDescription = detailRoom.MetaDescription,
                     Status = detailRoom.Status,
@@ -171,6 +184,19 @@ namespace TeamplateHotel.Areas.Administrator.Controllers
                 {
                     Image = a.ImageLarge
                 }).ToList();
+                if (!string.IsNullOrEmpty(detailRoom.RoomFunctionID))
+                {
+                    List<string> termList = new List<string>();
+                    var roomFunctionID = detailRoom.RoomFunctionID;
+                    int[] menuIds = roomFunctionID.Substring(0, roomFunctionID.Length - 1).Split(',').Select(n => Convert.ToInt32(n)).ToArray();
+
+                    foreach (var item in menuIds)
+                    {
+                        termList.Add(item.ToString());
+                    }
+                    string[] select = termList.ToArray();
+                    room.RoomFunctionID = select;
+                }
                 return View(room);
             }
         }
@@ -192,8 +218,10 @@ namespace TeamplateHotel.Areas.Administrator.Controllers
                             room.Alias = model.Alias;
                             room.Image = model.Image;
                             room.MaxPeople = model.MaxPeople;
-                            room.Price = (decimal)model.Price;
+                            room.Size = model.Size;
+                            room.Price = model.Price;
                             room.PriceNet = model.PriceNet;
+                            room.Bed = model.Bed;
                             room.Description = model.Description;
                             room.Content = model.Content;
                             room.MetaTitle = string.IsNullOrEmpty(model.MetaTitle) ? model.Title : model.MetaTitle;
@@ -202,7 +230,14 @@ namespace TeamplateHotel.Areas.Administrator.Controllers
                                 : model.MetaDescription;
                             room.Status = model.Status;
                             room.Home = model.Home;
-
+                            room.RoomFunctionID = null;
+                            if (model.RoomFunctionID != null)
+                            {
+                                foreach (var item in model.RoomFunctionID)
+                                {
+                                    room.RoomFunctionID += item + ',';
+                                }
+                            }
                             db.SubmitChanges();
 
                             //xóa gallery cho phòng
@@ -228,10 +263,12 @@ namespace TeamplateHotel.Areas.Administrator.Controllers
                     }
                     catch (Exception exception)
                     {
+                        ListDataFunction();
                         ViewBag.Messages = "Error: " + exception.Message;
                         return View(model);
                     }
                 }
+                ListDataFunction();
                 return View(model);
             }
         }
@@ -251,15 +288,33 @@ namespace TeamplateHotel.Areas.Administrator.Controllers
 
                         db.Rooms.DeleteOnSubmit(del);
                         db.SubmitChanges();
-                        return Json(new {Result = "OK", Message = "Xóa phòng thành công"});
+                        return Json(new { Result = "OK", Message = "Xóa phòng thành công" });
                     }
-                    return Json(new {Result = "ERROR", Message = "Phòng không tồn tại"});
+                    return Json(new { Result = "ERROR", Message = "Phòng không tồn tại" });
                 }
             }
             catch (Exception ex)
             {
-                return Json(new {Result = "ERROR", ex.Message});
+                return Json(new { Result = "ERROR", ex.Message });
             }
+        }
+
+        //lay list tien ich
+        public void ListDataFunction()
+        {
+            var db = new MyDbDataContext();
+            List<SelectListItem> listFunction = new List<SelectListItem>();
+            foreach (var b in db.RoomFunctions.ToList())
+            {
+                listFunction.Add(new SelectListItem()
+                {
+                    Value = b.Title,
+                    Text = b.ID.ToString(),
+                });
+            }
+            ViewBag.ListMenu3 = new SelectList(listFunction, "Text", "Value");
+
+
         }
     }
 }

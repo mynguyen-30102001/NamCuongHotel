@@ -75,6 +75,9 @@ namespace ProjectLibrary.Database
     partial void InsertRoom(Room instance);
     partial void UpdateRoom(Room instance);
     partial void DeleteRoom(Room instance);
+    partial void InsertRoomFunction(RoomFunction instance);
+    partial void UpdateRoomFunction(RoomFunction instance);
+    partial void DeleteRoomFunction(RoomFunction instance);
     partial void InsertRoomGallery(RoomGallery instance);
     partial void UpdateRoomGallery(RoomGallery instance);
     partial void DeleteRoomGallery(RoomGallery instance);
@@ -251,6 +254,14 @@ namespace ProjectLibrary.Database
 			get
 			{
 				return this.GetTable<Room>();
+			}
+		}
+		
+		public System.Data.Linq.Table<RoomFunction> RoomFunctions
+		{
+			get
+			{
+				return this.GetTable<RoomFunction>();
 			}
 		}
 		
@@ -840,6 +851,12 @@ namespace ProjectLibrary.Database
 		
 		private bool _New;
 		
+		private System.Nullable<System.DateTime> _DateCreate;
+		
+		private string _Type;
+		
+		private System.Nullable<System.DateTime> _DateUpdate;
+		
 		private EntityRef<Menu> _Menu;
 		
     #region Extensibility Method Definitions
@@ -876,6 +893,12 @@ namespace ProjectLibrary.Database
     partial void OnCustomerChanged();
     partial void OnNewChanging(bool value);
     partial void OnNewChanged();
+    partial void OnDateCreateChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateCreateChanged();
+    partial void OnTypeChanging(string value);
+    partial void OnTypeChanged();
+    partial void OnDateUpdateChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateUpdateChanged();
     #endregion
 		
 		public Article()
@@ -1184,6 +1207,66 @@ namespace ProjectLibrary.Database
 					this._New = value;
 					this.SendPropertyChanged("New");
 					this.OnNewChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DateCreate
+		{
+			get
+			{
+				return this._DateCreate;
+			}
+			set
+			{
+				if ((this._DateCreate != value))
+				{
+					this.OnDateCreateChanging(value);
+					this.SendPropertyChanging();
+					this._DateCreate = value;
+					this.SendPropertyChanged("DateCreate");
+					this.OnDateCreateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Type", DbType="NVarChar(50)")]
+		public string Type
+		{
+			get
+			{
+				return this._Type;
+			}
+			set
+			{
+				if ((this._Type != value))
+				{
+					this.OnTypeChanging(value);
+					this.SendPropertyChanging();
+					this._Type = value;
+					this.SendPropertyChanged("Type");
+					this.OnTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateUpdate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DateUpdate
+		{
+			get
+			{
+				return this._DateUpdate;
+			}
+			set
+			{
+				if ((this._DateUpdate != value))
+				{
+					this.OnDateUpdateChanging(value);
+					this.SendPropertyChanging();
+					this._DateUpdate = value;
+					this.SendPropertyChanged("DateUpdate");
+					this.OnDateUpdateChanged();
 				}
 			}
 		}
@@ -3818,6 +3901,8 @@ namespace ProjectLibrary.Database
 		
 		private bool _Status;
 		
+		private string _Image;
+		
 		private EntitySet<Article> _Articles;
 		
 		private EntitySet<Service> _Services;
@@ -3856,6 +3941,8 @@ namespace ProjectLibrary.Database
     partial void OnMetaDescriptionChanged();
     partial void OnStatusChanging(bool value);
     partial void OnStatusChanged();
+    partial void OnImageChanging(string value);
+    partial void OnImageChanged();
     #endregion
 		
 		public Menu()
@@ -4127,6 +4214,26 @@ namespace ProjectLibrary.Database
 					this._Status = value;
 					this.SendPropertyChanged("Status");
 					this.OnStatusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Image", DbType="NVarChar(MAX)")]
+		public string Image
+		{
+			get
+			{
+				return this._Image;
+			}
+			set
+			{
+				if ((this._Image != value))
+				{
+					this.OnImageChanging(value);
+					this.SendPropertyChanging();
+					this._Image = value;
+					this.SendPropertyChanged("Image");
+					this.OnImageChanged();
 				}
 			}
 		}
@@ -4435,6 +4542,8 @@ namespace ProjectLibrary.Database
 		
 		private bool _Home;
 		
+		private string _RoomFunctionID;
+		
 		private EntitySet<RoomGallery> _RoomGalleries;
 		
 		private EntityRef<Language> _Language;
@@ -4477,6 +4586,8 @@ namespace ProjectLibrary.Database
     partial void OnStatusChanged();
     partial void OnHomeChanging(bool value);
     partial void OnHomeChanged();
+    partial void OnRoomFunctionIDChanging(string value);
+    partial void OnRoomFunctionIDChanged();
     #endregion
 		
 		public Room()
@@ -4830,6 +4941,26 @@ namespace ProjectLibrary.Database
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RoomFunctionID", DbType="NVarChar(250)")]
+		public string RoomFunctionID
+		{
+			get
+			{
+				return this._RoomFunctionID;
+			}
+			set
+			{
+				if ((this._RoomFunctionID != value))
+				{
+					this.OnRoomFunctionIDChanging(value);
+					this.SendPropertyChanging();
+					this._RoomFunctionID = value;
+					this.SendPropertyChanged("RoomFunctionID");
+					this.OnRoomFunctionIDChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Room_RoomGallery", Storage="_RoomGalleries", ThisKey="ID", OtherKey="RoomId")]
 		public EntitySet<RoomGallery> RoomGalleries
 		{
@@ -4907,6 +5038,164 @@ namespace ProjectLibrary.Database
 		{
 			this.SendPropertyChanging();
 			entity.Room = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.RoomFunction")]
+	public partial class RoomFunction : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private string _Title;
+		
+		private string _Image;
+		
+		private string _LanguageID;
+		
+		private System.Nullable<int> _Index;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnTitleChanging(string value);
+    partial void OnTitleChanged();
+    partial void OnImageChanging(string value);
+    partial void OnImageChanged();
+    partial void OnLanguageIDChanging(string value);
+    partial void OnLanguageIDChanged();
+    partial void OnIndexChanging(System.Nullable<int> value);
+    partial void OnIndexChanged();
+    #endregion
+		
+		public RoomFunction()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Title", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string Title
+		{
+			get
+			{
+				return this._Title;
+			}
+			set
+			{
+				if ((this._Title != value))
+				{
+					this.OnTitleChanging(value);
+					this.SendPropertyChanging();
+					this._Title = value;
+					this.SendPropertyChanged("Title");
+					this.OnTitleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Image", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		public string Image
+		{
+			get
+			{
+				return this._Image;
+			}
+			set
+			{
+				if ((this._Image != value))
+				{
+					this.OnImageChanging(value);
+					this.SendPropertyChanging();
+					this._Image = value;
+					this.SendPropertyChanged("Image");
+					this.OnImageChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LanguageID", DbType="VarChar(10) NOT NULL", CanBeNull=false)]
+		public string LanguageID
+		{
+			get
+			{
+				return this._LanguageID;
+			}
+			set
+			{
+				if ((this._LanguageID != value))
+				{
+					this.OnLanguageIDChanging(value);
+					this.SendPropertyChanging();
+					this._LanguageID = value;
+					this.SendPropertyChanged("LanguageID");
+					this.OnLanguageIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Index]", Storage="_Index", DbType="Int")]
+		public System.Nullable<int> Index
+		{
+			get
+			{
+				return this._Index;
+			}
+			set
+			{
+				if ((this._Index != value))
+				{
+					this.OnIndexChanging(value);
+					this.SendPropertyChanging();
+					this._Index = value;
+					this.SendPropertyChanged("Index");
+					this.OnIndexChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 	

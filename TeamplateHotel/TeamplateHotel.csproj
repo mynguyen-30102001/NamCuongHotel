@@ -218,6 +218,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Administrator\AdministratorAreaRegistration.cs" />
     <Compile Include="Areas\Administrator\Controllers\PlugInController.cs" />
+    <Compile Include="Areas\Administrator\Controllers\RoomFunctionController.cs" />
     <Compile Include="Areas\Administrator\Controllers\SendEmailController.cs" />
     <Compile Include="Areas\Administrator\Controllers\AdvertisingController.cs" />
     <Compile Include="Areas\Administrator\Controllers\HotelController.cs" />
@@ -281,6 +282,7 @@
     <Compile Include="Models\DetailArticle.cs" />
     <Compile Include="Models\DetailRestaurant.cs" />
     <Compile Include="Models\DetailRoom.cs" />
+    <Compile Include="Models\EGallery.cs" />
     <Compile Include="Models\ShowObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -305,7 +307,11 @@
     <Content Include="Areas\Administrator\Content\img\logo-admin.png" />
     <Content Include="Areas\Administrator\Content\img\Ordering.png" />
     <Content Include="Areas\Administrator\Content\img\webhotel_logo.png" />
+    <Content Include="Areas\Administrator\Content\js\bootstrap.min.js" />
     <Content Include="Areas\Administrator\Content\js\jquery-checktree.js" />
+    <Content Include="Areas\Administrator\Content\Selecterbootrap\bootstrap-multiselect.css" />
+    <Content Include="Areas\Administrator\Content\Selecterbootrap\bootstrap-multiselect.min.js" />
+    <Content Include="Areas\Administrator\Content\Selecterbootrap\prettify.js" />
     <Content Include="Areas\Administrator\Content\Slider\theme\arrows.png" />
     <Content Include="Areas\Administrator\Content\Slider\theme\bullets.png" />
     <Content Include="Areas\Administrator\Content\Slider\theme\default.css" />
@@ -4224,9 +4230,6 @@
     <Content Include="Areas\Administrator\Views\Article\Index.cshtml" />
     <Content Include="Areas\Administrator\Views\Article\Create.cshtml" />
     <Content Include="Areas\Administrator\Views\Article\Update.cshtml" />
-    <Content Include="Areas\Administrator\Views\Room\Index.cshtml" />
-    <Content Include="Areas\Administrator\Views\Room\Create.cshtml" />
-    <Content Include="Areas\Administrator\Views\Room\Update.cshtml" />
     <Content Include="Areas\Administrator\Views\Tour\Index.cshtml" />
     <Content Include="Areas\Administrator\Views\Tour\Create.cshtml" />
     <Content Include="Areas\Administrator\Views\Tour\Update.cshtml" />
@@ -4387,6 +4390,11 @@
     <Content Include="Content\plugins\bootstrap-4.5.2\css\bootstrap.min.css.map" />
     <Content Include="Content\plugins\bootstrap-4.5.2\js\bootstrap.js.map" />
     <Content Include="Content\plugins\bootstrap-4.5.2\js\bootstrap.min.js.map" />
+    <Content Include="Areas\Administrator\Views\RoomFunction\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\Room\Create.cshtml" />
+    <Content Include="Areas\Administrator\Views\Room\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\Room\Update.cshtml" />
+    <Content Include="Areas\Administrator\Content\Selecterbootrap\bootstrap-multiselect.less" />
     <None Include="Properties\PublishProfiles\bien bac hotel.pubxml" />
     <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Properties\PublishProfiles\dfsdfsdf.pubxml" />
@@ -5102,6 +5110,7 @@
     <Content Include="Views\BookingTour\BookTour.cshtml" />
     <Content Include="Views\BookingTour\Messages.cshtml" />
     <Content Include="Views\Booking\BookingSmile.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

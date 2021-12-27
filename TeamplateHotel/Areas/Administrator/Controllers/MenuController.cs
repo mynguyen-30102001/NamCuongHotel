@@ -116,6 +116,7 @@ namespace TeamplateHotel.Areas.Administrator.Controllers
                             Index = 0,
                             Location = menuLocation.LocationId,
                             Level = model.Level,
+                            Image = model.Image,
                             MetaDescription = string.IsNullOrEmpty(model.MetaDescription) ? model.Title : model.MetaDescription,
                             MetaTitle = string.IsNullOrEmpty(model.MetaTitle) ? model.Title : model.MetaTitle,
                             ParentID = model.ParentID,
@@ -158,6 +159,7 @@ namespace TeamplateHotel.Areas.Administrator.Controllers
                         Index = menu.Index,
                         Level = menu.Level,
                         Location = menu.Location,
+                        Image = menu.Image,
                         ID = menu.ID,
                         MetaDescription = menu.MetaDescription,
                         MetaTitle = menu.MetaTitle,
@@ -222,6 +224,7 @@ namespace TeamplateHotel.Areas.Administrator.Controllers
                         edit.Title = model.Title;
                         edit.ParentID = model.ParentID;
                         edit.Type = model.Type;
+                        edit.Image = model.Image;
                         edit.Status = model.Status;
                         edit.MetaDescription = string.IsNullOrEmpty(model.MetaDescription) ? model.Title : model.MetaDescription;
                         edit.Link = model.Link;

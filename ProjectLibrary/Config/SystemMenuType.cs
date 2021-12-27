@@ -15,6 +15,7 @@ namespace ProjectLibrary.Config
         public const int OutSite = 9;
         public const int Service = 10;
         public const int About = 11;
+        public const int Recruitment = 12;
 
         public static Dictionary<int, string> CategoryType = new Dictionary<int, string>()
                                                                  {
@@ -29,6 +30,7 @@ namespace ProjectLibrary.Config
                                                                      {Gallery, "Trang gallery"},
                                                                      {Location, "Trang vị trí"},
                                                                      {OutSite, "Trang link ra ngoài"},
+                                                                     {Recruitment, "Trang tuyển dụng"},
                                                                  };
     }
 }

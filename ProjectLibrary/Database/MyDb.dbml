@@ -41,6 +41,9 @@
       <Column Name="Home" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="Customer" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="New" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DateCreate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Type" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DateUpdate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Association Name="Menu_Article" Member="Menu" ThisKey="MenuID" OtherKey="ID" Type="Menu" IsForeignKey="true" />
     </Type>
   </Table>
@@ -185,6 +188,7 @@
       <Column Name="MetaTitle" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
       <Column Name="MetaDescription" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
       <Column Name="Status" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Image" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Association Name="Menu_Article" Member="Articles" ThisKey="ID" OtherKey="MenuID" Type="Article" />
       <Association Name="Menu_Service" Member="Services" ThisKey="ID" OtherKey="MenuID" Type="Service" />
       <Association Name="Menu_Tour" Member="Tours" ThisKey="ID" OtherKey="MenuID" Type="Tour" />
@@ -218,8 +222,18 @@
       <Column Name="MetaDescription" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
       <Column Name="Status" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="Home" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="RoomFunctionID" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
       <Association Name="Room_RoomGallery" Member="RoomGalleries" ThisKey="ID" OtherKey="RoomId" Type="RoomGallery" />
       <Association Name="Language_Room" Member="Language" ThisKey="LanguageID" OtherKey="ID" Type="Language" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.RoomFunction" Member="RoomFunctions">
+    <Type Name="RoomFunction">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Image" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="LanguageID" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="[Index]" Member="Index" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.RoomGallery" Member="RoomGalleries">

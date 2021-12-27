@@ -31,10 +31,12 @@ namespace TeamplateHotel.Areas.Administrator.EntityModel
         public int MaxPeople { get; set; }
 
         [DisplayName("Giá phòng")]
-        public decimal? Price { get; set; }
+        [Required(ErrorMessage = "Vui lòng nhập giá phòng")]
+        [Range(1, double.MaxValue, ErrorMessage = "Giá phòng phải lớn hơn 0.")]
+        public decimal Price { get; set; }
 
         [DisplayName("Giá khuyến mại")]
-
+        [Range(1, double.MaxValue, ErrorMessage = "Giá khuyến mại phải lớn hơn 0.")]
         public decimal? PriceNet { get; set; }
 
         public int? Index { get; set; }
@@ -60,7 +62,26 @@ namespace TeamplateHotel.Areas.Administrator.EntityModel
 
         [DisplayName("Hiện thị ở trang chủ")]
         public bool Home { get; set; }
-
+        [DisplayName("View")]
+        public string View { get; set; }
+        [DisplayName("CheckIn")]
+        public string CheckIn { get; set; }
+        [DisplayName("CheckOut")]
+        public string CheckOut { get; set; }
+        [DisplayName("Tiện nghi")]
+        public string Amenities { get; set; }
+        [DisplayName("Dịch vụ")]
+        public string Service { get; set; }
+        [DisplayName("Bed")]
+        public string Bed { get; set; }
+        [DisplayName("Size")]
+        public int Size { get; set; }
+        [DisplayName("Số lượng phòng")]
+        public string NumberRoom { get; set; }
+        [DisplayName("Bathroom")]
+        public string Bathroom { get; set; }
         public List<EGalleryITem> EGalleryITems { get; set; }
+        [Required(ErrorMessage = "Vui lòng chọn tiện ích")]
+        public string[] RoomFunctionID { get; set; }
     }
 }
