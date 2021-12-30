@@ -79,7 +79,7 @@ namespace TeamplateHotel.Controllers
             }
 
             #region "Trang bài viết"
-            Trangbaiviet:
+            Trangbaiviet: 
             if (idSub.ToString() != "System.Object")
             {
                 int idArticle;
@@ -169,7 +169,32 @@ namespace TeamplateHotel.Controllers
                     return View("Tour/DetailTour", detailTour);
                 }
                 return View("Tour/ListTour", CommentController.GetTours(menu.ID));
-                #endregion
+            #endregion
+
         }
+        //public ActionResult DetailTag(int id)
+        //{
+        //    using (var db = new MyDbDataContext())
+        //    {
+        //        List<Article> listArticle = db.Articles.Where(a => a.Status && a.TagID.Contains(id.ToString())).OrderBy(a => a.Index).ToList();
+        //        IPagedList<Article> articles = listArticle.ToPagedList(1, 5);
+        //        return View("Article/ListArticle", articles);
+        //    }
+        //}
+        //[HttpGet]
+        //public ActionResult SearchArticles(string search)
+        //{
+        //    using (var db = new MyDbDataContext())
+        //    {
+        //        Menu menu = CommentController.GetMainMenus(Request.Cookies["LanguageID"].Value).Where(a => a.Type == SystemMenuType.Article).FirstOrDefault();
+        //        List<Article> listArticle = CommentController.GetArticles(menu.ID).Where(a => a.Title.ToUpper().Contains(search.ToUpper())).ToList();
+        //        int pages = 1;
+        //        int pageSizes = 5;
+        //        IPagedList<Article> Article = listArticle.ToPagedList(pages, pageSizes);
+        //        return View("Article/ListArticle", Article);
+
+
+        //    }
+        //}
     }
 }

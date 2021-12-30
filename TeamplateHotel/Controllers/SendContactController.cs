@@ -9,7 +9,7 @@ namespace TeamplateHotel.Controllers
     public class SendContactController : Controller
     {
         [HttpPost]
-        public ActionResult SubmitContact(Contact model)
+        public ActionResult SubmitContact(Contact model, string FirstName, string LastName)
         {
             model.CreateDate = DateTime.Now;
             if (ModelState.IsValid)
@@ -17,16 +17,17 @@ namespace TeamplateHotel.Controllers
                 using (var db = new MyDbDataContext())
                 {
                     db.Contacts.InsertOnSubmit(model);
+                    model.FullName = FirstName +' '+ LastName;
                     db.SubmitChanges();
 
                     SendEmail sendEmail =
                         db.SendEmails.FirstOrDefault(
                             a => a.Type == TypeSendEmail.Contact && a.LanguageID == Request.Cookies["LanguageID"].Value);
                     Hotel hotel = CommentController.DetailHotel(Request.Cookies["LanguageID"].Value);
-
+                    
                     sendEmail.Title = sendEmail.Title.Replace("{NameHotel}", hotel.Name);
                     string content = sendEmail.Content;
-                    content = content.Replace("{Gender}", model.Gender);
+                    //content = content.Replace("{Gender}", model.Gender);
                     content = content.Replace("{FullName}", model.FullName);
                     content = content.Replace("{Tel}", model.Tel);
                     content = content.Replace("{Email}", model.Email);

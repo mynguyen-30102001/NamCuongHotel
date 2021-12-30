@@ -7,6 +7,7 @@ namespace TeamplateHotel.Areas.Administrator.EntityModel
     public class EArticle
     {
         public int ID { get; set; }
+        public string[] TagID { get; set; }
 
         [DisplayName("Chuyên mục bài viết")]
         [Required(ErrorMessage = "Vui lòng chọn chuyên mục bài viết")]

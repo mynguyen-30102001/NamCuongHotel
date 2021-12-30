@@ -38,6 +38,18 @@ namespace TeamplateHotel
                 controller = "SendContact",
                 action = "Messages",
             });
+            //search article
+            routes.MapRoute("/SearchArt", "Search/SearchArticle", new
+            {
+                controller = "Home",
+                action = "SearchArticles"
+            });
+            //search
+            routes.MapRoute("Search Layout", "Search/SearchLayout", new
+            {
+                controller = "Search",
+                action = "SearchLayout",
+            });
 
             //Booking tour 
             routes.MapRoute("BookTour1", "BookTour/SendBooking", new
@@ -58,7 +70,15 @@ namespace TeamplateHotel
                 id = UrlParameter.Optional,
                 alias = UrlParameter.Optional
             });
-
+            
+            //tag
+            routes.MapRoute("Tag", "tag/{id}/{alias}", new
+            {
+                controller = "Home",    
+                action = "DetailTag",
+                id = UrlParameter.Optional,
+                alias = UrlParameter.Optional
+            });
             routes.MapRoute("Default", "{aliasMenuSub}/{idSub}/{aliasSub}", new
             {
                 controller = "Home",

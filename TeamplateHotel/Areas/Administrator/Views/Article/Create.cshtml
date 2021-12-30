@@ -39,7 +39,7 @@
 
 
                 <div class="control-group">
-                    <label class="control-label" for="Type">Loại bài viết
+                    <label class="control-label" for="Type">Loại bài viết</label>
                     <div class="controls">
                         @Html.TextBoxFor(c => c.Type, new { @class = "span4" })
                         @Html.ValidationMessageFor(c => c.Type)
@@ -51,6 +51,13 @@
                     <div class="controls">
                         @Html.TextBoxFor(c => c.Image, new { @class = "span4 inputbox upload" })
                         @Html.ValidationMessageFor(c => c.Image)
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="TagID">Tags<span class="asterisk" style="display: inline; float: none">*</span></label>
+                    <div class="controls">
+                        @Html.DropDownListFor(m => m.TagID, (IEnumerable<SelectListItem>)ViewBag.ListMenu3, new { @class = "span4", style = "width: 300px;display: inline;", multiple = "multiple" })
+                        @Html.ValidationMessageFor(m => m.TagID)
                     </div>
                 </div>
 
@@ -76,7 +83,7 @@
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label" for="Title">Bài viết khách hàng</label>
+                    <label class="control-label" for="Title">Tin gần đây</label>
                     <div class="controls">
                         <label class="radio-inline">@Html.RadioButtonFor(m => m.Customer, "true")  Có</label>
                         <label class="radio-inline">@Html.RadioButtonFor(m => m.Customer, "false", new { @checked = true }) Không</label>
@@ -134,10 +141,18 @@
 
 <script type="text/javascript">
 
-    $(document).ready(function() {
+    $(document).ready(function () {
+        $('#TagID').multiselect();
         bindUl();
         AutoAlias("Title", "Alias");
         CreateCkEditor();
+        $("#Home").change(function () {
+            if (this.checked) {
+                $("#ifvideo").prop("hidden", false);
+            } else {
+                $("#ifvideo").prop("hidden", true);
+            }
+        });
     });
 
 </script>

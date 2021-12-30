@@ -29,6 +29,8 @@ namespace ProjectLibrary.Config
                         DeliveryMethod = SmtpDeliveryMethod.Network,
                         EnableSsl = true,
                         Timeout = 100000
+                        //noreply@iittechcom.com
+                        //pass:PfxqBGDUdU9tmgpdj4DHdw==
                     };
 
                     var mail = new MailMessage

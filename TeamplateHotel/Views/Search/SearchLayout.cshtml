@@ -1,0 +1,62 @@
+﻿@using ProjectLibrary.Database
+@using PagedList;
+@using TeamplateHotel.Handler
+@using TeamplateHotel.Models;
+@model IPagedList<ShowObject>
+@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    Menu menu = ViewBag.Menu ?? new Menu();
+    Article article = ViewBag.ArticleByRoomRate;
+    var lang = Request.Cookies["LanguageID"].Value;
+}
+
+
+@*<div class="banner-page">
+    <div class="banner__item">
+        <div class="banner__img"><img src="@menu.Image" alt=""></div>
+        <div class="banner__caption">
+            <h1 class="animate__animated">@menu.Title</h1>
+        </div>
+    </div>
+</div>
+<ul class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item active">@menu.Title</li>
+</ul>*@
+<section class="rooms-wp box">
+    <div class="container">
+        <div class="room-head">
+            <div class="box__title room-title">
+                <h3>Kết quả tìm kiếm của : @ViewBag.SearchText</h3>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            @foreach (var itemRoom in Model)
+            {
+                <div class="col-lg-4 col-md-6">
+                    <div class="room-item">
+                        <div class="room-img">
+                            <img src="@itemRoom.Image" alt="">
+                            <div class="room-price"><span>@itemRoom.Price VND/ĐÊM</span></div>
+                        </div>
+                        <div class="room-detail">
+                            <div class="room-desc">
+                                <h4 class="room-name"><a href="/@itemRoom.MenuAlias/@itemRoom.ID/@itemRoom.Alias">@itemRoom.Title</a></h4>
+                                <ul class="room__info">
+                                    <li class="ml-0">@itemRoom.Size m<sup>2</sup></li>
+                                    <li>King bed</li>
+                                    <li class="mr-0">@itemRoom.MaxPeople persons</li>
+                                </ul>
+                                <div class="room-text">@Html.Raw(itemRoom.Description)</div>
+                            </div>
+                            <div class="room_btn"><a class="detail-btn" href="/@itemRoom.MenuAlias/@itemRoom.ID/@itemRoom.Alias">Xem chi tiết</a></div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</section>

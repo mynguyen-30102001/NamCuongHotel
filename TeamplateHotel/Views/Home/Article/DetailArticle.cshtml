@@ -1,12 +1,13 @@
 ﻿@using ProjectLibrary.Database
 @using TeamplateHotel.Controllers
-@using TeamplateHotel.Handler
+@using TeamplateHotel.Models
 @using ProjectLibrary.Config
 @model TeamplateHotel.Models.DetailArticle
 @{
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
     Menu menu = ViewBag.Menu ?? new Menu();
     Hotel detailHotel = CommentController.DetailHotel(Request.Cookies["LanguageID"].Value);
+    List<ShowObject> newArticles = CommentController.CustomerArticles(Request.Cookies["LanguageID"].Value);
 }
 
     <div class="banner-page">
@@ -45,24 +46,21 @@
                         <div class="blog-box">
                             <h3>Tin gần đây</h3>
                             <ul class="Recent-News">
-                                <li>
-                                    <div class="post-thumb"><img src="./images/about2.jpg" alt=""></div>
-                                    <div class="post-content">
-                                        <div class="post__meta"><span class="post__date"> 26 / 8 /2021</span><a class="post__catagory" href=""> Sự Kiện</a></div><a href="blog_detail.html">Khám phá địa điểm nối tiếng Hải Dương</a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="post-thumb"><img src="./images/about2.jpg" alt=""></div>
-                                    <div class="post-content">
-                                        <div class="post__meta"><span class="post__date"> 26 / 8 /2021</span><a class="post__catagory" href="">Sự Kiện</a></div><a href="blog_detail.html">Khám phá địa điểm nối tiếng Hải Dương</a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="post-thumb"><img src="./images/about2.jpg" alt=""></div>
-                                    <div class="post-content">
-                                        <div class="post__meta"><span class="post__date"> 26 / 8 /2021</span><a class="post__catagory" href="">Sự Kiện</a></div><a href="blog_detail.html">Khám phá địa điểm nối tiếng Hải Dương</a>
-                                    </div>
-                                </li>
+                                @foreach (var itemNew in newArticles.Take(3))
+                                {
+                                    <li>
+                                        <div class="post-thumb">
+                                            <img src="@itemNew.Image" alt="">
+                                        </div>
+                                        <div class="post-content">
+                                            <div class="post__meta">
+                                                <span class="post__date"> @itemNew.CreateDate.ToString("dd/MM/yyyy")</span>
+                                                <a class="post__catagory" href="">@itemNew.Type </a>
+                                            </div>
+                                            <a href="/@itemNew.MenuAlias/@itemNew.ID/@itemNew.Alias">@itemNew.Title</a>
+                                        </div>
+                                    </li>
+                                }
                             </ul>
                         </div>
                         <div class="blog-box">

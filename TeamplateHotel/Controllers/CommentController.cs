@@ -52,6 +52,16 @@ namespace TeamplateHotel.Controllers
                 return menufooter;
             }
         }
+        //danh sach menu room
+        public static List<Menu> GetMenuRoom (string languageKey)
+        {
+            using(var db = new MyDbDataContext())
+            {
+                List<Menu> menu = db.Menus.Where(a => a.Status && a.Type == SystemMenuType.RoomRate && a.LanguageID == languageKey).ToList();
+                return menu;
+            }
+        }
+
         //Danh sách Second menu
         public static List<EGallery> Gallery()
         {
@@ -171,7 +181,7 @@ namespace TeamplateHotel.Controllers
         {
             using (var db = new MyDbDataContext())
             {
-                List<Article> articles = db.Articles.Where(a => a.MenuID == menuId && a.Status).OrderBy(a => a.Index).ToList();
+                List<Article> articles = db.Articles.Where(a => a.MenuID == menuId && a.Status && !a.Customer).OrderBy(a => a.Index).ToList();
                 foreach (var article in articles)
                 {
                     article.MenuAlias = article.Menu.Alias;
@@ -432,11 +442,25 @@ namespace TeamplateHotel.Controllers
                                 Alias = a.Alias,
                                 MenuAlias = b.Alias,
                                 Title = a.Title,
+                                Type = a.Type,
                                 Index = a.Index,
                                 Image = a.Image,
                                 Description = a.Description,
                             }).Take(4).ToList();
                 return articleHots;
+            }
+        }
+        //Danh sách bài viết theo chuyên mục
+        public static List<Article> GetArticles(int menuId)
+        {
+            using (var db = new MyDbDataContext())
+            {
+                List<Article> articles = db.Articles.Where(a => a.MenuID == menuId && a.Status).OrderBy(a => a.Index).ToList();
+                foreach (var article in articles)
+                {
+                    article.MenuAlias = article.Menu.Alias;
+                }
+                return articles;
             }
         }
         //Bai viet Customer
@@ -453,10 +477,37 @@ namespace TeamplateHotel.Controllers
                                 MenuAlias = b.Alias,
                                 Title = a.Title,
                                 Index = a.Index,
+                                CreateDate = (DateTime)a.DateCreate,
+                                Type = a.Type,
                                 Image = a.Image,
                                 Description = a.Description,
                             }).ToList();
                 return CustomerArticle;
+            }
+        }
+        //Danh sách tất cả tags 
+        public static List<ArticleTag> GetAllTags(string languageKey)
+        {
+            using (var db = new MyDbDataContext())
+            {
+                List<ArticleTag> tags = db.ArticleTags.Where(a => a.LanguageID == languageKey).ToList();
+                return tags;
+            }
+        }
+        //Danh sách tags theo bài viết
+        public static List<ArticleTag> GetArticleTags(int id)
+        {
+            using (var db = new MyDbDataContext())
+            {
+                Article article = db.Articles.FirstOrDefault(a => a.ID == id);
+
+                int[] tagID = article.TagID.Substring(0, article.TagID.Length - 1).Split(',').Select(a => Convert.ToInt32(a)).ToArray();
+                List<ArticleTag> tags = new List<ArticleTag>();
+                foreach (var item in tagID)
+                {
+                    tags.Add(db.ArticleTags.FirstOrDefault(a => a.ID == item));
+                }
+                return tags;
             }
         }
         //phòng show home
@@ -478,11 +529,11 @@ namespace TeamplateHotel.Controllers
                     MaxPeople = a.MaxPeople,
                     Image = a.Image,
                     Description = a.Description,
-                    Price = (double)a.Price,
+                    Price = a.Price,
                 }).ToList();
                 foreach (var item in roomShowHome)
                 {
-                    item.Price = item.Price * (double)GetPriceUSD.USDToVND();
+                    item.Price = item.Price * GetPriceUSD.USDToVND();
                 }
                 return roomShowHome;
             }

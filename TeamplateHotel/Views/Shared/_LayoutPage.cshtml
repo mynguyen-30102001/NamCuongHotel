@@ -152,9 +152,9 @@
                             </nav>
                             <div class="search-btn">
                                 <span class="fas fa-search search-icon"></span>
-                                <form action="" id="quick-search">
-                                    <input class="form-control" type="text" name="quick-search" placeholder="Tìm kiếm...">
-                                    <button type="submit"><i class="fas fa-search"></i></button>
+                                <form action="/Search/SearchLayout" method="get" id="quick-search">
+                                    <input id="key-search" class="form-control" type="text" name="keySearch" placeholder="Tìm kiếm...">
+                                    <button id="submitSearch" type="submit"><i class="fas fa-search"></i></button>
                                 </form>
                             </div>
                             <div class="menu-bar d-block d-lg-none">
@@ -225,7 +225,7 @@
                                             }
                                         }
                                     }
-                                    
+
                                 </ul>
                             </nav>
                         </div>
@@ -342,5 +342,40 @@
             <!-- Template Main JS File-->
             <script src="~/Content/js/main.js"></script>
             <script src="~/Content/js/slider.js"></script>
+            <script src="~/Content/js/jquery.validate.min.js.js"></script>
+
+            <script>
+                //jQuery.validator.setDefaults({
+                //    debug: true,
+                //    success: "valid"
+                //});
+                $(document).ready(function () {
+                    //$("#quick-search").validate({
+                    //    rules: {
+                    //        'keySearch': {
+                    //            required: true,
+                    //        },
+                    //    },
+                    //    messages: {
+                    //        'keySearch': "This field is required",
+
+                    //    },
+                    //    submitHandler: function (form) {
+                    //        form.submit();
+                    //    },
+
+                    //});
+                    $("#submitSearch").click(function () {
+                        var key = $("#key-search").val();
+                        if (key == "") {
+                            alert("Xin vui lòng nhập từ khóa tìm kiếm");
+                            return false;
+                        }
+                    });
+
+                });
+               
+            </script>
+            @RenderSection("script", false)
         </body>
 

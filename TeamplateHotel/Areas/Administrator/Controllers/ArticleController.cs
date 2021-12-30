@@ -167,6 +167,19 @@ namespace TeamplateHotel.Areas.Administrator.Controllers
                     Customer = detailArticle.Customer,
                     New = detailArticle.New,
                 };
+                if (!string.IsNullOrEmpty(detailArticle.TagID))
+                {
+                    List<string> termList = new List<string>();
+                    var articleTagID = detailArticle.TagID;
+                    int[] menuIds = articleTagID.Substring(0, articleTagID.Length - 1).Split(',').Select(n => Convert.ToInt32(n)).ToArray();
+
+                    foreach (var item in menuIds)
+                    {
+                        termList.Add(item.ToString());
+                    }
+                    string[] select = termList.ToArray();
+                    artile.TagID = select;
+                }
                 LoadData();
                 return View(artile);
             }
@@ -206,7 +219,15 @@ namespace TeamplateHotel.Areas.Administrator.Controllers
                             article.Hot = model.Hot;
                             article.Customer = model.Customer;
                             article.New = model.New;
+                            article.TagID = null;
 
+                            if (model.TagID != null)
+                            {
+                                foreach (var item in model.TagID)
+                                {
+                                    article.TagID += item + ',';
+                                }
+                            }
                             db.SubmitChanges();
                             TempData["Messages"] = "Cập nhật bài viết thành công";
                             return RedirectToAction("Index");
@@ -279,6 +300,18 @@ namespace TeamplateHotel.Areas.Administrator.Controllers
                 Value = a.ID.ToString()
             }).ToList());
             ViewBag.ListMenu = listMenu;
+
+            var db = new MyDbDataContext();
+            List<SelectListItem> listTag = new List<SelectListItem>();
+            foreach (var b in db.ArticleTags.ToList())
+            {
+                listTag.Add(new SelectListItem()
+                {
+                    Value = b.TagName,
+                    Text = b.ID.ToString(),
+                });
+            }
+            ViewBag.ListMenu3 = new SelectList(listTag, "Text", "Value");
         }
     }
 }

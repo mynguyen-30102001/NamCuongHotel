@@ -9,76 +9,81 @@ namespace TeamplateHotel.Controllers
 {
     public class BookingController : Controller
     {
-        [HttpGet]
-        public ActionResult MakeReservation()
+        [HttpPost]
+        public ActionResult MakeReservation(string checkIn, string checkOut, int Adult, int Child, int ID)
         {
             using (var db = new MyDbDataContext())
             {
                 var bookRoom = new BookRoom();
-                bookRoom.CheckIn = DateTime.UtcNow;
-                bookRoom.CheckOut = DateTime.UtcNow.AddDays(1);
-                bookRoom.Adult = 1;
-                bookRoom.Child = 0;
-                if (!string.IsNullOrEmpty(Request.Params["Checkin"]))
-                {
-                    try
-                    {
-                        DateTime checkIn = Convert.ToDateTime(Request.Params["Checkin"]);
-                        bookRoom.CheckIn = checkIn;
-                    }
-                    catch (Exception)
-                    {
-                        bookRoom.CheckIn = DateTime.UtcNow;
-                        throw;
-                    }
-                }
-                if (!string.IsNullOrEmpty(Request.Params["Checkout"]))
-                {
-                    try
-                    {
-                        DateTime checkOut = Convert.ToDateTime(Request.Params["Checkout"]);
-                        bookRoom.CheckOut = checkOut;
-                    }
-                    catch (Exception)
-                    {
-                        bookRoom.CheckOut = DateTime.UtcNow.AddDays(1);
-                        throw;
-                    }
-                }
-                if (bookRoom.CheckOut <= bookRoom.CheckIn)
-                {
-                    bookRoom.CheckOut = bookRoom.CheckIn.AddDays(1);
-                }
+                //bookRoom.CheckIn = DateTime.ParseExact(checkIn, "dd/MM/yyyy", null);
+                //bookRoom.CheckOut = DateTime.ParseExact(checkOut, "dd/MM/yyyy", null);
+                bookRoom.CheckIn = DateTime.Parse(checkIn);
+                bookRoom.CheckOut = DateTime.Parse(checkOut);
+                bookRoom.Adult = Adult;
+                bookRoom.Child = Child;
+                
+                Room room = db.Rooms.FirstOrDefault(a=> a.ID == ID);
+                ViewBag.Room = room;
+                //if (!string.IsNullOrEmpty(Request.Params["Checkin"]))
+                //{
+                //    try
+                //    {
+                //        DateTime checkIn = Convert.ToDateTime(Request.Params["Checkin"]);
+                //        bookRoom.CheckIn = checkIn;
+                //    }
+                //    catch (Exception)
+                //    {
+                //        bookRoom.CheckIn = DateTime.UtcNow;
+                //        throw;
+                //    }
+                //}
+                //if (!string.IsNullOrEmpty(Request.Params["Checkout"]))
+                //{
+                //    try
+                //    {
+                //        DateTime checkOut = Convert.ToDateTime(Request.Params["Checkout"]);
+                //        bookRoom.CheckOut = checkOut;
+                //    }
+                //    catch (Exception)
+                //    {
+                //        bookRoom.CheckOut = DateTime.UtcNow.AddDays(1);
+                //        throw;
+                //    }
+                //}
+                //if (bookRoom.CheckOut <= bookRoom.CheckIn)
+                //{
+                //    bookRoom.CheckOut = bookRoom.CheckIn.AddDays(1);
+                //}
 
-                if (!string.IsNullOrEmpty(Request.Params["Adult"]))
-                {
-                    try
-                    {
-                        int adult = 1;
-                        int.TryParse(Request.Params["Adult"], out adult);
-                        bookRoom.Adult = adult;
-                    }
-                    catch (Exception)
-                    {
-                        bookRoom.Adult = 1;
-                        throw;
-                    }
-                }
+                //if (!string.IsNullOrEmpty(Request.Params["Adult"]))
+                //{
+                //    try
+                //    {
+                //        int adult = 1;
+                //        int.TryParse(Request.Params["Adult"], out adult);
+                //        bookRoom.Adult = adult;
+                //    }
+                //    catch (Exception)
+                //    {
+                //        bookRoom.Adult = 1;
+                //        throw;
+                //    }
+                //}
 
-                if (!string.IsNullOrEmpty(Request.Params["Child"]))
-                {
-                    try
-                    {
-                        int child = 0;
-                        int.TryParse(Request.Params["Child"], out child);
-                        bookRoom.Child = child;
-                    }
-                    catch (Exception)
-                    {
-                        bookRoom.Child = 0;
-                        throw;
-                    }
-                }
+                //if (!string.IsNullOrEmpty(Request.Params["Child"]))
+                //{
+                //    try
+                //    {
+                //        int child = 0;
+                //        int.TryParse(Request.Params["Child"], out child);
+                //        bookRoom.Child = child;
+                //    }
+                //    catch (Exception)
+                //    {
+                //        bookRoom.Child = 0;
+                //        throw;
+                //    }
+                //}
                 //string url = "http://smilebooking.com/paosapa/RAvailable.aspx?in=" +
                 //             bookRoom.CheckIn.ToString("MM/dd/yyyy") + "&out=" + bookRoom.CheckOut.ToString("MM/dd/yyyy") +
                 //             "&idht=paosapa&r=1&adult=" + bookRoom.Adult + "&child=" + bookRoom.Child;
@@ -124,11 +129,12 @@ namespace TeamplateHotel.Controllers
         }
 
         [HttpPost]
-        public ActionResult SendBooking(BookRoom model)
+        public ActionResult SendBooking(BookRoom model, decimal Price, int RoomNumber, string NameRoom)
         {
             string status = "success";
-            if (ModelState.IsValid)
-            {
+
+            //if (ModelState.IsValid)
+            //{
                 try
                 {
                     using (var db = new MyDbDataContext())
@@ -143,15 +149,22 @@ namespace TeamplateHotel.Controllers
                         model.Code = codeBooking;
                         string infoBooking = "";
                         decimal totelPrice = 0;
-                        foreach (ListRoomBooking item in model.ListRoomBookings)
-                        {
-                            if (item.Number > 0)
-                            {
-                                infoBooking += item.NameRoom + " = " + item.Number + ", ";
-                                totelPrice += (decimal)item.Price*item.Number;
-                            }
-                        }
-                        model.TotalMoney = totelPrice;
+                    TimeSpan Date = model.CheckOut.Date - model.CheckIn.Date ;
+                    int SoNgay = Date.Days;
+                    //foreach (ListRoomBooking item in model.ListRoomBookings)
+                    //{
+                    //    if (RoomNumber > 0)
+                    //    {
+                    //        infoBooking += item.NameRoom + " = " + RoomNumber + ", ";
+                    //        totelPrice += Price * RoomNumber;
+                    //    }
+                    //}
+                    if (RoomNumber > 0)
+                    {   
+                        infoBooking = NameRoom + " = " + RoomNumber + ", ";
+                        totelPrice += Price * RoomNumber ;
+                    }
+                    model.TotalMoney = totelPrice;
                         model.DateBook = DateTime.UtcNow;
                         model.InfoBooking = infoBooking;
                         db.BookRooms.InsertOnSubmit(model);
@@ -171,7 +184,7 @@ namespace TeamplateHotel.Controllers
                         content = content.Replace("{Address}", model.Address);
                         content = content.Replace("{City}", model.City);
                         content = content.Replace("{Country}", model.Country);
-                        content = content.Replace("{Smoking}", model.Smoking ? "Yes" : "No");
+                        //content = content.Replace("{Smoking}", model.Smoking ? "Yes" : "No");
                         content = content.Replace("{ArrivalFlight}", model.ArrivalFlight);
                         content = content.Replace("{ArrivalTime}", model.ArrivalTime);
                         content = content.Replace("{Request}", model.Request);
@@ -196,7 +209,11 @@ namespace TeamplateHotel.Controllers
                 {
                     status = "error";
                 }
-            }
+            //}
+            //else
+            //{
+            //    status = "error";
+            //}
             return Redirect("/Booking/Messages/?status=" + status);
         }
 

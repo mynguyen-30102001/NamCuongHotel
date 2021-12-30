@@ -1,6 +1,28 @@
 /* config */
 html {
 	scroll-behavior: smooth; }
+label.error {
+	display: inline-block;
+	color: red;
+	width: auto;
+}
+
+#wraploadding {
+	background-color: #fff;
+	opacity: 0.8;
+	z-index: 5000;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	display: none;
+}
+
+	#wraploadding div#imgloadding {
+		width: 100px;
+		height: 100px;
+		margin: auto;
+		position: relative;
+	}
 
 body {
 	font-family: "Roboto", sans-serif;
@@ -11,7 +33,8 @@ body {
 	color: #1b1c1e;
 	overflow-x: hidden;
 	text-rendering: optimizeLegibility;
-	-webkit-font-smoothing: antialiased; }
+	-webkit-font-smoothing: antialiased;
+}
 
 body::-webkit-scrollbar-track {
 	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
@@ -1444,10 +1467,15 @@ header {
 	opacity: 0;
 	transform: translateX(-50%); }
 
-[name="book_date"] {
+[name="CheckIn"] {
 	opacity: 0;
 	position: absolute;
 	bottom: 10px; }
+[name="CheckOut"] {
+	opacity: 0;
+	position: absolute;
+	bottom: 10px;
+}
 
 .b-number {
 	font-size: 40px;

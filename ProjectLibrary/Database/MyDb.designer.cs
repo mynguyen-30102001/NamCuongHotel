@@ -22,7 +22,7 @@ namespace ProjectLibrary.Database
 	using System;
 	
 	
-	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="Dblotusaromasapa")]
+	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="DBDemoNamCuong02")]
 	public partial class MyDbDataContext : System.Data.Linq.DataContext
 	{
 		
@@ -39,6 +39,9 @@ namespace ProjectLibrary.Database
     partial void InsertArticle(Article instance);
     partial void UpdateArticle(Article instance);
     partial void DeleteArticle(Article instance);
+    partial void InsertArticleTag(ArticleTag instance);
+    partial void UpdateArticleTag(ArticleTag instance);
+    partial void DeleteArticleTag(ArticleTag instance);
     partial void InsertBookRoom(BookRoom instance);
     partial void UpdateBookRoom(BookRoom instance);
     partial void DeleteBookRoom(BookRoom instance);
@@ -108,7 +111,7 @@ namespace ProjectLibrary.Database
     #endregion
 		
 		public MyDbDataContext() : 
-				base(global::ProjectLibrary.Properties.Settings.Default.DblotusaromasapaConnectionString, mappingSource)
+				base(global::ProjectLibrary.Properties.Settings.Default.DBDemoNamCuong02ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -158,6 +161,14 @@ namespace ProjectLibrary.Database
 			get
 			{
 				return this.GetTable<Article>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ArticleTag> ArticleTags
+		{
+			get
+			{
+				return this.GetTable<ArticleTag>();
 			}
 		}
 		
@@ -857,6 +868,8 @@ namespace ProjectLibrary.Database
 		
 		private System.Nullable<System.DateTime> _DateUpdate;
 		
+		private string _TagID;
+		
 		private EntityRef<Menu> _Menu;
 		
     #region Extensibility Method Definitions
@@ -899,6 +912,8 @@ namespace ProjectLibrary.Database
     partial void OnTypeChanged();
     partial void OnDateUpdateChanging(System.Nullable<System.DateTime> value);
     partial void OnDateUpdateChanged();
+    partial void OnTagIDChanging(string value);
+    partial void OnTagIDChanged();
     #endregion
 		
 		public Article()
@@ -1271,6 +1286,26 @@ namespace ProjectLibrary.Database
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TagID", DbType="NVarChar(250)")]
+		public string TagID
+		{
+			get
+			{
+				return this._TagID;
+			}
+			set
+			{
+				if ((this._TagID != value))
+				{
+					this.OnTagIDChanging(value);
+					this.SendPropertyChanging();
+					this._TagID = value;
+					this.SendPropertyChanged("TagID");
+					this.OnTagIDChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Menu_Article", Storage="_Menu", ThisKey="MenuID", OtherKey="ID", IsForeignKey=true)]
 		public Menu Menu
 		{
@@ -1326,6 +1361,164 @@ namespace ProjectLibrary.Database
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ArticleTag")]
+	public partial class ArticleTag : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private string _TagName;
+		
+		private string _Alias;
+		
+		private string _Description;
+		
+		private string _LanguageID;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnTagNameChanging(string value);
+    partial void OnTagNameChanged();
+    partial void OnAliasChanging(string value);
+    partial void OnAliasChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
+    partial void OnLanguageIDChanging(string value);
+    partial void OnLanguageIDChanged();
+    #endregion
+		
+		public ArticleTag()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TagName", DbType="NVarChar(250) NOT NULL", CanBeNull=false)]
+		public string TagName
+		{
+			get
+			{
+				return this._TagName;
+			}
+			set
+			{
+				if ((this._TagName != value))
+				{
+					this.OnTagNameChanging(value);
+					this.SendPropertyChanging();
+					this._TagName = value;
+					this.SendPropertyChanged("TagName");
+					this.OnTagNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Alias", DbType="NVarChar(250) NOT NULL", CanBeNull=false)]
+		public string Alias
+		{
+			get
+			{
+				return this._Alias;
+			}
+			set
+			{
+				if ((this._Alias != value))
+				{
+					this.OnAliasChanging(value);
+					this.SendPropertyChanging();
+					this._Alias = value;
+					this.SendPropertyChanged("Alias");
+					this.OnAliasChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(MAX)")]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this.OnDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._Description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LanguageID", DbType="VarChar(10) NOT NULL", CanBeNull=false)]
+		public string LanguageID
+		{
+			get
+			{
+				return this._LanguageID;
+			}
+			set
+			{
+				if ((this._LanguageID != value))
+				{
+					this.OnLanguageIDChanging(value);
+					this.SendPropertyChanging();
+					this._LanguageID = value;
+					this.SendPropertyChanged("LanguageID");
+					this.OnLanguageIDChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.BookRoom")]
 	public partial class BookRoom : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -1350,7 +1543,7 @@ namespace ProjectLibrary.Database
 		
 		private string _Country;
 		
-		private bool _Smoking;
+		private System.Nullable<bool> _Smoking;
 		
 		private string _ArrivalFlight;
 		
@@ -1394,7 +1587,7 @@ namespace ProjectLibrary.Database
     partial void OnCityChanged();
     partial void OnCountryChanging(string value);
     partial void OnCountryChanged();
-    partial void OnSmokingChanging(bool value);
+    partial void OnSmokingChanging(System.Nullable<bool> value);
     partial void OnSmokingChanged();
     partial void OnArrivalFlightChanging(string value);
     partial void OnArrivalFlightChanged();
@@ -1603,8 +1796,8 @@ namespace ProjectLibrary.Database
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Smoking", DbType="Bit NOT NULL")]
-		public bool Smoking
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Smoking", DbType="Bit")]
+		public System.Nullable<bool> Smoking
 		{
 			get
 			{
@@ -2417,7 +2610,7 @@ namespace ProjectLibrary.Database
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Gender", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Gender", DbType="NVarChar(50)")]
 		public string Gender
 		{
 			get
