@@ -13,7 +13,7 @@
     List<ShowObject> roomShowHomes = CommentController.RoomShowHome(Request.Cookies["LanguageID"].Value);
     List<Advertising> qc = CommentController.GetAdvertisings();
     Menu menu = ViewBag.Menu ?? new Menu();
-    List<Gallery> listGalleryHome = CommentController.ListGalleryHome();
+    List<Gallery> listGalleryHome = CommentController.ListGalleryHome(lang);
     Menu menuGallary = CommentController.GetMainMenus(Request.Cookies["LanguageID"].Value).Where(x => x.Type == SystemMenuType.Gallery).FirstOrDefault();
     List<Slider> sliders = CommentController.GetListSlider(Request.Cookies["LanguageID"].Value, 0);
     List<ShowObject> services = CommentController.ListServiceHome(Request.Cookies["LanguageID"].Value);
@@ -40,7 +40,8 @@
     </div>
     <div class="quick-book">
         <div class="container">
-            <form action="book-room.html" method="method" id="quick_search">
+            <form action="/Booking" method="post" id="quick_search">
+                <input type="hidden" value="0" name="Id"/>
                 <div class="row">
                     <div class="col-lg-20 col-6">
                         <div class="form-group">
@@ -59,16 +60,16 @@
                             <label for="Adult">Người Lớn</label>
                             <select class="custom-select" name="Adult" id="Adult">
                                 <option value="0">Adults</option>
-                                <option value="0">1</option>
-                                <option value="0">2</option>
-                                <option value="0">3</option>
-                                <option value="0">4</option>
-                                <option value="0">5</option>
-                                <option value="0">6</option>
-                                <option value="0">7</option>
-                                <option value="0">8</option>
-                                <option value="0">9</option>
-                                <option value="0">10</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
                             </select>
                         </div>
                     </div>
@@ -77,21 +78,21 @@
                             <label for="Child">Trẻ em</label>
                             <select class="custom-select" name="Child" id="Child">
                                 <option value="0">Child</option>
-                                <option value="0">1</option>
-                                <option value="0">2</option>
-                                <option value="0">3</option>
-                                <option value="0">4</option>
-                                <option value="0">5</option>
-                                <option value="0">6</option>
-                                <option value="0">7</option>
-                                <option value="0">8</option>
-                                <option value="0">9</option>
-                                <option value="0">10</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-lg-20 col-md-12 mt-auto">
-                        <button class="check-avai">ĐẶT PHÒNG</button>
+                        <button class="check-avai">@GetLanguage.Language(Request.Cookies["LanguageID"].Value, "BookingNow")</button>
                     </div>
                 </div>
             </form>
@@ -109,7 +110,7 @@
                     </div>
                     <div class="about__desc">
                         @Html.Raw(wellcomeArticle.Description)
-                    </div><a class="btn view-more" href="/@wellcomeArticle.MenuAlias/@wellcomeArticle.ID/@wellcomeArticle.Alias">Xem Thêm</a>
+                    </div><a class="btn view-more" href="/@wellcomeArticle.MenuAlias/@wellcomeArticle.ID/@wellcomeArticle.Alias">@GetLanguage.Language(Request.Cookies["LanguageID"].Value, "LEARNMORE")</a>
                 </div>
             </div>
             <div class="col-lg-6">
@@ -141,7 +142,7 @@
                     <div class="room__text">
                         @Html.Raw(itemRoom.Description)
                     </div>
-                    <div class="room-btn"><a class="btn" href="/@itemRoom.MenuAlias/@itemRoom.ID/@itemRoom.Alias">Xem chi tiết</a></div>
+                    <div class="room-btn"><a class="btn" href="/@itemRoom.MenuAlias/@itemRoom.ID/@itemRoom.Alias">@GetLanguage.Language(Request.Cookies["LanguageID"].Value, "Detail")</a></div>
                 </div>
                 <div class="room__img"><img src="@itemRoom.Image" alt=""></div>
             </div>
@@ -193,7 +194,7 @@
                         </div>
                         <div class="post__more">
                             <a class="btn view-more" href="/@itemNew.MenuAlias/@itemNew.ID/@itemNew.Alias">
-                                Xem thêm<i class="far fa-long-arrow-right ml-2"></i>
+                                @GetLanguage.Language(Request.Cookies["LanguageID"].Value, "LEARNMORE")<i class="far fa-long-arrow-right ml-2"></i>
                             </a>
                         </div>
                     </div>
@@ -231,6 +232,6 @@
 
         </div>
 
-        <div class="gallery-btn text-center"><a class="btn view-more" href="/@menuGallary.Alias">Xem Thêm</a></div>
+        <div class="gallery-btn text-center"><a class="btn view-more" href="/@menuGallary.Alias"> @GetLanguage.Language(Request.Cookies["LanguageID"].Value, "LEARNMORE")</a></div>
     </div>
 </section>

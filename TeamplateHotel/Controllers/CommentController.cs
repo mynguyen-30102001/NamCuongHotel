@@ -63,14 +63,14 @@ namespace TeamplateHotel.Controllers
         }
 
         //Danh sách Second menu
-        public static List<EGallery> Gallery()
+        public static List<EGallery> Gallery(string _lang)
         {
             using (var db = new MyDbDataContext())
             {
                 //List<Menu> menu = db.Menus.Where(a => a.Type == SystemMenuType.Gallery && a.Level == 1).ToList();
               
                     List<EGallery> galleries = db.Galleries.OrderBy(a => a.Index)
-                        .Join(db.Menus.Where(a => a.Type == SystemMenuType.Gallery && a.Level == 1), a => a.MenuId, b => b.ID,(a,b) => new EGallery
+                        .Join(db.Menus.Where(a => a.Type == SystemMenuType.Gallery && a.LanguageID ==_lang  && a.Level == 1), a => a.MenuId, b => b.ID,(a,b) => new EGallery
                         {
                             Id =a.ID,
                             MenuName = b.Title,
@@ -81,13 +81,22 @@ namespace TeamplateHotel.Controllers
                 return galleries;
             }
         }
-
-        public static List<Gallery> ListGalleryHome()
+        //Danh sách bài viết tuyển dụng
+        public static List<Recruitment> Recruitments()
         {
             using (var db = new MyDbDataContext())
             {
-                var menu = db.Menus.FirstOrDefault(a => a.Type == SystemMenuType.Home);
-                List<Gallery> galleries = db.Galleries.Where(a=> a.MenuId == menu.ID).OrderBy(a => a.Index).Take(6).ToList();
+                List<Recruitment> recruitments = db.Recruitments.Where(a => a.Status).OrderBy(a => a.Index).ToList();
+                return recruitments;
+            }
+        }
+
+        public static List<Gallery> ListGalleryHome(string _lang)
+        {
+            using (var db = new MyDbDataContext())
+            {
+                var menu = db.Menus.FirstOrDefault(a => a.Type == SystemMenuType.Home && a.LanguageID == _lang);
+                List<Gallery> galleries = db.Galleries.Where(a=> a.MenuId == menu.ID ).OrderBy(a => a.Index).Take(6).ToList();
                 return galleries;
             }
         }
@@ -332,16 +341,45 @@ namespace TeamplateHotel.Controllers
                 return restaurants;
             }
         }
-
-        public static List<Service> GetService()
+        //public static List<ShowObject> HotArticles(string languageKey)
+        //{
+        //    using (var db = new MyDbDataContext())
+        //    {
+        //        List<ShowObject> articleHots = db.Articles.Where(a => a.Hot && a.Status)
+        //                .Join(db.Menus.Where(a => a.LanguageID == languageKey), a => a.MenuID, b => b.ID,
+        //                    (a, b) => new ShowObject
+        //                    {
+        //                        ID = a.ID,
+        //                        Alias = a.Alias,
+        //                        MenuAlias = b.Alias,
+        //                        Title = a.Title,
+        //                        Type = a.Type,
+        //                        Index = a.Index,
+        //                        Image = a.Image,
+        //                        Description = a.Description,
+        //                    }).Take(4).ToList();
+        //        return articleHots;
+        //    }
+        //}
+        public static List<ShowObject> GetService(string languageKey)
         {
             using (var db = new MyDbDataContext())
             {
-                List<Service> restaurants = db.Services.Where(a => a.Status).OrderBy(a => a.Index).ToList();
-                foreach (var restaurant in restaurants)
-                {
-                    restaurant.MenuAlias = restaurant.Menu.Alias;
-                }
+                List<ShowObject> restaurants = db.Services.Where(a => a.Status)
+                    .Join(db.Menus.Where(a => a.LanguageID == languageKey), a=>a.MenuID, b=>b.ID ,
+                    (a,b) => new ShowObject
+                    {
+                        ID = a.ID,
+                        MenuAlias = b.Alias,
+                        Index = a.Index,    
+                        Image = a.Image,
+                        Title = a.Title,
+                        Alias = a.Alias,
+                    }).OrderBy(a => a.Index).ToList();
+                //foreach (var restaurant in restaurants)
+                //{
+                //    restaurant.MenuAlias = restaurant.Menu.Alias;
+                //}
                 return restaurants;
             }
         }

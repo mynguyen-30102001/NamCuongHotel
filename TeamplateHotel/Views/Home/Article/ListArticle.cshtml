@@ -1,5 +1,6 @@
 ﻿@using ProjectLibrary.Database
 @using TeamplateHotel.Models
+@using TeamplateHotel.Handler
 @using TeamplateHotel.Controllers
 @using PagedList.Mvc
 @model  PagedList.IPagedList<Article>
@@ -47,7 +48,7 @@
                         <div class="row no-gutters">
                             <div class="col-md-5 d-flex">
                                 <div class="post__thumb">
-                                    <a href="/@item.MenuAlias/@item.ID/@item.Alias"><img src="@item.Image" alt=""></a>
+                                    <a href="/@menu.Alias/@item.ID/@item.Alias"><img src="@item.Image" alt=""></a>
                                 </div>
                             </div>
                             <div class="col-md-7 d-flex">
@@ -65,13 +66,13 @@
                                         <a class="post__catagory" href=""> @item.Type</a>
                                     </div>
                                     <h3 class="post__title">
-                                        <a href="/@item.MenuAlias/@item.ID/@item.Alias">@item.Title</a>
+                                        <a href="/@menu.Alias/@item.ID/@item.Alias">@item.Title</a>
                                     </h3>
                                     <div class="post__desc">
                                         @Html.Raw(item.Description)
                                     </div>
                                     <div class="post__more">
-                                        <a class="btn view-more" href="/@item.MenuAlias/@item.ID/@item.Alias">Xem thêm</a>
+                                        <a class="btn view-more" href="/@menu.Alias/@item.ID/@item.Alias">@GetLanguage.Language(Request.Cookies["LanguageID"].Value, "LEARNMORE")</a>
                                     </div>
                                 </div>
                             </div>
@@ -82,15 +83,15 @@
             <div class="col-lg-4">
                 <div class="blog-sidebar">
                     <div class="blog-box d-none d-lg-block">
-                        <form action="/SearchArt" method="get" id="blog_search">
+                        <form action="/Search/SearchArticle" method="get" id="blog_search">
                             <div class="input-group">
                                 @*<input class="form-control" type="text" name="search" id="b_search" placeholder="Tìm kiếm...">
-                                <div class="input-group-append">
-                                    <span class="fas fa-search input-group-text"></span>
-                                    <button
-                                </div>*@
+                                    <div class="input-group-append">
+                                        <span class="fas fa-search input-group-text"></span>
+                                        <button
+                                    </div>*@
                                 <input id="key-search" class="form-control" type="text" name="search" placeholder="Tìm kiếm...">
-                                <button id="submitSearch" type="submit"><i class="fas fa-search"></i></button>
+                                <button id="submitSearch" type="submit" class="input-group-text"><i class="fas fa-search"></i></button>
                             </div>
                         </form>
                     </div>

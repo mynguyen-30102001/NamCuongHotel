@@ -61,7 +61,7 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="room-sidebar sticky-top">
-                        <h3>Đặt Phòng</h3>
+                        <h3> @GetLanguage.Language(Request.Cookies["LanguageID"].Value, "BookingNow")</h3>
                         <form action="/Booking" method="post" id="book-room">
                             <input type="hidden" name="ID" value="@Model.Room.ID"/>
                             <div class="form-group">
@@ -105,7 +105,7 @@
                                 </select>
                             </div>
                             <div class="from-group pt-2">
-                                <button type="submit" class="check-avai">ĐẶT NGAY</button>
+                                <button type="submit" class="check-avai"> @GetLanguage.Language(Request.Cookies["LanguageID"].Value, "BookNow")</button>
                             </div>
                         </form>
                     </div>
@@ -114,7 +114,7 @@
         </div>
     </div>
     <div class="container">
-        <h3 class="room-dt__title">Phòng liên quan</h3>
+        <h3 class="room-dt__title"> @GetLanguage.Language(Request.Cookies["LanguageID"].Value, "RoomArticle")</h3>
         <div class="room-related owl-carousel owl-theme">
             @foreach (var item in Model.Rooms)
             {
@@ -142,7 +142,7 @@
                                 @Html.Raw(item.Content)
                             </div>
                             <div class="room_btn">
-                                <a class="detail-btn" href="/@item.MenuAlias/@item.Alias">Xem chi tiết</a>
+                                <a class="detail-btn" href="/@item.MenuAlias/@item.Alias"> @GetLanguage.Language(Request.Cookies["LanguageID"].Value, "Detail")</a>
                             </div>
                         </div>
                     </div>

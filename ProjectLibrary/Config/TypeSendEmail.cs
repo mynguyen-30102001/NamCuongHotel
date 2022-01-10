@@ -8,6 +8,7 @@ namespace ProjectLibrary.Config
         public static int Contact = 1;
         public static int BookTour = 2;
         public static int BookRoom = 3;
+        public static int Recruitment = 4;
 
         public static List<ListItem> ListTypeSendEmail()
         {
@@ -27,6 +28,10 @@ namespace ProjectLibrary.Config
                 {
                     Value = BookRoom.ToString(),
                     Text = "Đặt phòng",
+                },
+                new ListItem {
+                    Value = Recruitment.ToString(),
+                    Text = "Ứng tuyển",
                 },
             };
 

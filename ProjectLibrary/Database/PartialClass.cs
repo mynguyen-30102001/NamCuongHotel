@@ -58,6 +58,7 @@ namespace ProjectLibrary.Database
         public int MaxPeople { get; set; }
         public int Number { get; set; }
         public string Content { get; set; }
+        public string Image { get; set; }
         public int Index { get; set; }
     }
 

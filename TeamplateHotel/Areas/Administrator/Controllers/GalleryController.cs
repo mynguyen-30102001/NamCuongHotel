@@ -24,14 +24,14 @@ namespace TeamplateHotel.Areas.Administrator.Controllers
             {
                 using (var db = new MyDbDataContext())
                 {
-                    List<EGallery> list = db.Galleries.OrderBy(a => a.Index).Select(a => new EGallery()
+                    List<EGallery> list = db.Galleries.Join(db.Menus.Where(a => a.LanguageID == Request.Cookies["lang_client"].Value), a=>a.MenuId, b=>b.ID, (a,b) => new EGallery
                     {
                         ID = a.ID,
                         Title = a.Title,
-                        MenuId = a.MenuId,
+                        MenuId = b.ID,
                         Image = a.LargeImage,
                         Index = a.Index,
-                    }).ToList();
+                    }).OrderBy(a => a.Index).ToList();
                     //Return result to jTable
                     return Json(new {Result = "OK", Records = list, TotalRecordCount = list.Count});
                 }

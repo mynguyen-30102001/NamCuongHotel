@@ -283,5 +283,16 @@ namespace ProjectLibrary.Properties {
                 return ((string)(this["DBDemoNamCuong02ConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=103.226.248.52;Initial Catalog=demoNamCuong02;Persist Security Info=T" +
+            "rue;User ID=DBDemoNamCuong02;Password=123456789a@@")]
+        public string demoNamCuong02ConnectionString {
+            get {
+                return ((string)(this["demoNamCuong02ConnectionString"]));
+            }
+        }
     }
 }

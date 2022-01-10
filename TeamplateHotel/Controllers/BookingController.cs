@@ -15,115 +15,101 @@ namespace TeamplateHotel.Controllers
             using (var db = new MyDbDataContext())
             {
                 var bookRoom = new BookRoom();
-                //bookRoom.CheckIn = DateTime.ParseExact(checkIn, "dd/MM/yyyy", null);
-                //bookRoom.CheckOut = DateTime.ParseExact(checkOut, "dd/MM/yyyy", null);
-                bookRoom.CheckIn = DateTime.Parse(checkIn);
-                bookRoom.CheckOut = DateTime.Parse(checkOut);
-                bookRoom.Adult = Adult;
-                bookRoom.Child = Child;
-                
-                Room room = db.Rooms.FirstOrDefault(a=> a.ID == ID);
-                ViewBag.Room = room;
-                //if (!string.IsNullOrEmpty(Request.Params["Checkin"]))
-                //{
-                //    try
-                //    {
-                //        DateTime checkIn = Convert.ToDateTime(Request.Params["Checkin"]);
-                //        bookRoom.CheckIn = checkIn;
-                //    }
-                //    catch (Exception)
-                //    {
-                //        bookRoom.CheckIn = DateTime.UtcNow;
-                //        throw;
-                //    }
-                //}
-                //if (!string.IsNullOrEmpty(Request.Params["Checkout"]))
-                //{
-                //    try
-                //    {
-                //        DateTime checkOut = Convert.ToDateTime(Request.Params["Checkout"]);
-                //        bookRoom.CheckOut = checkOut;
-                //    }
-                //    catch (Exception)
-                //    {
-                //        bookRoom.CheckOut = DateTime.UtcNow.AddDays(1);
-                //        throw;
-                //    }
-                //}
-                //if (bookRoom.CheckOut <= bookRoom.CheckIn)
-                //{
-                //    bookRoom.CheckOut = bookRoom.CheckIn.AddDays(1);
-                //}
-
-                //if (!string.IsNullOrEmpty(Request.Params["Adult"]))
-                //{
-                //    try
-                //    {
-                //        int adult = 1;
-                //        int.TryParse(Request.Params["Adult"], out adult);
-                //        bookRoom.Adult = adult;
-                //    }
-                //    catch (Exception)
-                //    {
-                //        bookRoom.Adult = 1;
-                //        throw;
-                //    }
-                //}
-
-                //if (!string.IsNullOrEmpty(Request.Params["Child"]))
-                //{
-                //    try
-                //    {
-                //        int child = 0;
-                //        int.TryParse(Request.Params["Child"], out child);
-                //        bookRoom.Child = child;
-                //    }
-                //    catch (Exception)
-                //    {
-                //        bookRoom.Child = 0;
-                //        throw;
-                //    }
-                //}
-                //string url = "http://smilebooking.com/paosapa/RAvailable.aspx?in=" +
-                //             bookRoom.CheckIn.ToString("MM/dd/yyyy") + "&out=" + bookRoom.CheckOut.ToString("MM/dd/yyyy") +
-                //             "&idht=paosapa&r=1&adult=" + bookRoom.Adult + "&child=" + bookRoom.Child;
-                //ViewBag.Url = url;
-
-                //return View("BookingSmile");
-
-                List<ListRoomBooking> listRoomBookings =
-                    db.Rooms.Where(a => a.Status && a.LanguageID == Request.Cookies["LanguageID"].Value).Select(a => new ListRoomBooking
-                    {
-                        RoomId = a.ID,
-                        NameRoom = a.Title,
-                        Price = a.Price,
-                        MaxPeople = a.MaxPeople,
-                        Number = 0,
-                        Content = a.Content,
-                        Index = (int)a.Index
-                    }).OrderBy(a=>a.Index).ToList();
-                var optionAdult = new List<SelectListItem>();
-                for (int i = 1; i < 11; i++)
+                if (ID != 0)
                 {
-                    optionAdult.Add(new SelectListItem
-                    {
-                        Text = i.ToString(),
-                        Value = i.ToString()
-                    });
-                }
-                ViewBag.OptionAdult = optionAdult;
+                    
+                    //bookRoom.CheckIn = DateTime.ParseExact(checkIn, "dd/MM/yyyy", null);
+                    //bookRoom.CheckOut = DateTime.ParseExact(checkOut, "dd/MM/yyyy", null);
+                    bookRoom.CheckIn = DateTime.Parse(checkIn);
+                    bookRoom.CheckOut = DateTime.Parse(checkOut);
+                    bookRoom.Adult = Adult;
+                    bookRoom.Child = Child;
 
-                var optionChild = new List<SelectListItem>();
-                for (int i = 0; i < 11; i++)
-                {
-                    optionChild.Add(new SelectListItem
+                    Room room = db.Rooms.FirstOrDefault(a => a.ID == ID);
+                    ViewBag.Room = room;
+                    //string url = "http://smilebooking.com/paosapa/RAvailable.aspx?in=" +
+                    //             bookRoom.CheckIn.ToString("MM/dd/yyyy") + "&out=" + bookRoom.CheckOut.ToString("MM/dd/yyyy") +
+                    //             "&idht=paosapa&r=1&adult=" + bookRoom.Adult + "&child=" + bookRoom.Child;
+                    //ViewBag.Url = url;
+                    //return View("BookingSmile");
+
+                    List<ListRoomBooking> listRoomBookings =
+                        db.Rooms.Where(a => a.Status && a.LanguageID == Request.Cookies["LanguageID"].Value).Select(a => new ListRoomBooking
+                        {
+                            RoomId = a.ID,
+                            NameRoom = a.Title,
+                            Price = a.Price,
+                            MaxPeople = a.MaxPeople,
+                            Number = 0,
+                           
+                            Content = a.Content,
+                            Index = (int)a.Index
+                        }).OrderBy(a => a.Index).ToList();
+                    var optionAdult = new List<SelectListItem>();
+                    for (int i = 1; i < 11; i++)
                     {
-                        Text = i.ToString(),
-                        Value = i.ToString()
-                    });
+                        optionAdult.Add(new SelectListItem
+                        {
+                            Text = i.ToString(),
+                            Value = i.ToString()
+                        });
+                    }
+                    ViewBag.OptionAdult = optionAdult;
+
+                    var optionChild = new List<SelectListItem>();
+                    for (int i = 0; i < 11; i++)
+                    {
+                        optionChild.Add(new SelectListItem
+                        {
+                            Text = i.ToString(),
+                            Value = i.ToString()
+                        });
+                    }
+                    ViewBag.OptionChild = optionChild;
+                    bookRoom.ListRoomBookings = listRoomBookings;
+
                 }
-                ViewBag.OptionChild = optionChild;
-                bookRoom.ListRoomBookings = listRoomBookings;
+                else
+                {
+                    bookRoom.CheckIn = DateTime.Parse(checkIn);
+                    bookRoom.CheckOut = DateTime.Parse(checkOut);
+                    bookRoom.Adult = Adult;
+                    bookRoom.Child = Child;
+                    List<ListRoomBooking> listRoomBookings =
+                        db.Rooms.Where(a => a.Status && a.LanguageID == Request.Cookies["LanguageID"].Value).Select(a => new ListRoomBooking
+                        {
+                            RoomId = a.ID,
+                            NameRoom = a.Title,
+                            Price = a.Price,
+                            MaxPeople = a.MaxPeople,
+                            Number = 0,
+                            Content = a.Content,
+                            Image = a.Image,
+                            Index = (int)a.Index
+                        }).OrderBy(a => a.Index).ToList();
+                    var optionAdult = new List<SelectListItem>();
+                    for (int i = 1; i < 11; i++)
+                    {
+                        optionAdult.Add(new SelectListItem
+                        {
+                            Text = i.ToString(),
+                            Value = i.ToString()
+                        });
+                    }
+                    ViewBag.OptionAdult = optionAdult;
+
+                    var optionChild = new List<SelectListItem>();
+                    for (int i = 0; i < 11; i++)
+                    {
+                        optionChild.Add(new SelectListItem
+                        {
+                            Text = i.ToString(),
+                            Value = i.ToString()
+                        });
+                    }
+                    ViewBag.OptionChild = optionChild;
+                    bookRoom.ListRoomBookings = listRoomBookings;
+                }
                 return View(bookRoom);
             }
         }

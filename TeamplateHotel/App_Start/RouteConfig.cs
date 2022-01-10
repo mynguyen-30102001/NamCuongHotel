@@ -25,7 +25,12 @@ namespace TeamplateHotel
                 controller = "Booking",
                 action = "MakeReservation",
             });
-
+            //recruitment
+            routes.MapRoute("Recruitment", "Recruitment/SendRec", new
+            {
+                controller = "SendRecruitment",
+                action = "SendRec",
+            });
             //contact
             routes.MapRoute("Contact", "Contact/SubmitContact", new
             {
@@ -38,8 +43,14 @@ namespace TeamplateHotel
                 controller = "SendContact",
                 action = "Messages",
             });
+            //email marketing
+            routes.MapRoute("EmailMarketing", "Marketing/SaveMail", new
+            {
+                controller = "EmailMarketing",
+                action = "SaveEmail",
+            });
             //search article
-            routes.MapRoute("/SearchArt", "Search/SearchArticle", new
+            routes.MapRoute("SearchArt", "Search/SearchArticle", new
             {
                 controller = "Home",
                 action = "SearchArticles"

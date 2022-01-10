@@ -64,7 +64,7 @@ namespace TeamplateHotel.Areas.Administrator.Controllers
             using (var db = new MyDbDataContext())
             {
                 var menus = new List<Options>();
-                var listLanguageTemp = db.Menus.Where(a => a.LanguageID == languageId && a.Status && a.Type == SystemMenuType.Home || a.Type == SystemMenuType.Gallery).Select(a => new Options() { DisplayText = a.Title, Value = a.ID.ToString(CultureInfo.InvariantCulture) }).ToList();
+                var listLanguageTemp = db.Menus.Where(a => a.LanguageID == languageId && a.Status && (a.Type == SystemMenuType.Home || a.Type == SystemMenuType.Gallery)).Select(a => new Options() { DisplayText = a.Title, Value = a.ID.ToString(CultureInfo.InvariantCulture) }).ToList();
                 menus.Add(new Options()
                 {
                     DisplayText = "Select a Menu",

@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DBDemoNamCuong02" Class="MyDbDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-FF2ROCU\SQLEXPRESS;Initial Catalog=DBDemoNamCuong02;Persist Security Info=True;User ID=sa" SettingsObjectName="ProjectLibrary.Properties.Settings" SettingsPropertyName="DBDemoNamCuong02ConnectionString" Provider="System.Data.SqlClient" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="demoNamCuong02" Class="MyDbDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=103.226.248.52;Initial Catalog=demoNamCuong02;Persist Security Info=True;User ID=DBDemoNamCuong02" SettingsObjectName="ProjectLibrary.Properties.Settings" SettingsPropertyName="demoNamCuong02ConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Advertising" Member="Advertisings">
     <Type Name="Advertising">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -178,6 +178,7 @@
       <Association Name="Language_Advertising" Member="Advertisings" ThisKey="ID" OtherKey="LanguageID" Type="Advertising" />
       <Association Name="Language_Hotel" Member="Hotels" ThisKey="ID" OtherKey="LanguageID" Type="Hotel" />
       <Association Name="Language_Menu" Member="Menus" ThisKey="ID" OtherKey="LanguageID" Type="Menu" />
+      <Association Name="Language_Recruitment" Member="Recruitments" ThisKey="ID" OtherKey="LanguageID" Type="Recruitment" />
       <Association Name="Language_Room" Member="Rooms" ThisKey="ID" OtherKey="LanguageID" Type="Room" />
       <Association Name="Language_Slider" Member="Sliders" ThisKey="ID" OtherKey="LanguageID" Type="Slider" />
       <Association Name="Language_Usefullink" Member="Usefullinks" ThisKey="ID" OtherKey="LanguageID" Type="Usefullink" />
@@ -211,6 +212,22 @@
       <Column Name="CSS" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="JS" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="SideBar" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Recruitment" Member="Recruitments">
+    <Type Name="Recruitment">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="City" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Position" Type="System.String" DbType="NVarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="Quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ExpirationDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Desciption" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Content" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Status" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="LanguageID" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="[Index]" Member="Index" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Alias" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Association Name="Language_Recruitment" Member="Language" ThisKey="LanguageID" OtherKey="ID" Type="Language" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Room" Member="Rooms">
@@ -265,6 +282,18 @@
       <Column Name="ContentDefault" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
       <Column Name="Success" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
       <Column Name="Error" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SendEmailRecuitment" Member="SendEmailRecuitments">
+    <Type Name="SendEmailRecuitment">
+      <Column Name="FullName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Phone" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Birthday" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Link" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="[File]" Member="File" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Gender" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
     </Type>
   </Table>
   <Table Name="dbo.Service" Member="Services">

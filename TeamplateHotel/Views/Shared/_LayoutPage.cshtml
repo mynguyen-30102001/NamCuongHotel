@@ -11,7 +11,7 @@
     Plugin plugin = CommentController.GetPluigPlugin();
     List<Menu> menus = CommentController.GetMainMenus(Request.Cookies["LanguageID"].Value);
     List<Menu> menufooter = CommentController.GetSecondMenus(Request.Cookies["LanguageID"].Value);
-    List<Service> getServices = CommentController.GetService();
+    List<ShowObject> getServices = CommentController.GetService(Request.Cookies["LanguageID"].Value);
     List<Room> getRoom = CommentController.GetRoom(lang);
     var language = languages.FirstOrDefault(a => a.ID == Request.Cookies["LanguageID"].Value) ?? new Language();
     string alias = "";
@@ -52,6 +52,7 @@
     <!-- Template Main CSS File-->
     <link rel="stylesheet" href="~/Content/css/style.css">
     <link rel="stylesheet" href="~/Content/css/responsive.css">
+    @RenderSection("css", false)
 </head>
 <body>
     <header>
@@ -68,7 +69,11 @@
                         <div class="col-6">
                             <div class="header__right ml-auto">
                                 <span class="header__social"><a href="#"><i class="fab fa-facebook"></i></a><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-instagram"></i></a></span>
-                                <span class="header__language"><a href="#">VI</a><a class="mr-0" href="#">EN</a></span>
+
+                                @foreach (var item in languages)
+                                {
+                                    <span class="header__language"><a href="/SelectLanguge/@item.ID">@item.Name</a></span>
+                                }
                             </div>
                         </div>
                     </div>
@@ -153,7 +158,7 @@
                             <div class="search-btn">
                                 <span class="fas fa-search search-icon"></span>
                                 <form action="/Search/SearchLayout" method="get" id="quick-search">
-                                    <input id="key-search" class="form-control" type="text" name="keySearch" placeholder="Tìm kiếm...">
+                                    <input id="key-search" class="form-control" type="text" name="keySearch" placeholder="Tìm kiếm..." required>
                                     <button id="submitSearch" type="submit"><i class="fas fa-search"></i></button>
                                 </form>
                             </div>
@@ -162,9 +167,16 @@
                                 <span></span>
                                 <span></span>
                             </div>
-                            <div class="book-btn">
-                                <a class="nav__link book-menu" href="/Booking"><span class="mr-2"> BOOK NOW</span><i class="fas fa-long-arrow-alt-right"></i></a>
-                            </div>
+                            <form action="/Booking" method="post" id="book-room">
+                                <input type="hidden" id="CheckIn1" name="CheckIn" value="" />
+                                <input type="hidden" id="CheckOut1" name="CheckOut" value="" />
+                                <input type="hidden" name="Adult" value="1" />
+                                <input type="hidden" name="Child" value="0" />
+                                <input type="hidden" name="ID" value="0" />
+                                <button type="submit" class="book-btn">
+                                    <a class="nav__link book-menu" href=""><span class="mr-2">@GetLanguage.Language(Request.Cookies["LanguageID"].Value, "BookingNow")</span><i class="fas fa-long-arrow-alt-right"></i></a>
+                                </button>
+                            </form>
                             <nav class="menu-mobile d-block d-lg-none">
                                 <div class="icon-mobile">
                                     <div class="menu-bar">
@@ -261,53 +273,56 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="col-lg-2 col-md-6">
-                                <div class="footer__col">
-                                    <h3 class="footer__head">  DỊCH VỤ</h3>
-                                    <ul class="footer__list">
-                                        <li>
-                                            <a class="footer__link" href="/">Phòng Nghỉ</a>
-                                        </li>
-                                        <li>
-                                            <a class="footer__link" href="/">Tiệc & Sự Kiện</a>
-                                        </li>
-                                        <li>
-                                            <a class="footer__link" href="/">Nhà hàng</a>
-                                        </li>
-                                        <li>
-                                            <a class="footer__link" href="/">Chăm Sóc Sức khỏe</a>
-                                        </li>
-                                    </ul>
+                            @foreach (var item in menufooter.Where(a => a.ParentID == 0).OrderBy(a => a.Index).ToList())
+                            {
+                                var itemMenu = menufooter.Where(a => a.ParentID == item.ID).OrderBy(a => a.Index).ToList();
+                                <div class="col-lg-2 col-md-6">
+                                    <div class="footer__col">
+                                        <h3 class="footer__head">@item.Title</h3>
+                                        <ul class="footer__list">
+                                            @if (item.Type == SystemMenuType.Service)
+                                            {
+                                                foreach (var itemService in getServices.Take(4))
+                                                {
+                                                    <li>
+                                                        <a class="footer__link" href="/@item.Alias/@itemService.ID/@itemService.Alias">@itemService.Title</a>
+                                                    </li>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                foreach (var item1 in itemMenu)
+                                                {
+                                                    if (item1.Type == SystemMenuType.OutSite)
+                                                    {
+                                                        <li>
+                                                            <a class="footer__link" href="@item1.Link">@item1.Title</a>
+                                                        </li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li>
+                                                            <a class="footer__link" href="/@item1.Alias">@item1.Title</a>
+                                                        </li>
+                                                    }
+
+                                                }
+
+                                            }
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-2 col-md-6">
-                                <div class="footer__col">
-                                    <h3 class="footer__head">Về chúng tôi</h3>
-                                    <ul class="footer__list">
-                                        <li>
-                                            <a class="footer__link" href="/">Giới thiệu</a>
-                                        </li>
-                                        <li>
-                                            <a class="footer__link" href="/">điều kiện & điều khoản</a>
-                                        </li>
-                                        <li>
-                                            <a class="footer__link" href="/">Chính sách bảo mật</a>
-                                        </li>
-                                        <li>
-                                            <a class="footer__link" href="/">Câu hỏi thưởng gặp</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                            }
+
                             <div class="col-lg-4 col-md-6">
                                 <div class="footer__col">
                                     <h3 class="footer__head">Subscribe Newsletter</h3>
                                     <div class="footer__text">
                                         <p>Eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                                     </div>
-                                    <form class="footer__form" action="/">
+                                    <form class="footer__form" method="post" id="Email_Marketing" action="/Marketing/SaveMail">
                                         <div class="form-group">
-                                            <input class="form-control" id="email" type="email" name="email" autocomplete="off" placeholder="Your email address">
+                                            <input class="form-control" id="email" type="email" name="emailMarketing" autocomplete="off" placeholder="Your email address">
                                             <button class="sub-btn" type="submit"><i class="fas fa-paper-plane"></i></button>
                                         </div>
                                     </form>
@@ -345,10 +360,10 @@
             <script src="~/Content/js/jquery.validate.min.js.js"></script>
 
             <script>
-                //jQuery.validator.setDefaults({
-                //    debug: true,
-                //    success: "valid"
-                //});
+                jQuery.validator.setDefaults({
+                    debug: true,
+                    success: "valid"
+                });
                 $(document).ready(function () {
                     //$("#quick-search").validate({
                     //    rules: {
@@ -374,8 +389,40 @@
                     });
 
                 });
-               
+
             </script>
             @RenderSection("script", false)
+            <script>
+                $(document).ready(function () {
+                    $("#Email_Marketing").validate({
+                        rules: {
+                            emailMarketing: true,
+                        },
+                        messages: {
+                            emailMarketing : "Xin mời nhập email của bạn",
+                        },
+                        submitHandler: function (form) {
+                            form.submit()
+                        }
+                    });
+                    $("#CheckIn1").daterangepicker({
+                        singleDatePicker: true,
+                        autoApply: true,
+                        minDate: moment(),
+                        locale: {
+                            format: 'DD/MM/YYYY'
+                        }
+                    });
+                    $("#CheckOut1").daterangepicker({
+                        singleDatePicker: true,
+                        autoApply: true,
+                        // minDate: moment(),
+                        minDate: moment().add(1, "days"),
+                        locale: {
+                            format: 'DD/MM/YYYY'
+                        }
+                    });
+                })
+            </script>
         </body>
 

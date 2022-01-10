@@ -1,0 +1,238 @@
+﻿@using ProjectLibrary.Database
+@using TeamplateHotel.Controllers
+@using TeamplateHotel.Handler
+@model List<Recruitment>
+@{
+    ViewBag.Title = "Recruitment";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    Menu menu = ViewBag.Menu ?? new Menu();
+}
+<div class="banner-page">
+    <div class="banner__item">
+        <div class="banner__img">
+            <img src="@menu.Image" alt="">
+        </div>
+        <div class="banner__caption">
+            <h1 class="animate__animated">@menu.Title</h1>
+        </div>
+    </div>
+</div>
+<ul class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/">Trang chủ</a>
+    </li>
+    <li class="breadcrumb-item active">@menu.Title</li>
+</ul>
+<div class="box req-main">
+    <div class="container">
+        <div class="box__title">
+            <h3>@menu.Title</h3>
+        </div>
+        <div class="req-table">
+            <div class="req-head req-box">
+                <div class="req-col">
+                    <span>Thành phố</span>
+                </div>
+                <div class="req-col">
+                    <span>Vị Trí</span>
+                </div>
+                <div class="req-col">
+                    <span>Số Lượng</span>
+                </div>
+                <div class="req-col">
+                    <span>Ngày hết hạn</span>
+                </div>
+            </div>
+            <div class="req-main">
+
+                @foreach (var item in Model)
+                {
+                    <div class="req-box" data-toggle="modal" data-target="#con_@item.ID">
+                        <div class="req-col">
+                            <span>@item.City</span>
+                        </div>
+                        <div class="req-col">
+                            <span>@item.Position</span>
+                        </div>
+                        <div class="req-col">
+                            <span>@item.Quantity</span>
+                        </div>
+                        <div class="req-col">
+                            <span>@item.ExpirationDate.ToString("dd/MM/yyyy")</span>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+    @foreach (var item1 in Model)
+    {
+        <div class="modal job-info" id="con_@item1.ID">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Thông tin tuyển dụng</h3>
+                        <span class="fa fa-times close-info" data-dismiss="modal"></span>
+                    </div>
+                    <div class="modal-body">
+                        <div class="job-head text-center">
+                            <h1 class="job-title">Quản Lí Khách Sạn</h1>
+                            <div class="job-subtitle">
+                                <span class="job-location mr-4"><i class="fas fa-map-marker-alt"></i>  Tỉnh @item1.City</span>
+                                <span class="job-datelimit"><i class="fas fa-calendar-day"></i>Ngày hết hạn: @item1.ExpirationDate.ToString("dd/MM/yyyy")</span>
+                            </div>
+                        </div>
+                        <div class="job-content">
+                            <div class="job-overview">
+                                <div class="row mb-lg-5 mb-4">
+                                    <div class="col-lg-9">
+                                        @Html.Raw(item1.Desciption)
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="job-btn d-none d-lg-block">
+                                            <button class="apply-job" data-toggle="modal" data-target="#myModal1_@item1.ID">ỨNG TUYỂN</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                @Html.Raw(item1.Content)
+                                @*<p>
+                                        <b class="text-underline">2. YÊU CẦU CÔNG VIỆC</b>
+                                    </p>
+                                    <p>- Nam, nữ: Trên 25 tuổi</p>
+                                    <p>- Tốt nghiệp Cao đẳng trở lên chuyên ngành Quản trị, Du lịch, Nhà hàng – Khách sạn</p>
+                                    <p class="mb-lg-5 mb-4">- Có kinh nghiệm từ 2 năm trở lên cấp quản lý tại các khách sạn</p>
+                                    <p>
+                                        <b class="text-underline">3. PHÚC LỢI</b>
+                                    </p>
+                                    <p>- Được làm việc trong môi trường thân thiện, năng động, chuyên nghiệp, cởi mở và sáng tạo.</p>
+                                    <p>- Thu nhập hấp dẫn và tương xứng với năng lực</p>
+                                    <p>- Tiếp cận mô hình kinh doanh hiện đại.</p>
+                                    <p>- Chương trình đào tạo chuyên nghiệp, nhiều cơ hội thăng tiến.</p>
+                                    <p class="mb-lg-5 mb-4">- Thu nhập ổn định và các chế độ phúc lợi cạnh tranh.</p>
+                                    <p>
+                                        <b class="text-underline">4. THÔNG TIN LIÊN HỆ</b>
+                                    </p>
+                                    <p>
+                                        - Điện thoại :
+                                        <a href="tel: 012345678"> 012345678</a>
+                                    </p>
+                                    <p>
+                                        - Email :
+                                        <a href="mailto: Info@Namcuonghotels.Com">Info@Namcuonghotels.Com</a>
+                                    </p>
+                                    <p class="mb-4">- Địa chỉ phỏng vấn : 47 Lạch Tray, Ngô Quyền, Hải Phòng</p>*@
+                                <div class="job-btn">
+                                    <button class="apply-job" data-toggle="modal" data-target="#myModal1_@item1.ID">ỨNG TUYỂN</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    @foreach (var item2 in Model)
+    {
+        <div class="modal form-recruitment" id="myModal1_@item2.ID">
+            
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Thông tin ứng viên</h3>
+                        <span class="fa fa-times" data-dismiss="modal"></span>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/Recruitment/SendRec" method="POST" id="form_recrui" enctype = "multipart/form-data">
+                                <input type="hidden" name="Position" value="@item2.Position" />
+                                <input type="hidden" name="City" value="@item2.City" />
+                                <div class="form-group">
+                                    <label for="name">Họ và tên</label>
+                                    <input class="form-control" type="text" name="FullName" id="name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">Số điện thoại</label>
+                                    <input class="form-control" type="tel" name="Phone" id="phone">
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">Email</label>
+                                    <input class="form-control" type="email" name="Email" id="email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">Ngày sinh</label>
+                                    <input class="form-control" type="date" name="Birthday" id="birthday">
+                                </div>
+                                <div class="form-group">
+                                    <label class="mr-4">Giới tính :</label>
+                                    <label class="mr-3" for="male">
+                                        <input class="mr-2" type="radio" name="Gender" id="male" value="Anh" checked><span>Nam</span>
+                                    </label>
+                                    <label for="female">
+                                        <input class="mr-2" type="radio" name="Gender" value="Chị" id="female"><span>Nữ</span>
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">Link portfolio</label>
+                                   
+                                    <input class="form-control" type="text" name="Link" id="link">
+                                </div>
+                                <div class="form-group">
+                                    <label>File CV</label>
+                                   <input class="form-control no-border" type="file" name="FileCV" accept="application/pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,image/png, image/jpeg, image/jpg">
+                                    <p class="text-red request-file">Định dạng file : pdf, doc, docx, xlsx, xls, pdf, png, jpg. Dung lượng <= 3MB</p>
+                                </div>
+                                <div class="form-group text-center">
+                                    <input class="apply-job" type="submit" value="ỨNG TUYỂN" />
+                                </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+@section script{
+   <script>
+       $(document).ready(function () {
+           $("#form_recrui").validate({
+               rules: {
+                   FullName: {
+                       required: true,
+                   },
+                   Email: {
+                       required: true,
+                   },
+                   Phone: {
+                       required: true,
+                   },
+                   Birthday: {
+                       required: true,
+                   },
+                   Link: {
+                       required:true,
+                   }
+               },
+               messages: {
+                   FullName: {
+                       required: "Vui lòng nhập tên của bạn",
+                   },
+                   Email: {
+                       required: "Vui lòng nhập email của bạn",
+                   },
+                   Phone: {
+                       required: "Vui lòng nhập số điện thoại của bạn",
+                   },
+                   Birthday: {
+                       required: "Vui lòng nhập ngày sinh của bạn",
+                   },
+                   Link: {
+                       required: "Vui lòng nhập link portfolio của bạn",
+                   }
+               }, submitHandler: function (form) {
+                   form.submit()
+               }
+           })
+       })
+    </script>
+    }

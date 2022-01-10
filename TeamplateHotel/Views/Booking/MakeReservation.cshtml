@@ -9,7 +9,13 @@
     Menu menu = ViewBag.Menu ?? new Menu();
     Room room = ViewBag.Room ?? new Room();
 }
-
+@section css{
+    <style>
+        .block {
+            display: none;
+        }
+    </style>
+}
 <div class="banner-page">
     <div class="banner__item">
         <div class="banner__img">
@@ -30,11 +36,30 @@
                 <div class="col-lg-4">
                     <div class="book-left mb-4">
                         <div class="book-img">
-                            <img src="@room.Image" alt="">
+                            @if (room.Image != null)
+                            {
+                                <img src="@room.Image" alt="">
+                            }
+                            else
+                            {
+                                <img src="" alt="" class="RoomImage" id="RoomImage">
+                                @*<input type="image" id="RoomImage" src=""  class="RoomImage">*@
+                            }
+
+
                             <div class="room-slected">
-                                <span>
-                                    @room.Title
-                                </span>
+                                @if (room.Title != null)
+                                {
+                                    <span id="RoomName1" class="RoomName1">
+                                        
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span id="RoomName" class="RoomName">
+                                    </span>
+                                }
+
                             </div>
                         </div>
                         <div class="book_info-left">
@@ -88,14 +113,31 @@
                             <div class="col-md-12 ">
                                 <div class="form-group">
                                     <label for="">Loại phòng <span class="required">*</span></label>
-                                    <select class="form-control" name="NameRoom">
-                                        <option class="select-room" value="@room.Title ">@room.Title </option>
+                                    @if (room.Title != null)
+                                    {
+                                        <select class="form-control" name="NameRoom" id="NameRoom1">
+                                            <option class="select-room" value="@room.Title ">@room.Title </option>
+                                            @foreach (var itemRoom in Model.ListRoomBookings.Where(a => a.RoomId != room.ID))
+                                            {
+                                                <option class="select-room" value="@itemRoom.NameRoom ">@itemRoom.NameRoom </option>
+                                            }
+                                        </select>
+                                    }
+                                    else
+                                    {
+                                        <select class="form-control" name="NameRoom" id="NameRoom">
+                                            @foreach (var itemRoom in Model.ListRoomBookings.Where(a => a.RoomId != room.ID))
+                                            {
+                                                <option class="select-room" value="@itemRoom.NameRoom ">@itemRoom.NameRoom </option>
+                                            }
+                                        </select>
+                                    }
+                                    <div class="block">
                                         @foreach (var itemRoom in Model.ListRoomBookings.Where(a => a.RoomId != room.ID))
                                         {
-                                            <option class="select-room" value="@itemRoom.NameRoom ">@itemRoom.NameRoom </option>
+                                            <input type="image" src="@itemRoom.Image" alt="" class="ImageRoom" id="ImageRoom" />
                                         }
-
-                                    </select>
+                                    </div>
 
                                 </div>
                             </div>
@@ -455,6 +497,9 @@
     <script>
         $(document).ready(function () {
 
+
+
+            //document.getElementsByClassName('block').style.display = "block";
             // setup datepicker date_in & out
             $("#dbook_in").daterangepicker({
                 singleDatePicker: true,
@@ -545,6 +590,8 @@
                 console.log(num_people);
                 $(this).parent(".b-info-number").find(".b-number").text(num_people);
             });
+
+
         })
     </script>
     <script>
@@ -592,43 +639,35 @@
             });
         })
     </script>
-}
-
-
-
-@*<script>
-
+    <script>
         $(document).ready(function () {
-            $("#CheckIn").datepicker({
-                changeMonth: true,
-                changeYear: true,
-                minDate: new Date()
+            $(".RoomName").text($("#NameRoom").val());
+            $(".RoomName1").text($("#NameRoom1").val());
+            $("#NameRoom, #NameRoom1").change(function () {
+                var nameRoom = $("#NameRoom").val();
+                var nameRoom1 = $("#NameRoom1").val();
+                var img_src = document.getElementById("ImageRoom");
+                var img_src1 = document.getElementById("RoomImage");
+                $("#RoomName").text(nameRoom);
+                $("#RoomName1").text(nameRoom1);
+                img_src1.src = img_src.src;
             });
-            $("#CheckOut").datepicker({
-                changeMonth: true,
-                changeYear: true,
-                minDate: new Date(),
-            });
-            $(".detail-info-room").dialog(
-            {
-                autoOpen: false,
-                modal: true,
-                width: 600,
-                title: '@Html.Raw(GetLanguage.Language(Request.Cookies["LanguageID"].Value, "InfoRoom"))'
-            });
-            $("#condition").dialog(
-            {
-                autoOpen: false,
-                modal: true,
-                width: 600,
-                title: '@Html.Raw(GetLanguage.Language(Request.Cookies["LanguageID"].Value, "TeamsConditions"))'
-            });
+            
+
+            var img_src = document.getElementById("ImageRoom");
+            var img_src1 = document.getElementById("RoomImage");
+            img_src1.src = img_src.src;
         });
 
 
 
     </script>
-    <script>
+}
+
+
+
+
+@*<script>
         $(document).ready(function () {
             function ShowDetailInfoRoom(param) {
                 var code = $(param).attr("id");

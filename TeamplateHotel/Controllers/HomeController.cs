@@ -61,6 +61,8 @@ namespace TeamplateHotel.Controllers
                     return View("About");
                 case SystemMenuType.Service:
                     goto Service;
+                case SystemMenuType.Recruitment:
+                    return View("Recruitment", CommentController.Recruitments());
                 case SystemMenuType.Booking:
                     return RedirectToAction("MakeReservation", "Booking");
                 case SystemMenuType.Contact:
@@ -69,7 +71,7 @@ namespace TeamplateHotel.Controllers
                     Session["Captcha"] = iNumber.ToString();
                     return View("Contact");
                 case SystemMenuType.Gallery:
-                    return View("Gallery", CommentController.Gallery());
+                    return View("Gallery", CommentController.Gallery(Request.Cookies["LanguageID"].Value));
                 case SystemMenuType.Location:
                     //Lấy bài viết Location
                     ViewBag.ArticleByRoomRate = db.Articles.FirstOrDefault(a => a.MenuID == menu.ID);
@@ -172,29 +174,32 @@ namespace TeamplateHotel.Controllers
             #endregion
 
         }
-        //public ActionResult DetailTag(int id)
-        //{
-        //    using (var db = new MyDbDataContext())
-        //    {
-        //        List<Article> listArticle = db.Articles.Where(a => a.Status && a.TagID.Contains(id.ToString())).OrderBy(a => a.Index).ToList();
-        //        IPagedList<Article> articles = listArticle.ToPagedList(1, 5);
-        //        return View("Article/ListArticle", articles);
-        //    }
-        //}
-        //[HttpGet]
-        //public ActionResult SearchArticles(string search)
-        //{
-        //    using (var db = new MyDbDataContext())
-        //    {
-        //        Menu menu = CommentController.GetMainMenus(Request.Cookies["LanguageID"].Value).Where(a => a.Type == SystemMenuType.Article).FirstOrDefault();
-        //        List<Article> listArticle = CommentController.GetArticles(menu.ID).Where(a => a.Title.ToUpper().Contains(search.ToUpper())).ToList();
-        //        int pages = 1;
-        //        int pageSizes = 5;
-        //        IPagedList<Article> Article = listArticle.ToPagedList(pages, pageSizes);
-        //        return View("Article/ListArticle", Article);
 
+        public ActionResult DetailTag(int id)
+        {
+            using (var db = new MyDbDataContext())
+            {
+                Menu menu = CommentController.GetMainMenus(Request.Cookies["LanguageID"].Value).Where(a => a.Type == SystemMenuType.Article).FirstOrDefault();
+                ViewBag.Menu = menu;
+                List<Article> listArticle = db.Articles.Where(a => a.Status && a.TagID.Contains(id.ToString())).OrderBy(a => a.Index).ToList();
+                IPagedList<Article> articles = listArticle.ToPagedList(1, 5);
+                return View("Article/ListArticle", articles);
+            }
+        }
 
-        //    }
-        //}
+        [HttpGet]
+        public ActionResult SearchArticles(string search)
+        {
+            using (var db = new MyDbDataContext())
+            {
+                Menu menu = CommentController.GetMainMenus(Request.Cookies["LanguageID"].Value).Where(a => a.Type == SystemMenuType.Article).FirstOrDefault();
+                ViewBag.Menu = menu;
+                List<Article> listArticle = CommentController.GetArticles(menu.ID).Where(a => a.Title.ToUpper().Contains(search.ToUpper())).ToList();
+                int pages = 1;
+                int pageSizes = 5;
+                IPagedList<Article> Article = listArticle.ToPagedList(pages, pageSizes);
+                return View("Article/ListArticle", Article);
+            }
+        }
     }
 }

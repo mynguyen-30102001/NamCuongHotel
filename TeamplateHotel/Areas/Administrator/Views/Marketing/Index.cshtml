@@ -1,0 +1,43 @@
+﻿@model ProjectLibrary.Database.EmailMarketing
+@{
+    Layout = "~/Areas/Administrator/Views/Templates/_LayoutPage.cshtml";
+}
+
+<div id="jtable-main-container"></div>
+<script type="text/javascript">
+        $(document).ready(function() {
+            $('#jtable-main-container').jtable({
+                title: '@ViewBag.Title',
+                paging: true, //Enable paging
+                pageSize: 20, //Set page size (default: 10)
+                sorting: true, //Enable sorting
+                defaultSorting: 'Name ASC', //Set default sorting
+                selecting: true, //Enable selecting
+                multiselect: true, //Allow multiple selecting
+                selectingCheckboxes: true, //Show checkboxes on first column
+                columnResizable: true, //Actually, no need to set true since it's default
+                columnSelectable: true, //Actually, no need to set true since it's default
+                saveUserPreferences: true, //Actually, no need to set true since it's default
+
+                 actions: {
+                    listAction: '@Url.Action("List", "Marketing")',
+                    deleteAction: '@Url.Action("Delete", "Marketing")',
+                },
+                fields: {
+                    Id: {
+                        key: true,
+                        create: false,
+                        edit: false,
+                        list: false
+                    },
+                    Email: {
+                        title: 'Địa chỉ email',
+                        width: '10%'
+                    },
+                },
+
+            });
+            $('#jtable-main-container').jtable('load');
+        });
+</script>
+
