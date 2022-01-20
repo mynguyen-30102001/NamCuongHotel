@@ -32,5 +32,7 @@ namespace TeamplateHotel.Areas.Administrator.EntityModel
 
         [DisplayName("Trạng thái hiển thị")]
         public bool Status { get; set; }
+        [DisplayName("Nội dung")]
+        public string Content { get; set; }
     }
 }

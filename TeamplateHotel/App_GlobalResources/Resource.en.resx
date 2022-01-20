@@ -346,19 +346,19 @@
     <value>See all news</value>
   </data>
   <data name="Service" xml:space="preserve">
-    <value>Come to us you will receive the best services and incentives</value>
+    <value>Our service</value>
   </data>
   <data name="hotel" xml:space="preserve">
     <value>Hotel</value>
   </data>
   <data name="room" xml:space="preserve">
-    <value>Room</value>
+    <value> Room</value>
   </data>
   <data name="Ser" xml:space="preserve">
     <value>Service</value>
   </data>
   <data name="Service1" xml:space="preserve">
-    <value>Two cable</value>
+    <value>QUALITY SERVICE FROM THE HOTEL</value>
   </data>
   <data name="Service10" xml:space="preserve">
     <value>Make room: two times per day</value>
@@ -433,7 +433,7 @@
     <value>Follow us on social media channels</value>
   </data>
   <data name="Newsletter" xml:space="preserve">
-    <value>Newsletter Sign Up</value>
+    <value>Latese news &amp; events</value>
   </data>
   <data name="Signoffers" xml:space="preserve">
     <value>Sign up for news and special offers</value>
@@ -443,5 +443,20 @@
   </data>
   <data name="money" xml:space="preserve">
     <value>$</value>
+  </data>
+  <data name="COMFORT" xml:space="preserve">
+    <value>COMFORT </value>
+  </data>
+  <data name="Gallery" xml:space="preserve">
+    <value>Gallery</value>
+  </data>
+  <data name="News" xml:space="preserve">
+    <value>News</value>
+  </data>
+  <data name="Recentnews" xml:space="preserve">
+    <value>Recent news</value>
+  </data>
+  <data name="Relaxing" xml:space="preserve">
+    <value>Relaxing on Vacation</value>
   </data>
 </root>

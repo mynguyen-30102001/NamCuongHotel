@@ -15,6 +15,7 @@
     List<Room> getRoom = CommentController.GetRoom(lang);
     var language = languages.FirstOrDefault(a => a.ID == Request.Cookies["LanguageID"].Value) ?? new Language();
     string alias = "";
+    Menu menu = ViewBag.Menu ?? new Menu();
 
     string homepage = "";
     if (ViewBag.HomePage == true)
@@ -32,7 +33,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="Description" content="Enter your description here">
     <meta content="" name="keywords">
-    <title>Nam Cường Hotel</title>
+    @if (ViewBag.HomePage != true)
+    {
+        <title>@menu.MetaTitle</title>
+    }
+
     <!-- Favicons-->
     <link href="" rel="icon">
     <link href="" rel="apple-touch-icon">
@@ -259,16 +264,16 @@
                                 <div class="footer__col">
                                     <ul class="footer__list">
                                         <li>
-                                            <h3 class="footer__head">NAM CUONG HOTELS & RESORTS</h3>
+                                            <h3 class="footer__head">@detailHotel.Condition</h3>
                                         </li>
                                         <li>
-                                            <a href="javascript:void(0)"><i class="fas fa-map-marker-alt"></i> 47 Lạch Tray, Ngô Quyền, Hải Phòng</a>
+                                            <a href="javascript:void(0)"><i class="fas fa-map-marker-alt"></i>@detailHotel.Address</a>
                                         </li>
                                         <li>
-                                            <a href="tel:012345678"><i class="fas fa-phone-alt"></i> 012345678</a>
+                                            <a href="tel:012345678"><i class="fas fa-phone-alt"></i> @detailHotel.Tel</a>
                                         </li>
                                         <li>
-                                            <a href="mailto:info@namcuonghotels.com"><i class="fas fa-envelope"></i> info@namcuonghotels.com</a>
+                                            <a href="mailto:@detailHotel.Email"><i class="fas fa-envelope"></i>@detailHotel.Email</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -336,10 +341,10 @@
                         <div class="cr-detail">
                             <div class="cr-text">©2021 Copyright by Nam Cuong Hotels & Resorts | All Rights Reserved.</div>
                             <div class="social">
-                                <a href="/"><i class="fab fa-facebook-f"></i></a>
-                                <a href="/"><i class="fab fa-twitter"></i></a>
-                                <a href="/"><i class="fab fa-instagram"></i></a>
-                                <a href="/"><i class="fab fa-google-plus-g"></i></a>
+                                <a href="@detailHotel.Facebook"><i class="fab fa-facebook-f"></i></a>
+                                <a href="@detailHotel.Twitter"><i class="fab fa-twitter"></i></a>
+                                <a href="@detailHotel.Instagram"><i class="fab fa-instagram"></i></a>
+                                <a href="@detailHotel.Youtube"><i class="fab fa-youtube"></i></a>
                             </div>
                         </div>
                     </div>

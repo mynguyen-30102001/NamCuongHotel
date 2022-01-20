@@ -9,7 +9,7 @@
     var lang = Request.Cookies["LanguageID"].Value;
     ShowObject article = CommentController.WellcomeArticle(Request.Cookies["LanguageID"].Value) ?? new ShowObject();
     List<ShowObject> articleShowHots = CommentController.HotArticles(Request.Cookies["LanguageID"].Value);
-    List<ShowObject> CustomerArticle = CommentController.CustomerArticles(Request.Cookies["LanguageID"].Value);
+    //List<ShowObject> CustomerArticle = CommentController.CustomerArticles(Request.Cookies["LanguageID"].Value);
     List<ShowObject> roomShowHomes = CommentController.RoomShowHome(Request.Cookies["LanguageID"].Value);
     List<Advertising> qc = CommentController.GetAdvertisings();
     Menu menu = ViewBag.Menu ?? new Menu();
@@ -23,7 +23,11 @@
 
     List<ShowObject> articleNews = CommentController.NewArticles(Request.Cookies["LanguageID"].Value);
     string menuAlias = "";
+    
 }
+@section css{
+    <title>@menu.MetaDescription</title>
+    }
 
 <div class="banner">
     <div class="banner-slide owl-carousel owl-theme">
@@ -33,7 +37,7 @@
                 <div class="banner__img"><img src="@itemSlide.Image" alt=""></div>
                 <div class="banner__caption">
                     <h3 class="animate__animated">@itemSlide.Title</h3>
-                    <h1 class="animate__animated">NAM CƯỜNG HOTEL</h1>
+                    <h1 class="animate__animated">@itemSlide.Content</h1>
                 </div>
             </div>
         }
@@ -41,7 +45,7 @@
     <div class="quick-book">
         <div class="container">
             <form action="/Booking" method="post" id="quick_search">
-                <input type="hidden" value="0" name="Id"/>
+                <input type="hidden" value="0" name="Id" />
                 <div class="row">
                     <div class="col-lg-20 col-6">
                         <div class="form-group">

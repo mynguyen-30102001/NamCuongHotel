@@ -18,62 +18,71 @@
             @using (Html.BeginForm("Update", "Slider", FormMethod.Post, new { @class = "form-horizontal" }))
             {
                 @Html.HiddenFor(a=>a.ID)
-                <div class="left-control">
-                    <div class="control-group">
-                        @Html.LabelFor(c => c.Title, new { @class = "control-label" })
-                        <div class="controls">
-                            @Html.TextBoxFor(c => c.Title, new { @class = "span4" })
-                            @Html.ValidationMessageFor(c => c.Title)
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        @Html.LabelFor(c => c.Image, new { @class = "control-label" })
-                        <div class="controls">
-                            @Html.TextBoxFor(c => c.Image, new { @class = "span4 inputbox upload" })
-                            <p class="help-img">Nên chọn ảnh có kích thước @ConfigImage.InfoImageSlider</p>
-                            @Html.ValidationMessageFor(c => c.Image)
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        @Html.LabelFor(c => c.Link, new { @class = "control-label" })
-                        <div class="controls">
-                            @Html.TextBoxFor(c => c.Link, new { @class = "span4" })
-                            @Html.ValidationMessageFor(c => c.Link)
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <label class="control-label" for="ViewAll">Hiện thị mọi chuyên mục</label>
-                        <div class="controls">
-                            @if (Model.ViewAll == true)
-                            {
-                                <label class="radio-inline"> <input type="radio" name="ViewAll" value="True" checked="checked"> có</label>
-                                <label class="radio-inline"> <input type="radio" name="ViewAll" value="false"> Không</label>
-                            }
-                            else
-                            {
-                                <label class="radio-inline"> <input type="radio" name="ViewAll" value="True"> có</label>
-                                <label class="radio-inline"> <input type="radio" name="ViewAll" value="false" checked="checked"> Không</label>
-                            }
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <div class="controls">
-                            <label class="checkbox inline">
-                                <input data-val="true" id="Status" name="Status" type="checkbox" value="true" checked="checked"> Status
-                            </label>
-                        </div>
-                    </div>
-
-
-                    <div class="form-actions">
-                        <input type="button" value="Submit" class="btn btn-primary" />
-                        <a href="@Url.Action("Index","Slider")" class="btn">Cancel</a>
+            <div class="left-control">
+                <div class="control-group">
+                    @Html.LabelFor(c => c.Title, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(c => c.Title, new { @class = "span4" })
+                        @Html.ValidationMessageFor(c => c.Title)
                     </div>
                 </div>
+
+                <div class="control-group">
+                    @Html.LabelFor(c => c.Image, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(c => c.Image, new { @class = "span4 inputbox upload" })
+                        <p class="help-img">Nên chọn ảnh có kích thước @ConfigImage.InfoImageSlider</p>
+                        @Html.ValidationMessageFor(c => c.Image)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    @Html.LabelFor(c => c.Link, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(c => c.Link, new { @class = "span4" })
+                        @Html.ValidationMessageFor(c => c.Link)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="ViewAll">Hiện thị mọi chuyên mục</label>
+                    <div class="controls">
+                        @if (Model.ViewAll == true)
+                        {
+                            <label class="radio-inline"> <input type="radio" name="ViewAll" value="True" checked="checked"> có</label>
+                            <label class="radio-inline"> <input type="radio" name="ViewAll" value="false"> Không</label>
+                        }
+                        else
+                        {
+                            <label class="radio-inline"> <input type="radio" name="ViewAll" value="True"> có</label>
+                            <label class="radio-inline"> <input type="radio" name="ViewAll" value="false" checked="checked"> Không</label>
+                        }
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <label class="checkbox inline">
+                            <input data-val="true" id="Status" name="Status" type="checkbox" value="true" checked="checked"> Status
+                        </label>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="Content">Mô tả chi tiết</label>
+                    <div class="controls">
+                        <p>
+                            <span class="error-login">@Html.ValidationMessageFor(a => a.Content)</span>
+                        </p>
+                        @Html.TextAreaFor(c => c.Content, new { @class = "full-ckeditor" })
+                    </div>
+                </div>
+
+
+                <div class="form-actions">
+                    <input type="button" value="Submit" class="btn btn-primary" />
+                    <a href="@Url.Action("Index","Slider")" class="btn">Cancel</a>
+                </div>
+            </div>
 
                 <div id="right-listMenu" class="right-control">
                     <h3>Danh sách chuyên mục</h3>

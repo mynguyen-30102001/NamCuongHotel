@@ -200,6 +200,7 @@
       <Column Name="MetaDescription" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
       <Column Name="Status" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="Image" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Content" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Association Name="Menu_Article" Member="Articles" ThisKey="ID" OtherKey="MenuID" Type="Article" />
       <Association Name="Menu_Service" Member="Services" ThisKey="ID" OtherKey="MenuID" Type="Service" />
       <Association Name="Menu_Tour" Member="Tours" ThisKey="ID" OtherKey="MenuID" Type="Tour" />

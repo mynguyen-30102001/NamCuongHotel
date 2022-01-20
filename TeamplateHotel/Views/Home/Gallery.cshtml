@@ -1,53 +1,89 @@
 ﻿@using ProjectLibrary.Database
 @using TeamplateHotel.Models
+@using TeamplateHotel.Controllers
 @using PagedList.Mvc
 @model  List<EGallery>
 @{
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
     Menu menu = ViewBag.Menu ?? new Menu();
+    List<Menu> menus = CommentController.GetMainMenus(Request.Cookies["LanguageID"].Value);
+    var menuChile = menus.Where(a => a.ParentID == menu.ID && a.Status).ToList();
 }
 
-    <div class="banner-page">
-        <div class="banner__item">
-            <div class="banner__img"><img src="@menu.Image" alt=""></div>
-            <div class="banner__caption">
-                <h1 class="animate__animated">@menu.Title</h1>
+<div class="banner-page">
+    <div class="banner__item">
+        <div class="banner__img">
+            <img src="@menu.Image" alt="">
+        </div>
+        <div class="banner__caption">
+            <h1 class="animate__animated">@menu.Title</h1>
+        </div>
+    </div>
+</div>
+<ul class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/">Trang chủ</a>
+    </li>
+    <li class="breadcrumb-item active">@menu.Title</li>
+</ul>
+<div class="gallery-main box">
+    <div class="gallery-box">
+        <div class="container">
+            <h3 class="gallery-title">VIDEO</h3>
+        </div>
+        <div class="gallery-slide owl-carousel owl-theme">
+            <div class="gallery-item">
+                <img src="~/Content/images/gallery1.jpg" alt="">
+                <i class="fas fa-play-circle"></i>
+            </div>
+            <div class="gallery-item">
+                <img src="~/Content/images/gallery2.jpg" alt="">
+                <i class="fas fa-play-circle"></i>
+            </div>
+            <div class="gallery-item">
+                <img src="~/Content/images/gallery3.jpg" alt="">
+                <i class="fas fa-play-circle"></i>
+            </div>
+            <div class="gallery-item">
+                <img src="~/Content/images/gallery4.jpg" alt="">
+                <i class="fas fa-play-circle"></i>
+            </div>
+            <div class="gallery-item">
+                <img src="~/Content/images/gallery5.jpg" alt="">
+                <i class="fas fa-play-circle"></i>
+            </div>
+            <div class="gallery-item">
+                <img src="~/Content/images/gallery5.jpg" alt="">
+                <i class="fas fa-play-circle"></i>
             </div>
         </div>
     </div>
-    <ul class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-        <li class="breadcrumb-item active">@menu.Title</li>
-    </ul>
-    <div class="gallery-main box">
-        <div class="gallery-box">
-            <div class="container">
-                <h3 class="gallery-title">VIDEO</h3>
-            </div>
-            <div class="gallery-slide owl-carousel owl-theme">
-                <div class="gallery-item"><img src="~/Content/images/gallery1.jpg" alt=""><i class="fas fa-play-circle"></i></div>
-                <div class="gallery-item"><img src="~/Content/images/gallery2.jpg" alt=""><i class="fas fa-play-circle"></i></div>
-                <div class="gallery-item"><img src="~/Content/images/gallery3.jpg" alt=""><i class="fas fa-play-circle"></i></div>
-                <div class="gallery-item"><img src="~/Content/images/gallery4.jpg" alt=""><i class="fas fa-play-circle"></i></div>
-                <div class="gallery-item"><img src="~/Content/images/gallery5.jpg" alt=""><i class="fas fa-play-circle"></i></div>
-                <div class="gallery-item"><img src="~/Content/images/gallery5.jpg" alt=""><i class="fas fa-play-circle"></i></div>
-            </div>
+    <div class="gallery-box">
+        <div class="container">
+            <h3 class="gallery-title">Hình ảnh</h3>
         </div>
-        <div class="gallery-box">
-            <div class="container">
-                <h3 class="gallery-title">Hình ảnh</h3>
-            </div>
-            @foreach (var item in Model)
-            {
-                <div class="img-element">
-                    <div class="container">
-                        <h3 class="g-sub-title">@item.MenuName</h3>
-                    </div>
-                    <div class="gallery-slide owl-carousel owl-theme">
-                        <div class="gallery-item"><a href="@item.LargeImg" data-fancybox="gallery"><img src="@item.LargeImg" alt=""></a></div>
-                    </div>
+
+
+        @foreach (var itemMenu in menuChile)
+        {
+            <div class="img-element">
+
+                <div class="container">
+                    <h3 class="g-sub-title">@itemMenu.Title</h3>
                 </div>
-            }
-           
-        </div>
+              
+                    <div class="gallery-slide owl-carousel owl-theme">
+                        <div class="gallery-item">
+                            @foreach (var item in Model)
+                            {
+                                <a href="@item.LargeImg" data-fancybox="gallery"><img src="@item.LargeImg" alt=""></a>
+
+                            }
+                        </div>
+                    </div>
+                
+            </div>
+        }
+
     </div>
+</div>

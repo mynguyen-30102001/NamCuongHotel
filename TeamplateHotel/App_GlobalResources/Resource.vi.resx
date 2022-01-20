@@ -346,19 +346,19 @@
     <value>Bài viết mới</value>
   </data>
   <data name="Service" xml:space="preserve">
-    <value>Hãy đến với chúng tôi bạn sẽ nhận được những dịch vụ và ưu đãi tốt nhất</value>
+    <value>Dịch vụ của chúng tôi</value>
   </data>
   <data name="hotel" xml:space="preserve">
     <value>Khách sạn</value>
   </data>
   <data name="room" xml:space="preserve">
-    <value>Phòng</value>
+    <value>Phòng nghỉ</value>
   </data>
   <data name="Ser" xml:space="preserve">
     <value>Dịch vụ</value>
   </data>
   <data name="Service1" xml:space="preserve">
-    <value>Truyền hình cáp</value>
+    <value>Dịch vụ đẳng cấp từ khách sạn </value>
   </data>
   <data name="Service10" xml:space="preserve">
     <value>Làm phòng : 01 hoặc 02 lần mỗi ngày</value>
@@ -412,7 +412,7 @@
     <value>Miễn phí Wifi</value>
   </data>
   <data name="Utilities" xml:space="preserve">
-    <value>Tiện ích</value>
+    <value>Tiện nghi</value>
   </data>
   <data name="alertErrorCaptcha" xml:space="preserve">
     <value>Nhập mã kiểm tra không đúng</value>
@@ -434,7 +434,7 @@
 Theo dõi chúng tôi trên các kênh mạng xã hội</value>
   </data>
   <data name="Newsletter" xml:space="preserve">
-    <value>Đăng ký bản tin</value>
+    <value>Tin tức &amp; sự kiện mới nhất</value>
   </data>
   <data name="Signoffers" xml:space="preserve">
     <value>Đăng ký nhận ưu đãi đặc biệt</value>
@@ -468,5 +468,20 @@ Theo dõi chúng tôi trên các kênh mạng xã hội</value>
   </data>
   <data name="money" xml:space="preserve">
     <value>đ</value>
+  </data>
+  <data name="COMFORT" xml:space="preserve">
+    <value>THOẢI MÁI &amp; TIỆN NGHI</value>
+  </data>
+  <data name="Gallery" xml:space="preserve">
+    <value>THƯ VIỆN HÌNH ẢNH</value>
+  </data>
+  <data name="News" xml:space="preserve">
+    <value>Tin tức</value>
+  </data>
+  <data name="Recentnews" xml:space="preserve">
+    <value>Tin gần đây</value>
+  </data>
+  <data name="Relaxing" xml:space="preserve">
+    <value>Thư giãn trong kì nghỉ</value>
   </data>
 </root>

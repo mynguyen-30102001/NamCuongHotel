@@ -64,6 +64,13 @@
                         @Html.ValidationMessageFor(c => c.PriceNet)
                     </div>
                 </div>
+                <div class="control-group">
+                    <label class="control-label" for="Bed">Bed</label>
+                    <div class="controls">
+                        @Html.TextBoxFor(c => c.Bed, new { @class = "span4" })
+                        @Html.ValidationMessageFor(c => c.Bed)
+                    </div>
+                </div>
 
                 <div class="control-group">
                     <label class="control-label" for="Size">Kích thước</label>

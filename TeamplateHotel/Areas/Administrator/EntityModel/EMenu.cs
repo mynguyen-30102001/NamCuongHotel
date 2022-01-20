@@ -42,6 +42,7 @@ namespace TeamplateHotel.Areas.Administrator.EntityModel
         [MaxLength(250, ErrorMessage = "Tối đa 250 ký tự")]
         public string MetaDescription { get; set; }
         public string Image { get; set; }
+        public string Content { get; set; }
 
         [DisplayName("Trạng thái hiển thị")]
         public bool Status { get; set; }

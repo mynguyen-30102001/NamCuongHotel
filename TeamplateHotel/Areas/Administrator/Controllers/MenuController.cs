@@ -124,6 +124,7 @@ namespace TeamplateHotel.Areas.Administrator.Controllers
                             Title = model.Title,
                             Type = model.Type,
                             Link = model.Link,
+                            Content = model.Content,
                         };
                         db.Menus.InsertOnSubmit(menu);
                         db.SubmitChanges();
@@ -167,6 +168,7 @@ namespace TeamplateHotel.Areas.Administrator.Controllers
                         Status = menu.Status,
                         Title = menu.Title,
                         Type = menu.Type,
+                        Content = menu.Content,
                         Link = menu.Link,
                     };
                     ListData();
@@ -228,6 +230,7 @@ namespace TeamplateHotel.Areas.Administrator.Controllers
                         edit.Status = model.Status;
                         edit.MetaDescription = string.IsNullOrEmpty(model.MetaDescription) ? model.Title : model.MetaDescription;
                         edit.Link = model.Link;
+                        edit.Content = model.Content;
                         db.SubmitChanges();
 
                         //Cập nhật lại Level menu con

@@ -103,6 +103,7 @@ namespace TeamplateHotel.Areas.Administrator.Controllers
                             Index = 0,
                             ViewAll = model.ViewAll,
                             Status = model.Status,
+                            Content = model.Content,
                         };
 
                         db.Sliders.InsertOnSubmit(slider);
@@ -143,6 +144,7 @@ namespace TeamplateHotel.Areas.Administrator.Controllers
                     Link = detailSlider.Link,
                     ViewAll = detailSlider.ViewAll,
                     Status = detailSlider.Status,
+                    Content = detailSlider.Content,
                 };
                 ViewBag.Title = "Sửa slide";
                 ViewBag.Menus = LoadData(slider.MenuIDs, Request.Cookies["lang_client"].Value);
@@ -174,6 +176,7 @@ namespace TeamplateHotel.Areas.Administrator.Controllers
                             slider.Status = model.Status;
                             slider.ViewAll = model.ViewAll;
                             slider.MenuIDs = model.MenuIDs;
+                            slider.Content = model.Content;
                             slider.LanguageID = Request.Cookies["lang_client"].Value;
                             db.SubmitChanges();
                             TempData["Messages"] = "Sửa slide thành công.";

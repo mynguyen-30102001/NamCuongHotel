@@ -250,6 +250,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to COMFORT.
+        /// </summary>
+        internal static string COMFORT {
+            get {
+                return ResourceManager.GetString("COMFORT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Contact.
         /// </summary>
         internal static string Contact {
@@ -448,6 +457,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Gallery.
+        /// </summary>
+        internal static string Gallery {
+            get {
+                return ResourceManager.GetString("Gallery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Gender.
         /// </summary>
         internal static string Gender {
@@ -601,7 +619,16 @@ namespace Resources {
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to Newsletter Sign Up.
+        ///    Looks up a localized string similar to News.
+        /// </summary>
+        internal static string News {
+            get {
+                return ResourceManager.GetString("News", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Latese news &amp; events.
         /// </summary>
         internal static string Newsletter {
             get {
@@ -718,11 +745,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Recent news.
+        /// </summary>
+        internal static string Recentnews {
+            get {
+                return ResourceManager.GetString("Recentnews", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Related Article.
         /// </summary>
         internal static string RelatedArticle {
             get {
                 return ResourceManager.GetString("RelatedArticle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Relaxing on Vacation.
+        /// </summary>
+        internal static string Relaxing {
+            get {
+                return ResourceManager.GetString("Relaxing", resourceCulture);
             }
         }
         
@@ -835,7 +880,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to Two cable.
+        ///    Looks up a localized string similar to QUALITY SERVICE FROM THE HOTEL.
         /// </summary>
         internal static string Service1 {
             get {

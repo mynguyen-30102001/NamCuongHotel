@@ -55,7 +55,7 @@
                     <div class="controls">
                         @Html.TextBoxFor(c => c.Image, new { @class = "span4 inputbox upload" })
                         @Html.ValidationMessageFor(c => c.Image)
-                      
+
                     </div>
                 </div>
 
@@ -87,6 +87,15 @@
                         <label class="checkbox inline">
                             @Html.CheckBoxFor(c => c.Status) Hiển thị
                         </label>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="Content">Mô tả chi tiết</label>
+                    <div class="controls">
+                        <p>
+                            <span class="error-login">@Html.ValidationMessageFor(a => a.Content)</span>
+                        </p>
+                        @Html.TextAreaFor(c => c.Content, new { @class = "full-ckeditor" })
                     </div>
                 </div>
 

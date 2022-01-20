@@ -82,11 +82,11 @@ namespace TeamplateHotel.Controllers
             }
         }
         //Danh sách bài viết tuyển dụng
-        public static List<Recruitment> Recruitments()
+        public static List<Recruitment> Recruitments(string lang)
         {
             using (var db = new MyDbDataContext())
             {
-                List<Recruitment> recruitments = db.Recruitments.Where(a => a.Status).OrderBy(a => a.Index).ToList();
+                List<Recruitment> recruitments = db.Recruitments.Where(a => a.Status && a.LanguageID == lang).OrderBy(a => a.Index).ToList();
                 return recruitments;
             }
         }
@@ -515,7 +515,7 @@ namespace TeamplateHotel.Controllers
                                 MenuAlias = b.Alias,
                                 Title = a.Title,
                                 Index = a.Index,
-                                CreateDate = (DateTime)a.DateCreate,
+                                //CreateDate = (DateTime)a.DateCreate,
                                 Type = a.Type,
                                 Image = a.Image,
                                 Description = a.Description,
@@ -567,6 +567,7 @@ namespace TeamplateHotel.Controllers
                     MaxPeople = a.MaxPeople,
                     Image = a.Image,
                     Description = a.Description,
+                    Bed = a.Bed,
                     Price = a.Price,
                 }).ToList();
                 foreach (var item in roomShowHome)

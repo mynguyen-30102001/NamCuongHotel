@@ -2,6 +2,7 @@
 @using TeamplateHotel.Controllers
 @using TeamplateHotel.Models
 @using ProjectLibrary.Config
+@using TeamplateHotel.Handler
 @model TeamplateHotel.Models.DetailArticle
 @{
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
@@ -10,71 +11,72 @@
     List<ShowObject> newArticles = CommentController.CustomerArticles(Request.Cookies["LanguageID"].Value);
 }
 
-    <div class="banner-page">
-        <div class="banner__item">
-            <div class="banner__img"><img src="@menu.Image" alt=""></div>
-            <div class="banner__caption">
-                <h1 class="animate__animated">@menu.Title</h1>
-            </div>
+<div class="banner-page">
+    <div class="banner__item">
+        <div class="banner__img"><img src="@menu.Image" alt=""></div>
+        <div class="banner__caption">
+            <h1 class="animate__animated">@menu.Title</h1>
         </div>
     </div>
-    <ul class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-        <li class="breadcrumb-item"><a href="/">@menu.Title</a></li>
-        <li class="breadcrumb-item active">@Model.Article.Title</li>
-    </ul>
-    <div class="blog-wp box">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="blog-post">
-                        <img src="@Model.Article.Image" alt="">
-                        <h3>@Model.Article.Title</h3>
-                        <div>@Html.Raw(Model.Article.Title)</div></div>
-                    <div class="blog-share"><a class="facebook" href=""><i class="fab fa-facebook mr-1"></i> Share</a><a class="twitter" href=""><i class="fab fa-twitter mr-1"></i> Tweet</a><a class="google" href=""><i class="fab fa-google-plus  mr-1"></i> Google+</a></div>
+</div>
+<ul class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+    <li class="breadcrumb-item"><a href="/">@menu.Title</a></li>
+    <li class="breadcrumb-item active">@Model.Article.Title</li>
+</ul>
+<div class="blog-wp box">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="blog-post">
+                    <img src="@Model.Article.Image" alt="">
+                    <h3>@Model.Article.Title</h3>
+                    <div>@Html.Raw(Model.Article.Title)</div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="blog-sidebar">
-                        <div class="blog-box d-none d-lg-block">
-                            <form action="" method="method" id="blog_search">
-                                <div class="input-group">
-                                    <input class="form-control" type="text" name="b_search" id="b_search" placeholder="Tìm kiếm...">
-                                    <div class="input-group-append"><span class="fas fa-search input-group-text"></span></div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="blog-box">
-                            <h3>Tin gần đây</h3>
-                            <ul class="Recent-News">
-                                @foreach (var itemNew in newArticles.Take(3))
-                                {
-                                    <li>
-                                        <div class="post-thumb">
-                                            <img src="@itemNew.Image" alt="">
+                <div class="blog-share"><a class="facebook" href=""><i class="fab fa-facebook mr-1"></i> Share</a><a class="twitter" href=""><i class="fab fa-twitter mr-1"></i> Tweet</a><a class="google" href=""><i class="fab fa-google-plus  mr-1"></i> Google+</a></div>
+            </div>
+            <div class="col-lg-4">
+                <div class="blog-sidebar">
+                    <div class="blog-box d-none d-lg-block">
+                        <form action="" method="method" id="blog_search">
+                            <div class="input-group">
+                                <input class="form-control" type="text" name="b_search" id="b_search" placeholder="Tìm kiếm...">
+                                <div class="input-group-append"><span class="fas fa-search input-group-text"></span></div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="blog-box">
+                        <h3>@GetLanguage.Language(Request.Cookies["LanguageID"].Value, "LEARNMORE")</h3>
+                        <ul class="Recent-News">
+                            @foreach (var itemNew in newArticles.Take(3))
+                            {
+                                <li>
+                                    <div class="post-thumb">
+                                        <img src="@itemNew.Image" alt="">
+                                    </div>
+                                    <div class="post-content">
+                                        <div class="post__meta">
+                                            @*<span class="post__date"> @itemNew.CreateDate.ToString("dd/MM/yyyy")</span>*@
+                                            <a class="post__catagory" href="">@itemNew.Type </a>
                                         </div>
-                                        <div class="post-content">
-                                            <div class="post__meta">
-                                                <span class="post__date"> @itemNew.CreateDate.ToString("dd/MM/yyyy")</span>
-                                                <a class="post__catagory" href="">@itemNew.Type </a>
-                                            </div>
-                                            <a href="/@itemNew.MenuAlias/@itemNew.ID/@itemNew.Alias">@itemNew.Title</a>
-                                        </div>
-                                    </li>
-                                }
-                            </ul>
-                        </div>
-                        <div class="blog-box">
-                            <h3>Tags</h3>
-                            <ul class="blog-tag">
-                                <li><a href="#">Hotel</a></li>
-                                <li><a href="#">room</a></li>
-                                <li><a href="#">service</a></li>
-                                <li><a href="#">event</a></li>
-                            </ul>
-                        </div>
+                                        <a href="/@itemNew.MenuAlias/@itemNew.ID/@itemNew.Alias">@itemNew.Title</a>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="blog-box">
+                        <h3>Tags</h3>
+                        <ul class="blog-tag">
+                            <li><a href="#">Hotel</a></li>
+                            <li><a href="#">room</a></li>
+                            <li><a href="#">service</a></li>
+                            <li><a href="#">event</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 

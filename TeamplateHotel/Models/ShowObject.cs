@@ -17,6 +17,7 @@ namespace TeamplateHotel.Models
         public int MaxPeople { get; set; }
         public decimal Price { get; set; }
         public string SecondMenu { get; set; }
+        public string Bed { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
         public string MenuName { get; set; }

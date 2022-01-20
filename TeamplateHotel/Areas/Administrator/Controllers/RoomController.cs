@@ -100,6 +100,7 @@ namespace TeamplateHotel.Areas.Administrator.Controllers
                             Description = model.Description,
                             Size = model.Size,
                             Bed = model.Bed,
+                            Content = model.Content,
                             MetaTitle = string.IsNullOrEmpty(model.MetaTitle) ? model.Title : model.MetaTitle,
                             MetaDescription =
                                 string.IsNullOrEmpty(model.MetaDescription) ? model.Title : model.MetaDescription,

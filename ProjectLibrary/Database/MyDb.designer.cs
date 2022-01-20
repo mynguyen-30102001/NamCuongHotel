@@ -4146,6 +4146,8 @@ namespace ProjectLibrary.Database
 		
 		private string _Image;
 		
+		private string _Content;
+		
 		private EntitySet<Article> _Articles;
 		
 		private EntitySet<Service> _Services;
@@ -4186,6 +4188,8 @@ namespace ProjectLibrary.Database
     partial void OnStatusChanged();
     partial void OnImageChanging(string value);
     partial void OnImageChanged();
+    partial void OnContentChanging(string value);
+    partial void OnContentChanged();
     #endregion
 		
 		public Menu()
@@ -4477,6 +4481,26 @@ namespace ProjectLibrary.Database
 					this._Image = value;
 					this.SendPropertyChanged("Image");
 					this.OnImageChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Content", DbType="NVarChar(MAX)")]
+		public string Content
+		{
+			get
+			{
+				return this._Content;
+			}
+			set
+			{
+				if ((this._Content != value))
+				{
+					this.OnContentChanging(value);
+					this.SendPropertyChanging();
+					this._Content = value;
+					this.SendPropertyChanged("Content");
+					this.OnContentChanged();
 				}
 			}
 		}

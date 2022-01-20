@@ -62,7 +62,7 @@ namespace TeamplateHotel.Controllers
                 case SystemMenuType.Service:
                     goto Service;
                 case SystemMenuType.Recruitment:
-                    return View("Recruitment", CommentController.Recruitments());
+                    return View("Recruitment", CommentController.Recruitments(Request.Cookies["LanguageID"].Value));
                 case SystemMenuType.Booking:
                     return RedirectToAction("MakeReservation", "Booking");
                 case SystemMenuType.Contact:

@@ -74,6 +74,16 @@
                         </label>
                     </div>
                 </div>
+                <div class="control-group">
+                    <label class="control-label" for="Content">Mô tả chi tiết</label>
+                    <div class="controls">
+                        <p>
+                            <span class="error-login">@Html.ValidationMessageFor(a => a.Content)</span>
+                        </p>
+                        @Html.TextAreaFor(c => c.Content, new { @class = "full-ckeditor" })
+                    </div>
+                </div>
+
 
                 <div class="control-group">
                     @Html.LabelFor(c => c.MetaTitle, new { @class = "control-label" })
